@@ -98,10 +98,10 @@ action:
           - condition: trigger
             id: up_release
         sequence:
-          - service: script.dimming_loop_stop
+          - service: script.stop_dimming_loop
 
       - conditions:
           - condition: trigger
             id: down_release
         sequence:
-          - service: script.dimming_loop_stop
+          - service: script.stop_dimming_loop
