@@ -25,74 +25,134 @@ variables:
   up_button: !input up_button
   down_button: !input down_button
   target_light: !input target_light
+  tap_threshold: 0.4  # 400ms threshold for tap vs hold
 
+# Store press times as variables
 trigger:
+  # Up button pressed
   - platform: state
     entity_id: !input up_button
     to: 'on'
     id: up_press
+  # Down button pressed
   - platform: state
     entity_id: !input down_button
     to: 'on'
     id: down_press
+  # Up button released
   - platform: state
     entity_id: !input up_button
     from: 'on'
     to: 'off'
     id: up_release
+  # Down button released
   - platform: state
     entity_id: !input down_button
     from: 'on'
     to: 'off'
     id: down_release
+  # Timer for tap detection
+  - platform: event
+    event_type: timer.finished
+    id: tap_timer
 
 condition: []
 
 action:
   - choose:
+      # Up button pressed
       - conditions:
           - condition: trigger
             id: up_press
         sequence:
-          - choose:
-              - conditions:
+          - variables:
+              up_press_time: '{{ now().timestamp() }}'
+          - if:
+              - condition: state
+                entity_id: !input target_light
+                state: 'off'
+            then:
+              # If light is off, turn it on to minimum brightness
+              - service: light.turn_on
+                target: !input target_light
+                data:
+                  brightness_pct: 10
+            else:
+              # If light is on, start dimming loop after hold threshold
+              - delay: '0:00:00.4'  # 400ms hold threshold
+              - if:
                   - condition: state
-                    entity_id: !input target_light
-                    state: 'off'
-                sequence:
-                  - service: light.turn_on
-                    data:
-                      entity_id: !input target_light
-                      brightness_pct: 10
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
+                    entity_id: !input up_button
                     state: 'on'
-                sequence:
+                then:
                   - service: script.dimming_loop
                     data:
                       light_entity: !input target_light
                       direction: 'up'
 
+      # Up button released
+      - conditions:
+          - condition: trigger
+            id: up_release
+        sequence:
+          - variables:
+              up_release_time: '{{ now().timestamp() }}'
+              up_press_duration: '{{ (up_release_time|float - up_press_time|float) * 1000 | int }}'
+          - if:
+              - condition: template
+                value_template: '{{ up_press_duration < 400 and is_state(target_light, "on") }}'
+            then:
+              # Tap action: increase brightness by 10%
+              - service: light.turn_on
+                target: !input target_light
+                data:
+                  brightness_step_pct: 10
+            else:
+              # Stop any running dimming loop
+              - service: script.stop_dimming_loop
+
+      # Down button pressed
       - conditions:
           - condition: trigger
             id: down_press
         sequence:
-          - choose:
-              - conditions:
+          - variables:
+              down_press_time: '{{ now().timestamp() }}'
+          - if:
+              - condition: state
+                entity_id: !input target_light
+                state: 'on'
+            then:
+              # Start dimming loop after hold threshold
+              - delay: '0:00:00.4'  # 400ms hold threshold
+              - if:
                   - condition: state
-                    entity_id: !input target_light
-                    state: 'off'
-                sequence: []
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
+                    entity_id: !input down_button
                     state: 'on'
-                sequence:
+                then:
                   - service: script.dimming_loop
                     data:
                       light_entity: !input target_light
                       direction: 'down'
+
+      # Down button released
+      - conditions:
+          - condition: trigger
+            id: down_release
+        sequence:
+          - variables:
+              down_release_time: '{{ now().timestamp() }}'
+              down_press_duration: '{{ (down_release_time|float - down_press_time|float) * 1000 | int }}'
+          - if:
+              - condition: template
+                value_template: '{{ down_press_duration < 400 and is_state(target_light, "on") }}'
+            then:
+              # Tap action: turn off the light
+              - service: light.turn_off
+                target: !input target_light
+            else:
+              # Stop any running dimming loop
+              - service: script.stop_dimming_loop
 
       - conditions:
           - condition: trigger
