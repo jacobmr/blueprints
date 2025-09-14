@@ -8,7 +8,7 @@ blueprint:
     - Hold DOWN decreases brightness
     - Release stops the brightness change
   domain: automation
-  source_url: https://github.com/jacobmr/blueprints/blob/main/dimmer_two_button.yaml
+  source_url: https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button.yaml
   input:
     up_button:
       name: Up Button (Binary Sensor)
@@ -67,10 +67,10 @@ action:
               sequence:
                 - service: light.turn_on
                   data:
-                    brightness_step_pct: !lambda "return step_size;"
+                    brightness_step_pct: "{{ step_size }}"
                   target:
                     entity_id: !input target_light
-                - delay: !lambda "return step_interval;"
+                - delay: "{{ step_interval }}ms"
 
       - conditions:
           - condition: trigger
@@ -87,10 +87,10 @@ action:
               sequence:
                 - service: light.turn_on
                   data:
-                    brightness_step_pct: !lambda "return -step_size;"
+                    brightness_step_pct: "{{ -step_size }}"
                   target:
                     entity_id: !input target_light
-                - delay: !lambda "return step_interval;"
+                - delay: "{{ step_interval }}ms"
 
       - conditions:
           - condition: trigger
