@@ -1,107 +1,91 @@
 blueprint:
-  name: Dimmer Two Button
-  description: Control a dimmable light with two binary sensors (up/down buttons).
+  name: Dimmer with Two Buttons (Tap + Hold)
+  description: >
+    Tap to turn on/off or change brightness. Hold to adjust brightness smoothly.
+    Requires `dimming_loop` and `dimming_loop_down` scripts to exist in your system.
   domain: automation
   source_url: https://github.com/jacobmr/blueprints/blob/main/dimmer_two_button.yaml
   input:
     up_button:
-      name: Up Button
+      name: UP Button
       selector:
         entity:
           domain: binary_sensor
     down_button:
-      name: Down Button
+      name: DOWN Button
       selector:
         entity:
           domain: binary_sensor
     target_light:
-      name: Target Light
+      name: Light to control
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
 
 mode: restart
+
 variables:
-  up_button: !input up_button
-  down_button: !input down_button
-  target_light: !input target_light
+  light_entity: !input target_light
+  up_button_id: !input up_button
+  down_button_id: !input down_button
+  tap_min_ms: 50
+  tap_max_ms: 400
+  press_start_time: 0
 
 trigger:
-  - platform: state
-    entity_id: !input up_button
-    to: 'on'
-    id: up_press
-  - platform: state
-    entity_id: !input down_button
-    to: 'on'
-    id: down_press
-  - platform: state
-    entity_id: !input up_button
-    from: 'on'
-    to: 'off'
-    id: up_release
-  - platform: state
-    entity_id: !input down_button
-    from: 'on'
-    to: 'off'
-    id: down_release
-
-condition: []
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input up_button
+  - platform: event
+    event_type: state_changed
+    event_data:
+      entity_id: !input down_button
 
 action:
+  - variables:
+      is_up: "{{ trigger.event.data.entity_id == up_button_id }}"
+      new_state: "{{ trigger.event.data.new_state }}"
+      old_state: "{{ trigger.event.data.old_state }}"
+      event_duration_ms: >
+        {% set start = old_state.last_changed.timestamp() %}
+        {% set end = new_state.last_changed.timestamp() %}
+        {{ ((end - start) * 1000) | int }}
+
   - choose:
-      - conditions:
-          - condition: trigger
-            id: up_press
+      - conditions: "{{ new_state.state == 'off' }}"
         sequence:
           - choose:
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: 'off'
+              - conditions: "{{ is_up }}"
                 sequence:
-                  - service: light.turn_on
-                    data:
-                      entity_id: !input target_light
-                      brightness_pct: 10
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: 'on'
+                  - choose:
+                      - conditions: "{{ event_duration_ms > tap_min_ms and event_duration_ms < tap_max_ms }}"
+                        sequence:
+                          - service: light.turn_on
+                            data:
+                              entity_id: "{{ light_entity }}"
+                              brightness_step_pct: 10
+                              transition: 0.3
+                      - conditions: "{{ event_duration_ms >= tap_max_ms }}"
+                        sequence:
+                          - service: script.dimming_loop
+                            data:
+                              variables:
+                                target_light: "{{ light_entity }}"
+                                direction: 'up'
+              - conditions: "{{ not is_up }}"
                 sequence:
-                  - service: script.dimming_loop
-                    data:
-                      light_entity: !input target_light
-                      direction: 'up'
-
-      - conditions:
-          - condition: trigger
-            id: down_press
-        sequence:
-          - choose:
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: 'off'
-                sequence: []
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: 'on'
-                sequence:
-                  - service: script.dimming_loop
-                    data:
-                      light_entity: !input target_light
-                      direction: 'down'
-
-      - conditions:
-          - condition: trigger
-            id: up_release
-        sequence:
-          - service: script.stop_dimming_loop
-
-      - conditions:
-          - condition: trigger
-            id: down_release
-        sequence:
-          - service: script.stop_dimming_loop
+                  - choose:
+                      - conditions: "{{ event_duration_ms > tap_min_ms and event_duration_ms < tap_max_ms }}"
+                        sequence:
+                          - service: light.turn_off
+                            data:
+                              entity_id: "{{ light_entity }}"
+                      - conditions: "{{ event_duration_ms >= tap_max_ms }}"
+                        sequence:
+                          - service: script.dimming_loop
+                            data:
+                              variables:
+                                target_light: "{{ light_entity }}"
+                                direction: 'down'
