@@ -1,0 +1,123 @@
+blueprint:
+  name: Dual Button Dimmer Control
+  description: >
+    Control a dimmable light with two buttons (up/down).
+    - UP: Turn on or increase brightness
+    - DOWN: Turn off or decrease brightness
+    - HOLD: Continuous dimming
+  domain: automation
+  input:
+    up_button:
+      name: Up Button
+      selector:
+        entity:
+          domain: binary_sensor
+    down_button:
+      name: Down Button
+      selector:
+        entity:
+          domain: binary_sensor
+    target_light:
+      name: Light to control
+      selector:
+        target:
+          entity:
+            domain: light
+
+mode: restart
+
+# Track button press times
+trigger:
+  # Up button pressed
+  - platform: state
+    entity_id: !input up_button
+    to: 'on'
+    id: up_press
+  # Up button released
+  - platform: state
+    entity_id: !input up_button
+    from: 'on'
+    to: 'off'
+    id: up_release
+  # Down button pressed
+  - platform: state
+    entity_id: !input down_button
+    to: 'on'
+    id: down_press
+  # Down button released
+  - platform: state
+    entity_id: !input down_button
+    from: 'on'
+    to: 'off'
+    id: down_release
+
+# Main automation logic
+action:
+  - choose:
+      # Up button pressed
+      - conditions:
+          - condition: trigger
+            id: up_press
+        sequence:
+          # If light is off, turn it on to minimum brightness
+          - if:
+              - condition: state
+                entity_id: !input target_light
+                state: 'off'
+            then:
+              - service: light.turn_on
+                target: !input target_light
+                data:
+                  brightness_pct: 10
+          # Start dimming loop after hold threshold
+          - delay: '0:00:00.4'  # 400ms hold threshold
+          - if:
+              - condition: state
+                entity_id: !input up_button
+                state: 'on'
+            then:
+              - service: script.dimming_loop
+                data:
+                  light_entity: !input target_light
+                  direction: 'up'
+
+      # Up button released
+      - conditions:
+          - condition: trigger
+            id: up_release
+        sequence:
+          - service: script.stop_dimming_loop
+
+      # Down button pressed
+      - conditions:
+          - condition: trigger
+            id: down_press
+        sequence:
+          # Only act if light is on
+          - if:
+              - condition: state
+                entity_id: !input target_light
+                state: 'on'
+            then:
+              # Start dimming loop after hold threshold
+              - delay: '0:00:00.4'  # 400ms hold threshold
+              - if:
+                  - condition: state
+                    entity_id: !input down_button
+                    state: 'on'
+                then:
+                  - service: script.dimming_loop
+                    data:
+                      light_entity: !input target_light
+                      direction: 'down'
+                else:
+                  # Single tap - turn off
+                  - service: light.turn_off
+                    target: !input target_light
+
+      # Down button released
+      - conditions:
+          - condition: trigger
+            id: down_release
+        sequence:
+          - service: script.stop_dimming_loop
