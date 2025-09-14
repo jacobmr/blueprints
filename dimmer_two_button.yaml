@@ -1,130 +1,100 @@
 blueprint:
-  name: Dimmer Light via Two Buttons (Hold + Tap)
-  description: >
-    Use two binary_sensor inputs (up/down) from an ESPHome device to control a dimmable light.
-    - If the light is OFF and UP is tapped → Turn ON
-    - If the light is ON and UP is tapped → Increase brightness by 10%
-    - If the light is ON and UP is held → Increase brightness by 10% every 500ms
-    - If the light is ON and DOWN is tapped → Turn OFF
-    - If the light is ON and DOWN is held → Decrease brightness by 10% every 500ms
-    - If the light is OFF and DOWN is tapped/held → Do nothing
+  name: Dimmer Two-Button Panel
+  description: |
+    Responds to single press, hold, and release events from an ESP32-based two-button dimmer panel. 
+    Implements:
+      - Tap up = on / +10%
+      - Tap down = off
+      - Hold up/down = adjust brightness in 10% steps every 250ms
   domain: automation
-  source_url: https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button.yaml
   input:
     up_button:
-      name: Up Button (Binary Sensor)
+      name: Up Button Sensor
       selector:
         entity:
           domain: binary_sensor
     down_button:
-      name: Down Button (Binary Sensor)
+      name: Down Button Sensor
       selector:
         entity:
           domain: binary_sensor
     target_light:
-      name: Light to Control
+      name: Target Light
       selector:
         entity:
           domain: light
 
-trigger:
-  - platform: state
-    entity_id: !input up_button
-    to: "on"
-    id: up_pressed
-  - platform: state
-    entity_id: !input down_button
-    to: "on"
-    id: down_pressed
-  - platform: state
-    entity_id: !input up_button
-    to: "off"
-    id: up_released
-  - platform: state
-    entity_id: !input down_button
-    to: "off"
-    id: down_released
-
+mode: restart
 variables:
-  step_size: 10
-  step_interval: 500
-  min_brightness: 10
+  light_entity: !input target_light
 
-mode: parallel
+trigger:
+  - platform: event
+    event_type: esphome.button_single
+    event_data:
+      label: !input up_button
+  - platform: event
+    event_type: esphome.button_single
+    event_data:
+      label: !input down_button
+  - platform: event
+    event_type: esphome.button_hold_start
+    event_data:
+      label: !input up_button
+  - platform: event
+    event_type: esphome.button_hold_start
+    event_data:
+      label: !input down_button
+  - platform: event
+    event_type: esphome.button_release
+    event_data:
+      label: !input up_button
+  - platform: event
+    event_type: esphome.button_release
+    event_data:
+      label: !input down_button
+
+condition: []
 
 action:
   - choose:
       - conditions:
-          - condition: trigger
-            id: up_pressed
+          - condition: template
+            value_template: "{{ trigger.event.event_type == 'esphome.button_single' and trigger.event.data.label == up_button }}"
         sequence:
-          - choose:
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: "off"
-                sequence:
-                  - service: light.turn_on
-                    data:
-                      brightness_pct: 100
-                      transition: 0.3
-                    target:
-                      entity_id: !input target_light
-              - conditions:
-                  - condition: state
-                    entity_id: !input target_light
-                    state: "on"
-                sequence:
-                  - service: light.turn_on
-                    data:
-                      brightness_step_pct: "{{ step_size }}"
-                      transition: 0.3
-                    target:
-                      entity_id: !input target_light
-          - repeat:
-              while:
-                - condition: state
-                  entity_id: !input up_button
-                  state: "on"
-              sequence:
-                - service: light.turn_on
-                  data:
-                    brightness_step_pct: "{{ step_size }}"
-                    transition: 0.3
-                  target:
-                    entity_id: !input target_light
-                - delay: "{{ step_interval }}ms"
+          - service: light.turn_on
+            data:
+              entity_id: "{{ light_entity }}"
+              brightness_step_pct: 10
+              transition: 0.2
 
       - conditions:
-          - condition: trigger
-            id: down_pressed
+          - condition: template
+            value_template: "{{ trigger.event.event_type == 'esphome.button_single' and trigger.event.data.label == down_button }}"
         sequence:
-          - condition: state
-            entity_id: !input target_light
-            state: "on"
           - service: light.turn_off
-            target:
-              entity_id: !input target_light
-          - repeat:
-              while:
-                - condition: state
-                  entity_id: !input down_button
-                  state: "on"
-              sequence:
-                - service: light.turn_on
-                  data:
-                    brightness_step_pct: "{{ -step_size }}"
-                    transition: 0.3
-                  target:
-                    entity_id: !input target_light
-                - delay: "{{ step_interval }}ms"
+            data:
+              entity_id: "{{ light_entity }}"
 
       - conditions:
-          - condition: trigger
-            id: up_released
-        sequence: []
+          - condition: template
+            value_template: "{{ trigger.event.event_type == 'esphome.button_hold_start' and trigger.event.data.label == up_button }}"
+        sequence:
+          - service: script.dimming_loop
+            data:
+              light: "{{ light_entity }}"
+              direction: up
+              input_button: "{{ up_button }}"
 
       - conditions:
-          - condition: trigger
-            id: down_released
-        sequence: []
+          - condition: template
+            value_template: "{{ trigger.event.event_type == 'esphome.button_hold_start' and trigger.event.data.label == down_button }}"
+        sequence:
+          - service: script.dimming_loop
+            data:
+              light: "{{ light_entity }}"
+              direction: down
+              input_button: "{{ down_button }}"
+
+      # do nothing on release; script stops itself based on release event
+    default: []
