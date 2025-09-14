@@ -1,0 +1,102 @@
+blueprint:
+  name: Dimmer Light via Two Buttons (Hold + Tap)
+  description: >
+    Use two binary_sensor inputs (up/down) from an ESPHome device to control a dimmable light.
+    - Single press UP turns the light ON
+    - Single press DOWN turns the light OFF
+    - Hold UP increases brightness
+    - Hold DOWN decreases brightness
+    - Release stops the brightness change
+  domain: automation
+  input:
+    up_button:
+      name: Up Button (Binary Sensor)
+      selector:
+        entity:
+          domain: binary_sensor
+    down_button:
+      name: Down Button (Binary Sensor)
+      selector:
+        entity:
+          domain: binary_sensor
+    target_light:
+      name: Light to Control
+      selector:
+        entity:
+          domain: light
+
+trigger:
+  - platform: state
+    entity_id: !input up_button
+    to: "on"
+    id: up_pressed
+  - platform: state
+    entity_id: !input down_button
+    to: "on"
+    id: down_pressed
+  - platform: state
+    entity_id: !input up_button
+    to: "off"
+    id: up_released
+  - platform: state
+    entity_id: !input down_button
+    to: "off"
+    id: down_released
+
+variables:
+  step_size: 10
+  step_interval: 300
+
+mode: parallel
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: up_pressed
+        sequence:
+          - service: light.turn_on
+            target:
+              entity_id: !input target_light
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: !input up_button
+                  state: "on"
+              sequence:
+                - service: light.turn_on
+                  data:
+                    brightness_step_pct: !lambda "return step_size;"
+                  target:
+                    entity_id: !input target_light
+                - delay: !lambda "return step_interval;"
+
+      - conditions:
+          - condition: trigger
+            id: down_pressed
+        sequence:
+          - service: light.turn_off
+            target:
+              entity_id: !input target_light
+          - repeat:
+              while:
+                - condition: state
+                  entity_id: !input down_button
+                  state: "on"
+              sequence:
+                - service: light.turn_on
+                  data:
+                    brightness_step_pct: !lambda "return -step_size;"
+                  target:
+                    entity_id: !input target_light
+                - delay: !lambda "return step_interval;"
+
+      - conditions:
+          - condition: trigger
+            id: up_released
+        sequence: []
+
+      - conditions:
+          - condition: trigger
+            id: down_released
+        sequence: []
