@@ -20,7 +20,9 @@ blueprint:
         entity:
           domain: light
 
-mode: restart
+mode: queued
+max: 10
+
 variables:
   up_button: !input up_button
   down_button: !input down_button
@@ -54,7 +56,7 @@ trigger:
   # Timer for tap detection
   - platform: event
     event_type: timer.finished
-    id: tap_timer
+    id: timer_finished
 
 condition: []
 
@@ -77,14 +79,19 @@ action:
                 target: !input target_light
                 data:
                   brightness_pct: 10
+                  transition: 0.1
             else:
-              # If light is on, start dimming loop after hold threshold
+              # Start a timer to detect hold
+              - service: timer.start
+                target:
+                  entity_id: timer.tap_detection
               - delay: '0:00:00.4'  # 400ms hold threshold
               - if:
                   - condition: state
                     entity_id: !input up_button
                     state: 'on'
                 then:
+                  # If still pressed after threshold, start dimming
                   - service: script.dimming_loop
                     data:
                       light_entity: !input target_light
@@ -95,6 +102,9 @@ action:
           - condition: trigger
             id: up_release
         sequence:
+          - service: timer.cancel
+            target:
+              entity_id: timer.tap_detection
           - variables:
               up_release_time: '{{ now().timestamp() }}'
               up_press_duration: '{{ (up_release_time|float - up_press_time|float) * 1000 | int }}'
@@ -107,9 +117,8 @@ action:
                 target: !input target_light
                 data:
                   brightness_step_pct: 10
-            else:
-              # Stop any running dimming loop
-              - service: script.stop_dimming_loop
+                  transition: 0.1
+          - service: script.stop_dimming_loop
 
       # Down button pressed
       - conditions:
@@ -123,13 +132,17 @@ action:
                 entity_id: !input target_light
                 state: 'on'
             then:
-              # Start dimming loop after hold threshold
+              # Start a timer to detect hold
+              - service: timer.start
+                target:
+                  entity_id: timer.tap_detection
               - delay: '0:00:00.4'  # 400ms hold threshold
               - if:
                   - condition: state
                     entity_id: !input down_button
                     state: 'on'
                 then:
+                  # If still pressed after threshold, start dimming
                   - service: script.dimming_loop
                     data:
                       light_entity: !input target_light
@@ -140,6 +153,9 @@ action:
           - condition: trigger
             id: down_release
         sequence:
+          - service: timer.cancel
+            target:
+              entity_id: timer.tap_detection
           - variables:
               down_release_time: '{{ now().timestamp() }}'
               down_press_duration: '{{ (down_release_time|float - down_press_time|float) * 1000 | int }}'
@@ -150,18 +166,7 @@ action:
               # Tap action: turn off the light
               - service: light.turn_off
                 target: !input target_light
-            else:
-              # Stop any running dimming loop
-              - service: script.stop_dimming_loop
-
-      - conditions:
-          - condition: trigger
-            id: up_release
-        sequence:
+                data:
+                  transition: 0.1
           - service: script.stop_dimming_loop
-
-      - conditions:
-          - condition: trigger
-            id: down_release
-        sequence:
           - service: script.stop_dimming_loop
