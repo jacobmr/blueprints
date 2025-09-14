@@ -2,11 +2,12 @@ blueprint:
   name: Dimmer Light via Two Buttons (Hold + Tap)
   description: >
     Use two binary_sensor inputs (up/down) from an ESPHome device to control a dimmable light.
-    - Single press UP turns the light ON
-    - Single press DOWN turns the light OFF
-    - Hold UP increases brightness
-    - Hold DOWN decreases brightness
-    - Release stops the brightness change
+    - If the light is OFF and UP is tapped → Turn ON
+    - If the light is ON and UP is tapped → Increase brightness by 10%
+    - If the light is ON and UP is held → Increase brightness by 10% every 500ms
+    - If the light is ON and DOWN is tapped → Turn OFF
+    - If the light is ON and DOWN is held → Decrease brightness by 10% every 500ms
+    - If the light is OFF and DOWN is tapped/held → Do nothing
   domain: automation
   source_url: https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button.yaml
   input:
@@ -46,7 +47,8 @@ trigger:
 
 variables:
   step_size: 10
-  step_interval: 300
+  step_interval: 500
+  min_brightness: 10
 
 mode: parallel
 
@@ -56,9 +58,29 @@ action:
           - condition: trigger
             id: up_pressed
         sequence:
-          - service: light.turn_on
-            target:
-              entity_id: !input target_light
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: !input target_light
+                    state: "off"
+                sequence:
+                  - service: light.turn_on
+                    data:
+                      brightness_pct: 100
+                      transition: 0.3
+                    target:
+                      entity_id: !input target_light
+              - conditions:
+                  - condition: state
+                    entity_id: !input target_light
+                    state: "on"
+                sequence:
+                  - service: light.turn_on
+                    data:
+                      brightness_step_pct: "{{ step_size }}"
+                      transition: 0.3
+                    target:
+                      entity_id: !input target_light
           - repeat:
               while:
                 - condition: state
@@ -68,6 +90,7 @@ action:
                 - service: light.turn_on
                   data:
                     brightness_step_pct: "{{ step_size }}"
+                    transition: 0.3
                   target:
                     entity_id: !input target_light
                 - delay: "{{ step_interval }}ms"
@@ -76,6 +99,9 @@ action:
           - condition: trigger
             id: down_pressed
         sequence:
+          - condition: state
+            entity_id: !input target_light
+            state: "on"
           - service: light.turn_off
             target:
               entity_id: !input target_light
@@ -88,6 +114,7 @@ action:
                 - service: light.turn_on
                   data:
                     brightness_step_pct: "{{ -step_size }}"
+                    transition: 0.3
                   target:
                     entity_id: !input target_light
                 - delay: "{{ step_interval }}ms"
