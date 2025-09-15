@@ -61,8 +61,8 @@ action:
                     state: 'off'
                 sequence:
                   - service: light.turn_on
-                    target: !input target_light
                     data:
+                      entity_id: !input target_light
                       brightness_pct: 10
               - conditions:
                   - condition: state
