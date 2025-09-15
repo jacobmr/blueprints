@@ -69,10 +69,24 @@ action:
                     entity_id: !input target_light
                     state: 'on'
                 sequence:
-                  - service: script.dimming_loop
-                    data:
-                      light_entity: !input target_light
-                      direction: 'up'
+                  # Wait briefly to detect tap vs hold
+                  - delay: '0:00:00.4'
+                  - if:
+                      - condition: state
+                        entity_id: !input up_button
+                        state: 'on'
+                    then:
+                      # Still pressed after 400ms = HOLD, start dimming loop
+                      - service: script.dimming_loop
+                        data:
+                          light_entity: !input target_light
+                          direction: 'up'
+                    else:
+                      # Released within 400ms = TAP, increase brightness by 10%
+                      - service: light.turn_on
+                        data:
+                          entity_id: !input target_light
+                          brightness_step_pct: 10
 
       - conditions:
           - condition: trigger
@@ -89,10 +103,23 @@ action:
                     entity_id: !input target_light
                     state: 'on'
                 sequence:
-                  - service: script.dimming_loop
-                    data:
-                      light_entity: !input target_light
-                      direction: 'down'
+                  # Wait briefly to detect tap vs hold
+                  - delay: '0:00:00.4'
+                  - if:
+                      - condition: state
+                        entity_id: !input down_button
+                        state: 'on'
+                    then:
+                      # Still pressed after 400ms = HOLD, start dimming loop
+                      - service: script.dimming_loop
+                        data:
+                          light_entity: !input target_light
+                          direction: 'down'
+                    else:
+                      # Released within 400ms = TAP, turn off
+                      - service: light.turn_off
+                        data:
+                          entity_id: !input target_light
 
       - conditions:
           - condition: trigger
