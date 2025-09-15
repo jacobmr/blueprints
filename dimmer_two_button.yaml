@@ -2,7 +2,7 @@ blueprint:
   name: Dimmer Two Button
   description: Control a dimmable light with two binary sensors (up/down buttons).
   domain: automation
-  source_url: https://github.com/jacobmr/blueprints/blob/main/dimmer_two_button.yaml
+  source_url: https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button.yaml
   input:
     up_button:
       name: Up Button
