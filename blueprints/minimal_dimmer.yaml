@@ -1,0 +1,68 @@
+blueprint:
+  name: Minimal Dimmer Test
+  description: A minimal test blueprint for dimmer control
+  domain: automation
+  input:
+    up_button:
+      name: Up Button
+      selector:
+        entity:
+          domain: binary_sensor
+    down_button:
+      name: Down Button
+      selector:
+        entity:
+          domain: binary_sensor
+    target_light:
+      name: Target Light
+      selector:
+        entity:
+          domain: light
+
+mode: queued
+max: 10
+
+variables:
+  up_button: !input up_button
+  down_button: !input down_button
+  target_light: !input target_light
+
+trigger:
+  - platform: state
+    entity_id: !input up_button
+    to: 'on'
+    id: up_press
+  - platform: state
+    entity_id: !input down_button
+    to: 'on'
+    id: down_press
+  - platform: state
+    entity_id: !input up_button
+    from: 'on'
+    to: 'off'
+    id: up_release
+  - platform: state
+    entity_id: !input down_button
+    from: 'on'
+    to: 'off'
+    id: down_release
+
+action:
+  - choose:
+      # Up button pressed
+      - conditions:
+          - condition: trigger
+            id: up_press
+        sequence:
+          - service: light.turn_on
+            target: !input target_light
+            data:
+              brightness_pct: 50
+
+      # Down button pressed
+      - conditions:
+          - condition: trigger
+            id: down_press
+        sequence:
+          - service: light.turn_off
+            target: !input target_light
