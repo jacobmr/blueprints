@@ -1,0 +1,286 @@
+Entity ID,Friendly Name,Domain,Device Class,State,Last Updated
+update.home_assistant_supervisor_update,Home Assistant Supervisor Update,update,,off,2025-09-13T19:06:39.765033+00:00
+update.home_assistant_core_update,Home Assistant Core Update,update,,off,2025-09-13T19:06:39.765309+00:00
+update.file_editor_update,File editor Update,update,,off,2025-09-13T19:06:39.765499+00:00
+update.home_assistant_google_drive_backup_update,Home Assistant Google Drive Backup Update,update,,off,2025-09-13T19:06:39.765654+00:00
+update.advanced_ssh_web_terminal_update,Advanced SSH & Web Terminal Update,update,,off,2025-09-13T19:06:39.765795+00:00
+update.zerotier_one_update,ZeroTier One Update,update,,off,2025-09-13T19:06:39.765942+00:00
+update.airsonos_update,AirSonos Update,update,,off,2025-09-13T19:06:39.766078+00:00
+update.home_assistant_operating_system_update,Home Assistant Operating System Update,update,,off,2025-09-13T19:06:39.766260+00:00
+conversation.home_assistant,Home Assistant,conversation,,unknown,2025-09-13T19:06:40.801517+00:00
+event.backup_automatic_backup,Backup Automatic backup,event,,2025-09-13T11:23:18.903+00:00,2025-09-13T19:06:40.887663+00:00
+sensor.backup_backup_manager_state,Backup Backup Manager state,sensor,enum,idle,2025-09-13T19:07:22.136229+00:00
+sensor.backup_next_scheduled_automatic_backup,Backup Next scheduled automatic backup,sensor,timestamp,2025-09-14T10:50:29+00:00,2025-09-13T19:06:40.888744+00:00
+sensor.backup_last_successful_automatic_backup,Backup Last successful automatic backup,sensor,timestamp,2025-09-13T11:23:18+00:00,2025-09-13T19:06:40.888938+00:00
+sensor.backup_last_attempted_automatic_backup,Backup Last attempted automatic backup,sensor,timestamp,2025-09-13T11:23:16+00:00,2025-09-13T19:06:40.889117+00:00
+zone.home,Casa Apertura,zone,,0,2025-09-13T19:06:41.317003+00:00
+script.play_doorbell_on_sonos,Play Doorbell on Sonos,script,,off,2025-09-13T19:10:24.809291+00:00
+person.matt_goldberg,Matt Goldberg,person,,not_home,2025-09-13T19:07:21.786606+00:00
+person.jacob,jacob,person,,unknown,2025-09-13T19:07:21.786742+00:00
+sun.sun,Sun,sun,,above_horizon,2025-09-13T20:42:41.822616+00:00
+sensor.sun_next_dawn,Sun Next dawn,sensor,timestamp,2025-09-14T12:06:19+00:00,2025-09-13T19:06:41.807070+00:00
+sensor.sun_next_dusk,Sun Next dusk,sensor,timestamp,2025-09-14T01:45:19+00:00,2025-09-13T19:06:41.807286+00:00
+sensor.sun_next_midnight,Sun Next midnight,sensor,timestamp,2025-09-14T06:55:21+00:00,2025-09-13T19:06:41.807459+00:00
+sensor.sun_next_noon,Sun Next noon,sensor,timestamp,2025-09-14T18:55:38+00:00,2025-09-13T19:06:41.807629+00:00
+sensor.sun_next_rising,Sun Next rising,sensor,timestamp,2025-09-14T12:35:35+00:00,2025-09-13T19:06:41.807799+00:00
+sensor.sun_next_setting,Sun Next setting,sensor,timestamp,2025-09-14T01:16:05+00:00,2025-09-13T19:06:41.807970+00:00
+automation.doorbell_pressed,Doorbell Pressed,automation,,on,2025-09-13T19:10:24.810189+00:00
+media_player.kd_65x735f,KD-65X735F,media_player,,unavailable,2025-09-13T19:06:43.629614+00:00
+binary_sensor.matts_iphone_focus,Matt’s iPhone Focus,binary_sensor,,off,2025-09-13T19:06:43.686909+00:00
+device_tracker.matts_iphone,Matt’s iPhone,device_tracker,,not_home,2025-09-13T19:06:43.687492+00:00
+sensor.matts_iphone_activity,Matt’s iPhone Activity,sensor,,unavailable,2025-09-13T19:06:43.688638+00:00
+sensor.matts_iphone_distance,Matt’s iPhone Distance,sensor,,unavailable,2025-09-13T19:06:43.688873+00:00
+sensor.matts_iphone_floors_ascended,Matt’s iPhone Floors Ascended,sensor,,unavailable,2025-09-13T19:06:43.689088+00:00
+sensor.matts_iphone_floors_descended,Matt’s iPhone Floors Descended,sensor,,unavailable,2025-09-13T19:06:43.689273+00:00
+sensor.matts_iphone_steps,Matt’s iPhone Steps,sensor,,unavailable,2025-09-13T19:06:43.689469+00:00
+sensor.matts_iphone_battery_level,Matt’s iPhone Battery Level,sensor,battery,95,2025-09-13T19:06:43.689721+00:00
+sensor.matts_iphone_battery_state,Matt’s iPhone Battery State,sensor,,Not Charging,2025-09-13T19:06:43.689947+00:00
+sensor.matts_iphone_storage,Matt’s iPhone Storage,sensor,,unavailable,2025-09-13T19:06:43.690123+00:00
+sensor.matts_iphone_bssid,Matt’s iPhone BSSID,sensor,,unavailable,2025-09-13T19:06:43.690288+00:00
+sensor.matts_iphone_ssid,Matt’s iPhone SSID,sensor,,unavailable,2025-09-13T19:06:43.690470+00:00
+sensor.matts_iphone_connection_type,Matt’s iPhone Connection Type,sensor,,unavailable,2025-09-13T19:06:43.690635+00:00
+sensor.matts_iphone_sim_1,Matt’s iPhone SIM 1,sensor,,unavailable,2025-09-13T19:06:43.690811+00:00
+sensor.matts_iphone_sim_2,Matt’s iPhone SIM 2,sensor,,unavailable,2025-09-13T19:06:43.690978+00:00
+sensor.matts_iphone_geocoded_location,Matt’s iPhone Geocoded Location,sensor,,unavailable,2025-09-13T19:06:43.691152+00:00
+sensor.matts_iphone_last_update_trigger,Matt’s iPhone Last Update Trigger,sensor,,unavailable,2025-09-13T19:06:43.691329+00:00
+sensor.matts_iphone_app_version,Matt’s iPhone App Version,sensor,,2025.7.2,2025-09-13T19:06:43.691509+00:00
+sensor.matts_iphone_location_permission,Matt’s iPhone Location permission,sensor,,Authorized Always,2025-09-13T19:06:43.691703+00:00
+sensor.matts_iphone_audio_output,Matt’s iPhone Audio Output,sensor,,unavailable,2025-09-13T19:06:43.691904+00:00
+sensor.matts_iphone_average_active_pace,Matt’s iPhone Average Active Pace,sensor,,unavailable,2025-09-13T19:06:43.692103+00:00
+tts.google_en_com,Google Translate en com,tts,,unknown,2025-09-13T19:06:43.726972+00:00
+button.shellyprodm2pm_2cbcbb9f4bcc_reboot,shellyprodm2pm-2cbcbb9f4bcc Reboot,button,restart,unknown,2025-09-13T19:06:43.792575+00:00
+event.shellyprodm2pm_2cbcbb9f4bcc_input_0,shellyprodm2pm-2cbcbb9f4bcc Input 0,event,button,unknown,2025-09-13T19:06:43.799400+00:00
+event.shellyprodm2pm_2cbcbb9f4bcc_input_1,shellyprodm2pm-2cbcbb9f4bcc Input 1,event,button,unknown,2025-09-13T19:06:43.799754+00:00
+event.shellyprodm2pm_2cbcbb9f4bcc_input_2,shellyprodm2pm-2cbcbb9f4bcc Input 2,event,button,unknown,2025-09-13T19:06:43.800063+00:00
+event.shellyprodm2pm_2cbcbb9f4bcc_input_3,shellyprodm2pm-2cbcbb9f4bcc Input 3,event,button,unknown,2025-09-13T19:06:43.800354+00:00
+light.shellyprodm2pm_2cbcbb9f4bcc_light_0,Banquette Pendant,light,,off,2025-09-13T20:04:56.855277+00:00
+light.shellyprodm2pm_2cbcbb9f4bcc_light_1,Kitchen Cans,light,,off,2025-09-13T20:04:56.855433+00:00
+sensor.shellyprodm2pm_2cbcbb9f4bcc_light_0_power,shellyprodm2pm-2cbcbb9f4bcc Light 0 Power,sensor,power,0.0,2025-09-13T20:04:56.855607+00:00
+sensor.shellyprodm2pm_2cbcbb9f4bcc_light_1_power,shellyprodm2pm-2cbcbb9f4bcc Light 1 Power,sensor,power,0.0,2025-09-13T20:04:56.855733+00:00
+sensor.shellyprodm2pm_2cbcbb9f4bcc_light_0_energy,shellyprodm2pm-2cbcbb9f4bcc Light 0 Energy,sensor,energy,2.106619,2025-09-13T20:04:56.855866+00:00
+sensor.shellyprodm2pm_2cbcbb9f4bcc_light_1_energy,shellyprodm2pm-2cbcbb9f4bcc Light 1 Energy,sensor,energy,3.396138,2025-09-13T20:04:56.856006+00:00
+update.shellyprodm2pm_2cbcbb9f4bcc_firmware,shellyprodm2pm-2cbcbb9f4bcc Firmware,update,firmware,off,2025-09-13T20:04:56.856136+00:00
+button.shellyprodm2pm_2cbcbba38c20_reboot,shellyprodm2pm-2cbcbba38c20 Reboot,button,restart,unknown,2025-09-13T19:06:43.816246+00:00
+event.shellyprodm2pm_2cbcbba38c20_input_0,shellyprodm2pm-2cbcbba38c20 Input 0,event,button,unknown,2025-09-13T19:06:43.817341+00:00
+event.shellyprodm2pm_2cbcbba38c20_input_1,shellyprodm2pm-2cbcbba38c20 Input 1,event,button,unknown,2025-09-13T19:06:43.817622+00:00
+event.shellyprodm2pm_2cbcbba38c20_input_2,shellyprodm2pm-2cbcbba38c20 Input 2,event,button,unknown,2025-09-13T19:06:43.818320+00:00
+event.shellyprodm2pm_2cbcbba38c20_input_3,shellyprodm2pm-2cbcbba38c20 Input 3,event,button,unknown,2025-09-13T19:06:43.818632+00:00
+light.shellyprodm2pm_2cbcbba38c20_light_0,Sideboard Cans,light,,off,2025-09-13T20:05:05.821610+00:00
+light.shellyprodm2pm_2cbcbba38c20_light_1,shellyprodm2pm-2cbcbba38c20 Light 1,light,,off,2025-09-13T20:05:05.821782+00:00
+sensor.shellyprodm2pm_2cbcbba38c20_light_0_power,shellyprodm2pm-2cbcbba38c20 Light 0 Power,sensor,power,0.0,2025-09-13T20:05:05.821984+00:00
+sensor.shellyprodm2pm_2cbcbba38c20_light_1_power,shellyprodm2pm-2cbcbba38c20 Light 1 Power,sensor,power,0.0,2025-09-13T20:05:05.822116+00:00
+sensor.shellyprodm2pm_2cbcbba38c20_light_0_energy,shellyprodm2pm-2cbcbba38c20 Light 0 Energy,sensor,energy,0.166146,2025-09-13T20:05:05.822259+00:00
+sensor.shellyprodm2pm_2cbcbba38c20_light_1_energy,shellyprodm2pm-2cbcbba38c20 Light 1 Energy,sensor,energy,0.625,2025-09-13T20:05:05.822377+00:00
+update.shellyprodm2pm_2cbcbba38c20_firmware,shellyprodm2pm-2cbcbba38c20 Firmware,update,firmware,off,2025-09-13T20:05:05.822631+00:00
+binary_sensor.shellyplusuni_8c4f00a6a834_input_0,Shelly Uni - Doorbell Input 0,binary_sensor,power,off,2025-09-13T19:53:43.719959+00:00
+binary_sensor.shellyplusuni_8c4f00a6a834_input_1,Doorbell,binary_sensor,sound,off,2025-09-13T19:53:43.720038+00:00
+button.shellyplusuni_8c4f00a6a834_reboot,Shelly Uni - Doorbell Reboot,button,restart,unknown,2025-09-13T19:23:38.309634+00:00
+sensor.shellyplusuni_8c4f00a6a834_input_2_pulse_counter,Shelly Uni - Doorbell Input 2 pulse counter,sensor,,15,2025-09-13T19:53:43.720130+00:00
+sensor.shellyplusuni_8c4f00a6a834_input_2_pulse_counter_frequency,Shelly Uni - Doorbell Input 2 pulse counter frequency,sensor,,0.0,2025-09-13T19:53:43.720178+00:00
+switch.shellyplusuni_8c4f00a6a834_switch_0,Uni other switch - unused,switch,,off,2025-09-13T19:53:43.720214+00:00
+switch.shellyplusuni_8c4f00a6a834_switch_1,Uni switch - unused,switch,,off,2025-09-13T19:53:43.720240+00:00
+update.shellyplusuni_8c4f00a6a834_firmware,Shelly Uni - Doorbell Firmware,update,firmware,off,2025-09-13T19:53:43.720294+00:00
+button.shellyprodm2pm_2cbcbba1f7c4_reboot,shellyprodm2pm-2cbcbba1f7c4 Reboot,button,restart,unknown,2025-09-13T20:04:30.033391+00:00
+event.shellyprodm2pm_2cbcbba1f7c4_input_0,shellyprodm2pm-2cbcbba1f7c4 Input 0,event,button,unknown,2025-09-13T20:04:30.033572+00:00
+event.shellyprodm2pm_2cbcbba1f7c4_input_1,shellyprodm2pm-2cbcbba1f7c4 Input 1,event,button,unknown,2025-09-13T20:04:30.033666+00:00
+event.shellyprodm2pm_2cbcbba1f7c4_input_2,shellyprodm2pm-2cbcbba1f7c4 Input 2,event,button,unknown,2025-09-13T20:04:30.033745+00:00
+event.shellyprodm2pm_2cbcbba1f7c4_input_3,shellyprodm2pm-2cbcbba1f7c4 Input 3,event,button,unknown,2025-09-13T20:04:30.033820+00:00
+light.shellyprodm2pm_2cbcbba1f7c4_light_0,Dining Pendants,light,,off,2025-09-13T20:04:30.034007+00:00
+light.shellyprodm2pm_2cbcbba1f7c4_light_1,shellyprodm2pm-2cbcbba1f7c4 Light 1,light,,off,2025-09-13T20:04:30.034153+00:00
+sensor.shellyprodm2pm_2cbcbba1f7c4_light_0_power,shellyprodm2pm-2cbcbba1f7c4 Light 0 Power,sensor,power,0.0,2025-09-13T20:04:30.034320+00:00
+sensor.shellyprodm2pm_2cbcbba1f7c4_light_1_power,shellyprodm2pm-2cbcbba1f7c4 Light 1 Power,sensor,power,0.0,2025-09-13T20:04:30.034444+00:00
+sensor.shellyprodm2pm_2cbcbba1f7c4_light_0_energy,shellyprodm2pm-2cbcbba1f7c4 Light 0 Energy,sensor,energy,4.020521,2025-09-13T20:04:30.034576+00:00
+sensor.shellyprodm2pm_2cbcbba1f7c4_light_1_energy,shellyprodm2pm-2cbcbba1f7c4 Light 1 Energy,sensor,energy,0.42,2025-09-13T20:04:30.034693+00:00
+update.shellyprodm2pm_2cbcbba1f7c4_firmware,shellyprodm2pm-2cbcbba1f7c4 Firmware,update,firmware,off,2025-09-13T20:04:30.034841+00:00
+button.shellyprodm2pm_a0dd6c9e5f08_reboot,shellyprodm2pm-a0dd6c9e5f08 Reboot,button,restart,unknown,2025-09-13T19:06:43.842565+00:00
+event.shellyprodm2pm_a0dd6c9e5f08_input_0,shellyprodm2pm-a0dd6c9e5f08 Input 0,event,button,unknown,2025-09-13T19:06:43.844218+00:00
+event.shellyprodm2pm_a0dd6c9e5f08_input_1,shellyprodm2pm-a0dd6c9e5f08 Input 1,event,button,unknown,2025-09-13T19:06:43.844898+00:00
+event.shellyprodm2pm_a0dd6c9e5f08_input_2,shellyprodm2pm-a0dd6c9e5f08 Input 2,event,button,unknown,2025-09-13T19:06:43.845165+00:00
+event.shellyprodm2pm_a0dd6c9e5f08_input_3,shellyprodm2pm-a0dd6c9e5f08 Input 3,event,button,unknown,2025-09-13T19:06:43.845408+00:00
+light.shellyprodm2pm_a0dd6c9e5f08_light_0,Main Hall,light,,off,2025-09-13T20:05:03.881181+00:00
+light.shellyprodm2pm_a0dd6c9e5f08_light_1,Isla,light,,off,2025-09-13T20:05:03.881351+00:00
+sensor.shellyprodm2pm_a0dd6c9e5f08_light_0_power,shellyprodm2pm-a0dd6c9e5f08 Light 0 Power,sensor,power,0.0,2025-09-13T20:05:03.881521+00:00
+sensor.shellyprodm2pm_a0dd6c9e5f08_light_1_power,shellyprodm2pm-a0dd6c9e5f08 Light 1 Power,sensor,power,0.0,2025-09-13T20:05:03.881646+00:00
+sensor.shellyprodm2pm_a0dd6c9e5f08_light_0_energy,shellyprodm2pm-a0dd6c9e5f08 Light 0 Energy,sensor,energy,0.285877,2025-09-13T20:05:03.881778+00:00
+sensor.shellyprodm2pm_a0dd6c9e5f08_light_1_energy,shellyprodm2pm-a0dd6c9e5f08 Light 1 Energy,sensor,energy,0.441826,2025-09-13T20:05:03.881903+00:00
+update.shellyprodm2pm_a0dd6c9e5f08_firmware,shellyprodm2pm-a0dd6c9e5f08 Firmware,update,firmware,off,2025-09-13T20:05:03.882041+00:00
+button.shellypro3_ece334e986dc_reboot,shellypro3-ece334e986dc Reboot,button,restart,unknown,2025-09-13T20:04:24.252035+00:00
+switch.shellypro3_ece334e986dc_switch_0,Driveway,switch,,off,2025-09-13T20:09:55.481191+00:00
+switch.shellypro3_ece334e986dc_switch_1,Tree,switch,,off,2025-09-13T20:09:55.481447+00:00
+switch.shellypro3_ece334e986dc_switch_2,Service Walkway,switch,,off,2025-09-13T20:09:55.481592+00:00
+update.shellypro3_ece334e986dc_firmware,shellypro3-ece334e986dc Firmware,update,firmware,off,2025-09-13T20:09:55.481826+00:00
+todo.shopping_list,Shopping List,todo,,0,2025-09-13T19:06:44.812334+00:00
+update.hacs_update,HACS update,update,,off,2025-09-13T19:06:44.821769+00:00
+media_player.kitchen_speaker_2,Kitchen speaker 2,media_player,speaker,off,2025-09-13T20:04:28.746968+00:00
+weather.forecast_home,Forecast Casa Apertura,weather,,rainy,2025-09-13T20:01:45.445592+00:00
+media_player.great_room_speaker_2,Great Room speaker 2,media_player,speaker,off,2025-09-13T20:04:27.209507+00:00
+media_player.great_room,Great Room,media_player,speaker,paused,2025-09-13T19:10:31.913315+00:00
+switch.great_room_crossfade,Great Room Cross-fade,switch,,off,2025-09-13T19:06:45.311215+00:00
+switch.great_room_loudness,Great Room Loudness,switch,,off,2025-09-13T19:06:45.311442+00:00
+media_player.outside_dining,Outside Dining,media_player,speaker,paused,2025-09-13T19:10:31.755141+00:00
+number.great_room_bass,Great Room Bass,number,,0,2025-09-13T19:06:45.332531+00:00
+number.great_room_balance,Great Room Balance,number,,0,2025-09-13T19:06:45.332759+00:00
+number.great_room_treble,Great Room Treble,number,,0,2025-09-13T19:06:45.332965+00:00
+media_player.tv_room,TV Room,media_player,speaker,paused,2025-09-13T19:10:31.653326+00:00
+number.outside_dining_bass,Outside Dining Bass,number,,0,2025-09-13T19:06:45.431334+00:00
+number.outside_dining_balance,Outside Dining Balance,number,,0,2025-09-13T19:06:45.431590+00:00
+number.outside_dining_treble,Outside Dining Treble,number,,0,2025-09-13T19:06:45.431803+00:00
+switch.outside_dining_crossfade,Outside Dining Cross-fade,switch,,off,2025-09-13T19:06:45.437776+00:00
+switch.outside_dining_loudness,Outside Dining Loudness,switch,,off,2025-09-13T19:06:45.438010+00:00
+switch.tv_room_crossfade,TV Room Cross-fade,switch,,off,2025-09-13T19:06:45.492402+00:00
+switch.tv_room_loudness,TV Room Loudness,switch,,off,2025-09-13T19:06:45.492618+00:00
+number.tv_room_bass,TV Room Bass,number,,-10,2025-09-13T19:06:45.493024+00:00
+number.tv_room_balance,TV Room Balance,number,,0,2025-09-13T19:06:45.493219+00:00
+number.tv_room_treble,TV Room Treble,number,,1,2025-09-13T19:06:45.493402+00:00
+event.red_button_button,Red Button Button,event,button,2025-06-22T21:00:58.013+00:00,2025-09-13T19:06:45.502167+00:00
+sensor.red_button_battery,Red Button Battery,sensor,battery,100,2025-09-13T19:06:45.502956+00:00
+media_player.guest_living,Guest Living,media_player,speaker,paused,2025-09-13T19:10:31.676833+00:00
+switch.guest_living_crossfade,Guest Living Cross-fade,switch,,off,2025-09-13T19:06:45.600480+00:00
+switch.guest_living_loudness,Guest Living Loudness,switch,,off,2025-09-13T19:06:45.600721+00:00
+number.guest_living_bass,Guest Living Bass,number,,0,2025-09-13T19:06:45.604696+00:00
+number.guest_living_balance,Guest Living Balance,number,,0,2025-09-13T19:06:45.604946+00:00
+number.guest_living_treble,Guest Living Treble,number,,0,2025-09-13T19:06:45.605138+00:00
+media_player.outside_master,Outside Master,media_player,speaker,paused,2025-09-13T19:10:31.792140+00:00
+switch.outside_master_crossfade,Outside Master Cross-fade,switch,,off,2025-09-13T19:06:45.698322+00:00
+switch.outside_master_loudness,Outside Master Loudness,switch,,off,2025-09-13T19:06:45.698539+00:00
+number.outside_master_bass,Outside Master Bass,number,,0,2025-09-13T19:06:45.711641+00:00
+number.outside_master_balance,Outside Master Balance,number,,0,2025-09-13T19:06:45.711899+00:00
+number.outside_master_treble,Outside Master Treble,number,,0,2025-09-13T19:06:45.712096+00:00
+media_player.kitchen,Kitchen,media_player,speaker,paused,2025-09-13T19:10:31.855474+00:00
+number.kitchen_bass,Kitchen Bass,number,,4,2025-09-13T19:06:45.805688+00:00
+number.kitchen_balance,Kitchen Balance,number,,0,2025-09-13T19:06:45.805958+00:00
+number.kitchen_treble,Kitchen Treble,number,,-1,2025-09-13T19:06:45.806146+00:00
+media_player.patio,Patio,media_player,speaker,paused,2025-09-13T19:10:31.717254+00:00
+switch.kitchen_crossfade,Kitchen Cross-fade,switch,,off,2025-09-13T19:06:45.812989+00:00
+switch.kitchen_loudness,Kitchen Loudness,switch,,on,2025-09-13T19:06:45.813266+00:00
+number.patio_bass,Patio Bass,number,,0,2025-09-13T19:06:45.872861+00:00
+number.patio_balance,Patio Balance,number,,0,2025-09-13T19:06:45.873162+00:00
+number.patio_treble,Patio Treble,number,,0,2025-09-13T19:06:45.873355+00:00
+switch.patio_crossfade,Patio Cross-fade,switch,,off,2025-09-13T19:06:45.886814+00:00
+switch.patio_loudness,Patio Loudness,switch,,off,2025-09-13T19:06:45.887058+00:00
+sensor.envoy_121802041995_current_power_production,Envoy 121802041995 Current power production,sensor,power,0.717,2025-09-13T20:45:49.363853+00:00
+sensor.envoy_121802041995_energy_production_today,Envoy 121802041995 Energy production today,sensor,energy,35.77,2025-09-13T20:45:49.364206+00:00
+sensor.envoy_121802041995_energy_production_last_seven_days,Envoy 121802041995 Energy production last seven days,sensor,energy,347.184,2025-09-13T20:45:49.364374+00:00
+sensor.envoy_121802041995_lifetime_energy_production,Envoy 121802041995 Lifetime energy production,sensor,energy,119.111015,2025-09-13T20:45:49.364531+00:00
+sensor.envoy_121802041995_current_power_consumption,Envoy 121802041995 Current power consumption,sensor,power,6.369,2025-09-13T20:45:49.364698+00:00
+sensor.envoy_121802041995_energy_consumption_today,Envoy 121802041995 Energy consumption today,sensor,energy,128.36,2025-09-13T20:45:49.364846+00:00
+sensor.envoy_121802041995_energy_consumption_last_seven_days,Envoy 121802041995 Energy consumption last seven days,sensor,energy,1472.416,2025-09-13T20:45:49.365007+00:00
+sensor.envoy_121802041995_lifetime_energy_consumption,Envoy 121802041995 Lifetime energy consumption,sensor,energy,405.196354,2025-09-13T20:45:49.365150+00:00
+sensor.envoy_121802041995_lifetime_net_energy_consumption,Envoy 121802041995 Lifetime net energy consumption,sensor,energy,304.064419,2025-09-13T20:45:49.365311+00:00
+sensor.envoy_121802041995_lifetime_net_energy_production,Envoy 121802041995 Lifetime net energy production,sensor,energy,17.978967,2025-09-13T20:04:47.896740+00:00
+sensor.envoy_121802041995_current_net_power_consumption,Envoy 121802041995 Current net power consumption,sensor,power,5.652,2025-09-13T20:45:49.365543+00:00
+sensor.inverter_121744042527,Inverter 121744042527,sensor,power,17,2025-09-13T20:44:47.615855+00:00
+sensor.inverter_121744043181,Inverter 121744043181,sensor,power,19,2025-09-13T20:44:47.616009+00:00
+sensor.inverter_121744045428,Inverter 121744045428,sensor,power,19,2025-09-13T20:45:49.365943+00:00
+sensor.inverter_121744046280,Inverter 121744046280,sensor,power,18,2025-09-13T20:44:47.616225+00:00
+sensor.inverter_121744046336,Inverter 121744046336,sensor,power,18,2025-09-13T20:44:47.616356+00:00
+sensor.inverter_121744045547,Inverter 121744045547,sensor,power,15,2025-09-13T20:45:49.366238+00:00
+sensor.inverter_121744045555,Inverter 121744045555,sensor,power,17,2025-09-13T20:43:40.759948+00:00
+sensor.inverter_121744046288,Inverter 121744046288,sensor,power,19,2025-09-13T20:45:49.366440+00:00
+sensor.inverter_121744043185,Inverter 121744043185,sensor,power,20,2025-09-13T20:45:49.366570+00:00
+sensor.inverter_121744046068,Inverter 121744046068,sensor,power,17,2025-09-13T20:43:40.760325+00:00
+sensor.inverter_121744052654,Inverter 121744052654,sensor,power,17,2025-09-13T20:43:40.760448+00:00
+sensor.inverter_121744045543,Inverter 121744045543,sensor,power,13,2025-09-13T20:45:49.366835+00:00
+sensor.inverter_121744048119,Inverter 121744048119,sensor,power,20,2025-09-13T20:44:47.616964+00:00
+sensor.inverter_121744048026,Inverter 121744048026,sensor,power,20,2025-09-13T20:45:49.367053+00:00
+sensor.inverter_121744045343,Inverter 121744045343,sensor,power,19,2025-09-13T20:45:49.367181+00:00
+sensor.inverter_121744043180,Inverter 121744043180,sensor,power,20,2025-09-13T20:45:49.367309+00:00
+sensor.inverter_121744047960,Inverter 121744047960,sensor,power,6,2025-09-13T20:45:49.367437+00:00
+sensor.inverter_121744046386,Inverter 121744046386,sensor,power,20,2025-09-13T20:45:49.367561+00:00
+sensor.inverter_121744047932,Inverter 121744047932,sensor,power,18,2025-09-13T20:44:47.617507+00:00
+sensor.inverter_121744046335,Inverter 121744046335,sensor,power,17,2025-09-13T20:45:49.367618+00:00
+sensor.inverter_121744045431,Inverter 121744045431,sensor,power,15,2025-09-13T20:43:40.761546+00:00
+sensor.inverter_121744045695,Inverter 121744045695,sensor,power,16,2025-09-13T20:44:47.617769+00:00
+sensor.inverter_121744039374,Inverter 121744039374,sensor,power,18,2025-09-13T20:45:49.367698+00:00
+sensor.inverter_121744045216,Inverter 121744045216,sensor,power,13,2025-09-13T20:43:40.761863+00:00
+sensor.inverter_121744030263,Inverter 121744030263,sensor,power,19,2025-09-13T20:43:40.762004+00:00
+sensor.inverter_121744052473,Inverter 121744052473,sensor,power,18,2025-09-13T20:44:47.618063+00:00
+sensor.inverter_121744052514,Inverter 121744052514,sensor,power,20,2025-09-13T20:45:49.367797+00:00
+sensor.inverter_121744052512,Inverter 121744052512,sensor,power,20,2025-09-13T20:44:47.618123+00:00
+sensor.inverter_121744045489,Inverter 121744045489,sensor,power,19,2025-09-13T20:45:49.367873+00:00
+sensor.inverter_121744046810,Inverter 121744046810,sensor,power,16,2025-09-13T20:44:47.618180+00:00
+sensor.inverter_121744048115,Inverter 121744048115,sensor,power,17,2025-09-13T20:43:40.767959+00:00
+sensor.inverter_121744034737,Inverter 121744034737,sensor,power,18,2025-09-13T20:44:47.618241+00:00
+sensor.inverter_121744048030,Inverter 121744048030,sensor,power,20,2025-09-13T20:45:49.368004+00:00
+sensor.inverter_121744047748,Inverter 121744047748,sensor,power,18,2025-09-13T20:44:47.618300+00:00
+sensor.inverter_121744039397,Inverter 121744039397,sensor,power,16,2025-09-13T20:43:40.768545+00:00
+sensor.inverter_121744046321,Inverter 121744046321,sensor,power,19,2025-09-13T20:44:47.618359+00:00
+sensor.inverter_121744043112,Inverter 121744043112,sensor,power,19,2025-09-13T20:44:47.618397+00:00
+sensor.inverter_121744046348,Inverter 121744046348,sensor,power,16,2025-09-13T20:44:47.618434+00:00
+sensor.inverter_121744021999,Inverter 121744021999,sensor,power,18,2025-09-13T20:44:47.618472+00:00
+sensor.inverter_121744045988,Inverter 121744045988,sensor,power,19,2025-09-13T20:45:49.368160+00:00
+sensor.inverter_121744052673,Inverter 121744052673,sensor,power,16,2025-09-13T20:44:47.618529+00:00
+sensor.inverter_121744047995,Inverter 121744047995,sensor,power,16,2025-09-13T20:43:40.769496+00:00
+sensor.network_scanner,Network Scanner,sensor,,0,2025-09-13T19:07:21.781484+00:00
+device_tracker.bluecharm_110420_fa98,,device_tracker,,unavailable,2025-09-13T19:07:21.783234+00:00
+sensor.bluecharm_110420_fa98_estimated_distance,jacob's car keys,sensor,distance,unavailable,2025-09-13T19:07:21.783306+00:00
+device_tracker.govee_h5074_3bd9,,device_tracker,,unavailable,2025-09-13T19:07:21.783346+00:00
+sensor.govee_h5074_3bd9_estimated_distance,Estimated distance,sensor,distance,unavailable,2025-09-13T19:07:21.783384+00:00
+update.network_scanner_update,Network Scanner update,update,,unavailable,2025-09-13T19:07:21.783420+00:00
+binary_sensor.backups_stale,Backups Stale,binary_sensor,problem,off,2025-09-13T19:07:35.592511+00:00
+sensor.backup_state,Backup State,sensor,,backed_up,2025-09-13T19:07:35.599159+00:00
+button.shellypro3_ece334ed586c_reboot,shellypro3-ece334ed586c Reboot,button,restart,unknown,2025-09-13T19:46:08.059466+00:00
+switch.shellypro3_ece334ed586c_switch_0,Empty Pro 3 Slot 1,switch,,off,2025-09-13T20:17:16.813573+00:00
+switch.shellypro3_ece334ed586c_switch_1,Empty Pro 3 slot 2,switch,,off,2025-09-13T20:17:16.813712+00:00
+switch.shellypro3_ece334ed586c_switch_2,Front Walk Sconce,switch,,off,2025-09-13T20:17:16.813796+00:00
+update.shellypro3_ece334ed586c_firmware,shellypro3-ece334ed586c Firmware,update,firmware,off,2025-09-13T20:17:16.813979+00:00
+button.shellypro3_ece334e97ab8_reboot,shellypro3-ece334e97ab8 Reboot,button,restart,unknown,2025-09-13T19:17:48.034396+00:00
+switch.shellypro3_ece334e97ab8_switch_0,Bench LED,switch,,off,2025-09-13T20:04:56.831087+00:00
+switch.shellypro3_ece334e97ab8_switch_1,Pool Lights,switch,,off,2025-09-13T20:04:56.831246+00:00
+switch.shellypro3_ece334e97ab8_switch_2,Planter By Pool,switch,,off,2025-09-13T20:04:56.831348+00:00
+update.shellypro3_ece334e97ab8_firmware,shellypro3-ece334e97ab8 Firmware,update,firmware,off,2025-09-13T20:04:56.831510+00:00
+button.shellypro3_ece334e977e0_reboot,shellypro3-ece334e977e0 Reboot,button,restart,unknown,2025-09-13T19:21:38.099591+00:00
+switch.shellypro3_ece334e977e0_switch_0,South Landscape Lights,switch,,off,2025-09-13T20:04:00.988095+00:00
+switch.shellypro3_ece334e977e0_switch_1,Garage Sconces,switch,,off,2025-09-13T20:04:00.988243+00:00
+switch.shellypro3_ece334e977e0_switch_2,Front Walk,switch,,off,2025-09-13T20:04:00.988336+00:00
+update.shellypro3_ece334e977e0_firmware,shellypro3-ece334e977e0 Firmware,update,firmware,off,2025-09-13T20:04:00.988490+00:00
+button.shellypro3_ece334ed5278_reboot,shellypro3-ece334ed5278 Reboot,button,restart,unknown,2025-09-13T19:21:45.343957+00:00
+switch.shellypro3_ece334ed5278_switch_0,Courtyard Sconces,switch,,off,2025-09-13T20:06:53.820985+00:00
+switch.shellypro3_ece334ed5278_switch_1,Guest Walkway,switch,,off,2025-09-13T20:06:53.821249+00:00
+switch.shellypro3_ece334ed5278_switch_2,Not Connected,switch,,off,2025-09-13T20:06:53.821397+00:00
+update.shellypro3_ece334ed5278_firmware,shellypro3-ece334ed5278 Firmware,update,firmware,off,2025-09-13T20:06:53.821613+00:00
+button.shellyprodm2pm_2cbcbba40c84_reboot,shellyprodm2pm-2cbcbba40c84 Reboot,button,restart,unknown,2025-09-13T19:13:26.770401+00:00
+event.shellyprodm2pm_2cbcbba40c84_input_0,shellyprodm2pm-2cbcbba40c84 Input 0,event,button,unknown,2025-09-13T19:13:26.774151+00:00
+event.shellyprodm2pm_2cbcbba40c84_input_1,shellyprodm2pm-2cbcbba40c84 Input 1,event,button,unknown,2025-09-13T19:13:26.776135+00:00
+event.shellyprodm2pm_2cbcbba40c84_input_2,shellyprodm2pm-2cbcbba40c84 Input 2,event,button,unknown,2025-09-13T19:13:26.777158+00:00
+event.shellyprodm2pm_2cbcbba40c84_input_3,shellyprodm2pm-2cbcbba40c84 Input 3,event,button,unknown,2025-09-13T19:13:26.778106+00:00
+light.shellyprodm2pm_2cbcbba40c84_light_0,Terrace Strip One,light,,off,2025-09-13T20:05:02.855688+00:00
+light.shellyprodm2pm_2cbcbba40c84_light_1,Outdoor Dining,light,,off,2025-09-13T20:05:02.855857+00:00
+sensor.shellyprodm2pm_2cbcbba40c84_light_0_power,shellyprodm2pm-2cbcbba40c84 Light 0 Power,sensor,power,0.0,2025-09-13T20:05:02.856055+00:00
+sensor.shellyprodm2pm_2cbcbba40c84_light_1_power,shellyprodm2pm-2cbcbba40c84 Light 1 Power,sensor,power,0.0,2025-09-13T20:05:02.856183+00:00
+sensor.shellyprodm2pm_2cbcbba40c84_light_0_energy,shellyprodm2pm-2cbcbba40c84 Light 0 Energy,sensor,energy,0.066034,2025-09-13T20:05:02.856323+00:00
+sensor.shellyprodm2pm_2cbcbba40c84_light_1_energy,shellyprodm2pm-2cbcbba40c84 Light 1 Energy,sensor,energy,0.033042,2025-09-13T20:05:02.856441+00:00
+update.shellyprodm2pm_2cbcbba40c84_firmware,shellyprodm2pm-2cbcbba40c84 Firmware,update,firmware,off,2025-09-13T20:05:02.856584+00:00
+button.shellyprodm2pm_2cbcbba40ca0_reboot,shellyprodm2pm-2cbcbba40ca0 Reboot,button,restart,unknown,2025-09-13T19:13:38.844170+00:00
+event.shellyprodm2pm_2cbcbba40ca0_input_0,shellyprodm2pm-2cbcbba40ca0 Input 0,event,button,unknown,2025-09-13T19:13:38.847581+00:00
+event.shellyprodm2pm_2cbcbba40ca0_input_1,shellyprodm2pm-2cbcbba40ca0 Input 1,event,button,unknown,2025-09-13T19:13:38.849446+00:00
+event.shellyprodm2pm_2cbcbba40ca0_input_2,shellyprodm2pm-2cbcbba40ca0 Input 2,event,button,unknown,2025-09-13T19:13:38.850286+00:00
+event.shellyprodm2pm_2cbcbba40ca0_input_3,shellyprodm2pm-2cbcbba40ca0 Input 3,event,button,unknown,2025-09-13T19:13:38.851114+00:00
+light.shellyprodm2pm_2cbcbba40ca0_light_0,Banquette Spots,light,,off,2025-09-13T20:04:18.784091+00:00
+light.shellyprodm2pm_2cbcbba40ca0_light_1,Kitchen Box,light,,off,2025-09-13T20:04:18.784265+00:00
+sensor.shellyprodm2pm_2cbcbba40ca0_light_0_power,shellyprodm2pm-2cbcbba40ca0 Light 0 Power,sensor,power,0.0,2025-09-13T20:04:18.784443+00:00
+sensor.shellyprodm2pm_2cbcbba40ca0_light_1_power,shellyprodm2pm-2cbcbba40ca0 Light 1 Power,sensor,power,0.0,2025-09-13T20:04:18.784568+00:00
+sensor.shellyprodm2pm_2cbcbba40ca0_light_0_energy,shellyprodm2pm-2cbcbba40ca0 Light 0 Energy,sensor,energy,0.032013,2025-09-13T20:04:18.784706+00:00
+sensor.shellyprodm2pm_2cbcbba40ca0_light_1_energy,shellyprodm2pm-2cbcbba40ca0 Light 1 Energy,sensor,energy,0.592371,2025-09-13T20:04:18.784820+00:00
+update.shellyprodm2pm_2cbcbba40ca0_firmware,shellyprodm2pm-2cbcbba40ca0 Firmware,update,firmware,off,2025-09-13T20:04:18.785029+00:00
+light.shellypro3_ece334e986dc_switch_0,Driveway,light,,off,2025-09-13T20:09:55.482660+00:00
+light.shellypro3_ece334e977e0_switch_1,Garage Sconces,light,,off,2025-09-13T20:04:00.989331+00:00
+light.shellypro3_ece334e986dc_switch_1,Tree,light,,off,2025-09-13T20:09:55.482963+00:00
+light.shellypro3_ece334ed5278_switch_1,Guest Walkway,light,,off,2025-09-13T20:06:53.822678+00:00
+light.shellypro3_ece334e986dc_switch_2,Service Walkway,light,,off,2025-09-13T20:09:55.483170+00:00
+light.shellypro3_ece334e977e0_switch_2,Front Walk,light,,off,2025-09-13T20:04:00.989459+00:00
+light.shellypro3_ece334e97ab8_switch_0,Bench LED,light,,off,2025-09-13T20:04:56.832290+00:00
+light.shellypro3_ece334e977e0_switch_0,South Landscape Lights,light,,off,2025-09-13T20:04:00.989178+00:00
+light.shellypro3_ece334e97ab8_switch_1,Pool Lights,light,,off,2025-09-13T20:04:56.832441+00:00
+light.shellypro3_ece334e97ab8_switch_2,Planter By Pool,light,,off,2025-09-13T20:04:56.832573+00:00
+light.shellypro3_ece334ed5278_switch_0,Courtyard Sconces,light,,off,2025-09-13T20:06:53.822428+00:00
+light.shellypro3_ece334ed5278_switch_2,Not Connected,light,,off,2025-09-13T20:06:53.822871+00:00
+light.shellypro3_ece334ed586c_switch_2,Front Walk Sconce,light,,off,2025-09-13T20:17:16.814670+00:00
+binary_sensor.dining_room_light_panel_dr1,Dining-Room-Light-Panel DR1,binary_sensor,,off,2025-09-13T20:20:24.413752+00:00
+binary_sensor.dining_room_light_panel_dr2,Dining-Room-Light-Panel DR2,binary_sensor,,off,2025-09-13T20:20:26.657654+00:00
+binary_sensor.dining_room_light_panel_dr3,Dining-Room-Light-Panel DR3,binary_sensor,,off,2025-09-13T20:20:30.194849+00:00
+binary_sensor.dining_room_light_panel_dr4,Dining-Room-Light-Panel DR4,binary_sensor,,off,2025-09-13T20:20:31.527124+00:00
+binary_sensor.dining_room_light_panel_dr1d,Dining-Room-Light-Panel DR1D,binary_sensor,,off,2025-09-13T20:20:25.343388+00:00
+binary_sensor.dining_room_light_panel_dr2d,Dining-Room-Light-Panel DR2D,binary_sensor,,off,2025-09-13T20:20:27.187827+00:00
+binary_sensor.dining_room_light_panel_dr3d,Dining-Room-Light-Panel DR3D,binary_sensor,,off,2025-09-13T20:20:28.953103+00:00
+binary_sensor.dining_room_light_panel_dr4d,Dining-Room-Light-Panel DR4D,binary_sensor,,off,2025-09-13T20:20:32.359241+00:00

@@ -1,0 +1,20 @@
+alias: Test Button Presses
+description: "Log all button presses for debugging"
+trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down  # Replace with your actual button entity IDs
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down  # Replace with your actual button entity IDs
+    to: 'off'
+action:
+  - service: system_log.write
+    data:
+      message: "Button event: {{ trigger.entity_id }} changed to {{ trigger.to_state.state }}"
+      level: info
+      logger: homeassistant.components.automation
+
+  - service: persistent_notification.create
+    data:
+      title: "Button Pressed"
+      message: "{{ trigger.entity_id }} is now {{ trigger.to_state.state }}"
