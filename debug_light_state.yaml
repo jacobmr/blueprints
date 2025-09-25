@@ -1,0 +1,14 @@
+alias: Debug Light State
+description: "Test light state detection"
+trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_panel_up_kpu3
+    to: 'on'
+action:
+  - service: persistent_notification.create
+    data:
+      title: "Light State Debug"
+      message: >
+        Button pressed. Light state: {{ states('light.shellyprodm2pm_a0dd6c9e5f08_light_0') }}
+        Light brightness: {{ state_attr('light.shellyprodm2pm_a0dd6c9e5f08_light_0', 'brightness') }}
+mode: queued

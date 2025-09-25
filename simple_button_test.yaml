@@ -1,0 +1,15 @@
+alias: Simple Button Test
+description: "Test if buttons trigger any automation at all"
+trigger:
+  - platform: state
+    entity_id: binary_sensor.kitchen_panel_up_kpu3
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.kitchen_panel_up_kpud3
+    to: 'on'
+action:
+  - service: persistent_notification.create
+    data:
+      title: "Button Test"
+      message: "Button {{ trigger.entity_id }} was pressed at {{ now() }}"
+mode: queued

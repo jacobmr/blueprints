@@ -20,7 +20,7 @@ blueprint:
         entity:
           domain: light
 
-mode: restart
+mode: parallel
 variables:
   up_button: !input up_button
   down_button: !input down_button
@@ -57,7 +57,7 @@ action:
           - service: persistent_notification.create
             data:
               title: "Debug UP Press"
-              message: "Light state: {{ states('!input target_light') }} | Brightness: {{ state_attr('!input target_light', 'brightness') }}"
+              message: "Light state: {{ states(target_light) }} | Brightness: {{ state_attr(target_light, 'brightness') }}"
           - choose:
               - conditions:
                   - condition: state
@@ -94,8 +94,9 @@ action:
                           title: "Debug"
                           message: "HOLD detected - starting dimming loop UP"
                       - service: script.dimming_loop
+                        target:
+                          entity_id: !input target_light
                         data:
-                          light_entity: !input target_light
                           direction: 'up'
                     else:
                       # Released within 400ms = TAP, increase brightness by 10%
@@ -132,8 +133,9 @@ action:
                     then:
                       # Still pressed after 400ms = HOLD, start dimming loop
                       - service: script.dimming_loop
+                        target:
+                          entity_id: !input target_light
                         data:
-                          light_entity: !input target_light
                           direction: 'down'
                     else:
                       # Released within 400ms = TAP, turn off
@@ -145,10 +147,14 @@ action:
           - condition: trigger
             id: up_release
         sequence:
-          - service: script.stop_dimming_loop
+          - service: script.turn_off
+            target:
+              entity_id: script.dimming_loop
 
       - conditions:
           - condition: trigger
             id: down_release
         sequence:
-          - service: script.stop_dimming_loop
+          - service: script.turn_off
+            target:
+              entity_id: script.dimming_loop

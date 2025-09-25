@@ -1,0 +1,8 @@
+alias: Kitchen Dimmer Control
+description: ""
+use_blueprint:
+  path: jacobmr/blueprints/dimmer_two_button.yaml
+  input:
+    up_button: binary_sensor.kitchen_panel_up_kpu3
+    down_button: binary_sensor.kitchen_panel_dn_kpl3
+    target_light: light.shellyprodm2pm_a0dd6c9e5f08_light_0
