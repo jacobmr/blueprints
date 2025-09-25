@@ -18,7 +18,10 @@ HEADERS = {
 BUTTON_KEYWORDS = os.getenv("HA_BUTTON_FILTERS", "button,panel,kpu,kpl").split(",")
 SCRIPT_ENTITY = "script.dimming_loop"
 
-LOG_FILE = os.path.join(os.path.dirname(__file__), "salida.out")
+LOG_FILE = os.getenv(
+    "HA_LOG_FILE",
+    os.path.join(os.path.dirname(__file__), "ha_monitor.out"),
+)
 
 
 def now_ts():
@@ -188,4 +191,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
