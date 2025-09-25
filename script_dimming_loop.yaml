@@ -1,11 +1,10 @@
 alias: Dimming Loop
 fields:
-  target:
+  target_light:
     name: Target Light
     selector:
-      target:
-        entity:
-          domain: light
+      entity:
+        domain: light
   direction:
     name: Direction
     selector:
@@ -33,14 +32,12 @@ fields:
 mode: restart
 sequence:
   - repeat:
-      while:
-        - condition: template
-          value_template: >
-            {{ is_state('script.dimming_loop', 'on') }}
+      while: []
       sequence:
         - service: light.turn_on
-          target: "{{ target }}"
           data:
+            entity_id: "{{ target_light }}"
             brightness_step_pct: >
               {% if direction == 'up' %}{{ step }}{% else %}{{ -step }}{% endif %}
-        - delay: '{{ "%0.2f"|format(delay|float) }}'
+        - delay:
+            seconds: "{{ delay }}"

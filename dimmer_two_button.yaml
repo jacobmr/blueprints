@@ -94,9 +94,8 @@ action:
                           title: "Debug"
                           message: "HOLD detected - starting dimming loop UP"
                       - service: script.dimming_loop
-                        target:
-                          entity_id: !input target_light
                         data:
+                          target_light: !input target_light
                           direction: 'up'
                     else:
                       # Released within 400ms = TAP, increase brightness by 10%
@@ -133,9 +132,8 @@ action:
                     then:
                       # Still pressed after 400ms = HOLD, start dimming loop
                       - service: script.dimming_loop
-                        target:
-                          entity_id: !input target_light
                         data:
+                          target_light: !input target_light
                           direction: 'down'
                     else:
                       # Released within 400ms = TAP, turn off
