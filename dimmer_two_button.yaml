@@ -54,20 +54,12 @@ action:
           - condition: trigger
             id: up_press
         sequence:
-          - service: persistent_notification.create
-            data:
-              title: "Debug UP Press"
-              message: "Light state: {{ states(target_light) }} | Brightness: {{ state_attr(target_light, 'brightness') }}"
           - choose:
               - conditions:
                   - condition: state
                     entity_id: !input target_light
                     state: 'off'
                 sequence:
-                  - service: persistent_notification.create
-                    data:
-                      title: "Debug"
-                      message: "Executing OFF branch - turning light ON"
                   - service: light.turn_on
                     data:
                       entity_id: !input target_light
@@ -77,10 +69,6 @@ action:
                     entity_id: !input target_light
                     state: 'on'
                 sequence:
-                  - service: persistent_notification.create
-                    data:
-                      title: "Debug"
-                      message: "Executing ON branch - waiting 400ms for tap/hold detection"
                   # Wait briefly to detect tap vs hold
                   - delay: '0:00:00.4'
                   - if:
@@ -89,20 +77,12 @@ action:
                         state: 'on'
                     then:
                       # Still pressed after 400ms = HOLD, start dimming loop
-                      - service: persistent_notification.create
-                        data:
-                          title: "Debug"
-                          message: "HOLD detected - starting dimming loop UP"
                       - service: script.dimming_loop
                         data:
                           target_light: !input target_light
                           direction: 'up'
                     else:
                       # Released within 400ms = TAP, increase brightness by 10%
-                      - service: persistent_notification.create
-                        data:
-                          title: "Debug"
-                          message: "TAP detected - increasing brightness 10%"
                       - service: light.turn_on
                         data:
                           entity_id: !input target_light
