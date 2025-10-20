@@ -96,8 +96,9 @@ action:
                     state: 'off'
                 sequence:
                   - service: light.turn_on
-                    data:
+                    target:
                       entity_id: !input target_light
+                    data:
                       brightness_pct: 100
               # Light is ON - wait to detect tap vs hold
               - conditions:
@@ -119,20 +120,28 @@ action:
                               entity_id: !input up_button
                               state: 'on'
                             - condition: template
-                              value_template: "{{ state_attr(target_light, 'brightness') | int(0) < 255 }}"
+                              value_template: "{{ (state_attr(target_light, 'brightness') | int(0) / 255 * 100) | round(0) < 100 }}"
                           sequence:
                             - service: light.turn_on
-                              data:
+                              target:
                                 entity_id: !input target_light
-                                brightness_step_pct: "{{ brightness_step }}"
+                              data:
+                                brightness_pct: >
+                                  {% set current = (state_attr(target_light, 'brightness') | int(0) / 255 * 100) | round(0) %}
+                                  {% set new_brightness = current + brightness_step %}
+                                  {% if new_brightness > 100 %}100{% else %}{{ new_brightness }}{% endif %}
                             - delay:
                                 milliseconds: "{{ step_delay }}"
                     else:
                       # TAP detected - single brightness increase
                       - service: light.turn_on
-                        data:
+                        target:
                           entity_id: !input target_light
-                          brightness_step_pct: "{{ brightness_step }}"
+                        data:
+                          brightness_pct: >
+                            {% set current = (state_attr(target_light, 'brightness') | int(0) / 255 * 100) | round(0) %}
+                            {% set new_brightness = current + brightness_step %}
+                            {% if new_brightness > 100 %}100{% else %}{{ new_brightness }}{% endif %}
 
       # DOWN BUTTON PRESSED
       - conditions:
@@ -166,27 +175,22 @@ action:
                               entity_id: !input down_button
                               state: 'on'
                             - condition: template
-                              value_template: "{{ state_attr(target_light, 'brightness') | int(255) > 26 }}"
+                              value_template: "{{ (state_attr(target_light, 'brightness') | int(255) / 255 * 100) | round(0) > 10 }}"
                           sequence:
                             - service: light.turn_on
-                              data:
+                              target:
                                 entity_id: !input target_light
-                                brightness_step_pct: "{{ -brightness_step }}"
+                              data:
+                                brightness_pct: >
+                                  {% set current = (state_attr(target_light, 'brightness') | int(255) / 255 * 100) | round(0) %}
+                                  {% set new_brightness = current - brightness_step %}
+                                  {% if new_brightness < 10 %}10{% else %}{{ new_brightness }}{% endif %}
                             - delay:
                                 milliseconds: "{{ step_delay }}"
-                      # After dimming down, ensure minimum is 10%
-                      - if:
-                          - condition: template
-                            value_template: "{{ state_attr(target_light, 'brightness') | int(255) <= 26 }}"
-                        then:
-                          - service: light.turn_on
-                            data:
-                              entity_id: !input target_light
-                              brightness_pct: 10
                     else:
                       # TAP detected - turn off
                       - service: light.turn_off
-                        data:
+                        target:
                           entity_id: !input target_light
 
       # UP/DOWN BUTTON RELEASED - stop any ongoing dimming (handled by mode: restart)
