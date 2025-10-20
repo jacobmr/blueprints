@@ -141,7 +141,7 @@ action:
                     {% if is_state(target_light, 'off') %}
                       20
                     {% else %}
-                      {% set current = (state_attr(target_light, 'brightness') | int(255) / 255 * 100) | round(0) %}
+                      {% set current = (state_attr(target_light, 'brightness') | int(0) / 255 * 100) | round(0) %}
                       {% set new_brightness = current - brightness_step %}
                       {% if new_brightness < brightness_step %}{{ brightness_step }}{% else %}{{ new_brightness }}{% endif %}
                     {% endif %}
