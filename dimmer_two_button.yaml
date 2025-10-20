@@ -19,12 +19,47 @@ blueprint:
       selector:
         entity:
           domain: light
+    brightness_step:
+      name: Brightness Step Percentage
+      description: How much to change brightness with each step (default 20%)
+      default: 20
+      selector:
+        number:
+          min: 5
+          max: 50
+          step: 5
+          unit_of_measurement: "%"
+    step_delay:
+      name: Step Delay
+      description: Delay between brightness steps during hold (default 400ms)
+      default: 400
+      selector:
+        number:
+          min: 100
+          max: 1000
+          step: 50
+          unit_of_measurement: "ms"
+    tap_threshold:
+      name: Tap vs Hold Threshold
+      description: How long to wait before considering it a hold (default 400ms)
+      default: 400
+      selector:
+        number:
+          min: 200
+          max: 800
+          step: 50
+          unit_of_measurement: "ms"
 
-mode: parallel
+mode: restart
+max_exceeded: silent
+
 variables:
   up_button: !input up_button
   down_button: !input down_button
   target_light: !input target_light
+  brightness_step: !input brightness_step
+  step_delay: !input step_delay
+  tap_threshold: !input tap_threshold
 
 trigger:
   - platform: state
@@ -37,12 +72,10 @@ trigger:
     id: down_press
   - platform: state
     entity_id: !input up_button
-    from: 'on'
     to: 'off'
     id: up_release
   - platform: state
     entity_id: !input down_button
-    from: 'on'
     to: 'off'
     id: down_release
 
@@ -50,11 +83,13 @@ condition: []
 
 action:
   - choose:
+      # UP BUTTON PRESSED
       - conditions:
           - condition: trigger
             id: up_press
         sequence:
           - choose:
+              # Light is OFF - turn on to 100%
               - conditions:
                   - condition: state
                     entity_id: !input target_light
@@ -63,76 +98,101 @@ action:
                   - service: light.turn_on
                     data:
                       entity_id: !input target_light
-                      brightness_pct: 10
+                      brightness_pct: 100
+              # Light is ON - wait to detect tap vs hold
               - conditions:
                   - condition: state
                     entity_id: !input target_light
                     state: 'on'
                 sequence:
-                  # Wait briefly to detect tap vs hold
-                  - delay: '0:00:00.4'
+                  - delay:
+                      milliseconds: "{{ tap_threshold }}"
                   - if:
                       - condition: state
                         entity_id: !input up_button
                         state: 'on'
                     then:
-                      # Still pressed after 400ms = HOLD, start dimming loop
-                      - service: script.dimming_loop
-                        data:
-                          target_light: !input target_light
-                          direction: 'up'
+                      # HOLD detected - continuous dimming up
+                      - repeat:
+                          while:
+                            - condition: state
+                              entity_id: !input up_button
+                              state: 'on'
+                            - condition: template
+                              value_template: "{{ state_attr(target_light, 'brightness') | int(0) < 255 }}"
+                          sequence:
+                            - service: light.turn_on
+                              data:
+                                entity_id: !input target_light
+                                brightness_step_pct: "{{ brightness_step }}"
+                            - delay:
+                                milliseconds: "{{ step_delay }}"
                     else:
-                      # Released within 400ms = TAP, increase brightness by 10%
+                      # TAP detected - single brightness increase
                       - service: light.turn_on
                         data:
                           entity_id: !input target_light
-                          brightness_step_pct: 10
+                          brightness_step_pct: "{{ brightness_step }}"
 
+      # DOWN BUTTON PRESSED
       - conditions:
           - condition: trigger
             id: down_press
         sequence:
           - choose:
+              # Light is OFF - do nothing
               - conditions:
                   - condition: state
                     entity_id: !input target_light
                     state: 'off'
                 sequence: []
+              # Light is ON - wait to detect tap vs hold
               - conditions:
                   - condition: state
                     entity_id: !input target_light
                     state: 'on'
                 sequence:
-                  # Wait briefly to detect tap vs hold
-                  - delay: '0:00:00.4'
+                  - delay:
+                      milliseconds: "{{ tap_threshold }}"
                   - if:
                       - condition: state
                         entity_id: !input down_button
                         state: 'on'
                     then:
-                      # Still pressed after 400ms = HOLD, start dimming loop
-                      - service: script.dimming_loop
-                        data:
-                          target_light: !input target_light
-                          direction: 'down'
+                      # HOLD detected - continuous dimming down to 10%
+                      - repeat:
+                          while:
+                            - condition: state
+                              entity_id: !input down_button
+                              state: 'on'
+                            - condition: template
+                              value_template: "{{ state_attr(target_light, 'brightness') | int(255) > 26 }}"
+                          sequence:
+                            - service: light.turn_on
+                              data:
+                                entity_id: !input target_light
+                                brightness_step_pct: "{{ -brightness_step }}"
+                            - delay:
+                                milliseconds: "{{ step_delay }}"
+                      # After dimming down, ensure minimum is 10%
+                      - if:
+                          - condition: template
+                            value_template: "{{ state_attr(target_light, 'brightness') | int(255) <= 26 }}"
+                        then:
+                          - service: light.turn_on
+                            data:
+                              entity_id: !input target_light
+                              brightness_pct: 10
                     else:
-                      # Released within 400ms = TAP, turn off
+                      # TAP detected - turn off
                       - service: light.turn_off
                         data:
                           entity_id: !input target_light
 
+      # UP/DOWN BUTTON RELEASED - stop any ongoing dimming (handled by mode: restart)
       - conditions:
           - condition: trigger
-            id: up_release
-        sequence:
-          - service: script.turn_off
-            target:
-              entity_id: script.dimming_loop
-
-      - conditions:
-          - condition: trigger
-            id: down_release
-        sequence:
-          - service: script.turn_off
-            target:
-              entity_id: script.dimming_loop
+            id: 
+              - up_release
+              - down_release
+        sequence: []
