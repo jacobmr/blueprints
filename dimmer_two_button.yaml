@@ -40,7 +40,7 @@ blueprint:
           step: 50
           unit_of_measurement: "ms"
 
-mode: restart
+mode: single
 max_exceeded: silent
 
 variables:
