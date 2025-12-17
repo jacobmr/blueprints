@@ -252,15 +252,108 @@ ChatGPT will give you the complete updated YAML. Then:
 
 ---
 
+## 🔌 ESP32 Dimmer Hardware
+
+This project uses custom ESP32-C3 dimmer hardware based on the [krida0electronics HASS dimmer](https://github.com/krida0electronics/hass).
+
+### Hardware Specs
+- **Board**: ESP32-C3-DevKitM-1
+- **Output**: GPIO3 (LEDC PWM at 1220Hz)
+- **Max Load**: ~3A @ 120V (360W)
+- **Use Case**: High-amperage LED fixtures
+
+### Configuration File
+**File**: `great-room-led-esp32.yaml`
+
+This is the ESPHome configuration for the Great Room LED dimmer.
+
+### Critical Fix: `zero_means_zero: true`
+
+**IMPORTANT**: The default krida0electronics config has a bug where lights won't turn completely off (stay at ~20%).
+
+**The Fix** (already applied in our config):
+```yaml
+output:
+  - platform: ledc
+    pin: GPIO03
+    id: gpio_03
+    frequency: "1220Hz"
+    zero_means_zero: true  # ← This line forces true OFF at 0%
+```
+
+Without this line, the dimmer maintains a minimum brightness and won't fully turn off, which prevents sleep!
+
+### Web Interface Access
+
+The dimmer has a built-in web interface:
+- **URL**: `http://[device-ip-address]` (find IP in Home Assistant)
+- **Username**: `admin`
+- **Password**: `admin`
+
+Use this to:
+- Control the light directly
+- View device logs
+- Check WiFi status
+- Monitor device health
+
+### Flashing/Updating Firmware
+
+**Via ESPHome CLI** (USB connected):
+```bash
+cd /Users/jmr/dev/hass
+python3 -m esphome run hass.yaml --device /dev/cu.usbmodem101
+```
+
+**Via ESPHome Dashboard** (OTA over WiFi):
+1. Install ESPHome add-on in Home Assistant
+2. Open ESPHome Dashboard
+3. Upload `great-room-led-esp32.yaml`
+4. Click "Install" → "Wirelessly"
+
+### WiFi Configuration
+
+Current settings (hardcoded in YAML):
+- **SSID**: Casa Aperture
+- **Password**: rosie1234
+- **Fallback Hotspot**: "Light-Dimmer Fallback Hotspot" (activates if WiFi fails)
+
+### Troubleshooting
+
+**Light won't turn completely off**:
+- Check that `zero_means_zero: true` is in the output config
+- Reflash firmware if missing
+
+**Device offline**:
+- Check WiFi credentials
+- Look for fallback hotspot
+- Power cycle the device
+
+**Can't access web interface**:
+- Find device IP in Home Assistant (Settings → Devices → great-room-led)
+- Make sure you're on the same network
+- Try `http://great-room-led.local` (mDNS)
+
+---
+
 ## 📚 Project Files
 
+**Blueprints:**
 - `dimmer_two_button.yaml` - Main dimmer blueprint with double-click
 - `two_button_onoff.yaml` - Simple on/off control
 - `spst_switch_light.yaml` - Toggle switch control
 - `kitchen_dimmer_automation.yaml` - Example automation instance
+
+**ESP32 Hardware:**
+- `great-room-led-esp32.yaml` - ESP32-C3 dimmer configuration with `zero_means_zero` fix
+
+**Documentation:**
+- `README.md` - This file! Complete guide for Matt
 - `CLAUDE.md` - Development instructions for AI assistants
 - `ESP32_COMPLETE_DOCUMENTATION.md` - Full ESP32 system documentation
-- `monitor_kitchen_buttons.py` - Development tool for testing buttons
+
+**Development Tools:**
+- `monitor_kitchen_buttons.py` - Real-time button event monitor
+- `monitor_light_debug.py` - Light debugging tool (service calls + state changes)
 
 ---
 
