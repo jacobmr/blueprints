@@ -15,6 +15,12 @@ blueprint:
       selector:
         entity:
           domain: light
+    upside_down:
+      name: Switch is Upside Down (oops)
+      description: Check this if the switch is installed upside down - inverts the on/off logic
+      default: false
+      selector:
+        boolean:
 
 mode: single
 max_exceeded: silent
@@ -22,6 +28,7 @@ max_exceeded: silent
 variables:
   switch_sensor: !input switch_sensor
   target_light: !input target_light
+  upside_down: !input upside_down
 
 trigger:
   - platform: state
@@ -37,19 +44,47 @@ condition: []
 
 action:
   - choose:
-      # ============ SWITCH ON = LIGHT ON ============
+      # ============ TURN LIGHT ON ============
       - conditions:
-          - condition: trigger
-            id: switch_on
+          - condition: or
+            conditions:
+              # Normal: switch ON = light ON
+              - condition: and
+                conditions:
+                  - condition: trigger
+                    id: switch_on
+                  - condition: template
+                    value_template: "{{ not upside_down }}"
+              # Inverted: switch OFF = light ON
+              - condition: and
+                conditions:
+                  - condition: trigger
+                    id: switch_off
+                  - condition: template
+                    value_template: "{{ upside_down }}"
         sequence:
           - service: light.turn_on
             target:
               entity_id: !input target_light
 
-      # ============ SWITCH OFF = LIGHT OFF ============
+      # ============ TURN LIGHT OFF ============
       - conditions:
-          - condition: trigger
-            id: switch_off
+          - condition: or
+            conditions:
+              # Normal: switch OFF = light OFF
+              - condition: and
+                conditions:
+                  - condition: trigger
+                    id: switch_off
+                  - condition: template
+                    value_template: "{{ not upside_down }}"
+              # Inverted: switch ON = light OFF
+              - condition: and
+                conditions:
+                  - condition: trigger
+                    id: switch_on
+                  - condition: template
+                    value_template: "{{ upside_down }}"
         sequence:
           - service: light.turn_off
             target:
