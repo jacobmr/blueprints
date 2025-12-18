@@ -218,6 +218,144 @@ ChatGPT will give you the complete updated YAML. Then:
 
 ---
 
+## 🔀 Contributing Back: Submitting Pull Requests
+
+If you create a useful blueprint modification that others might benefit from, you can contribute it back to the main repository!
+
+### Option 1: Ask Claude Code to Create a PR (Easiest)
+
+**Step 1**: Make your changes and test them in Home Assistant
+
+**Step 2**: Ask Claude Code to submit a PR:
+```
+"I've modified the dimmer blueprint to add triple-click support.
+Please create a pull request to submit this back to the main repository.
+
+Use this PR description:
+- Added triple-click detection
+- Triple-click UP sets brightness to 75%
+- Triple-click DOWN sets brightness to 25%"
+```
+
+**Step 3**: Claude Code will:
+1. Create a new branch
+2. Commit your changes
+3. Push to GitHub
+4. Open a pull request with your description
+5. Give you the PR URL
+
+**Step 4**: Share the PR URL with JMR so he can review and merge it!
+
+---
+
+### Option 2: Manual Pull Request (Traditional Git)
+
+If you prefer to do it manually:
+
+```bash
+# 1. Create a new branch for your feature
+git checkout -b add-triple-click-feature
+
+# 2. Make your changes to the blueprint file
+# (edit dimmer_two_button.yaml)
+
+# 3. Commit your changes
+git add dimmer_two_button.yaml
+git commit -m "Add triple-click feature to dimmer blueprint"
+
+# 4. Push to GitHub
+git push origin add-triple-click-feature
+
+# 5. Go to GitHub and create Pull Request
+# https://github.com/jacobmr/blueprints/pulls
+```
+
+---
+
+## 🍴 Forking: Creating Your Own Version
+
+Want to maintain your own customized version of the blueprints? Fork the repository!
+
+### Why Fork?
+
+- Create custom blueprints without affecting the main repo
+- Experiment freely with different features
+- Maintain blueprints specific to your home setup
+- Share your custom blueprints with others
+
+### How to Fork
+
+**Step 1**: Go to the repository on GitHub:
+```
+https://github.com/jacobmr/blueprints
+```
+
+**Step 2**: Click the **Fork** button (top right)
+
+**Step 3**: This creates a copy at:
+```
+https://github.com/YOUR-USERNAME/blueprints
+```
+
+**Step 4**: Clone YOUR fork to your computer:
+```bash
+cd ~/dev
+git clone https://github.com/YOUR-USERNAME/blueprints.git my-blueprints
+cd my-blueprints
+```
+
+**Step 5**: Make changes and push to YOUR fork:
+```bash
+# Make your changes
+git add .
+git commit -m "My custom dimmer with triple-click"
+git push origin main
+```
+
+**Step 6**: Import from YOUR fork in Home Assistant:
+```
+https://raw.githubusercontent.com/YOUR-USERNAME/blueprints/main/dimmer_two_button.yaml
+```
+
+### Asking Claude Code to Work with Your Fork
+
+Tell Claude Code which fork to use:
+```
+"I've forked the blueprints repo to my-username/blueprints.
+Please make changes to MY fork, not the original.
+Add a feature that..."
+```
+
+Claude will:
+1. Work with your forked repository
+2. Push changes to your fork
+3. Keep your custom version separate from the main repo
+
+### Syncing Your Fork with Updates
+
+If the main repository gets updates you want:
+
+```bash
+# Add the original repo as a remote (one-time setup)
+git remote add upstream https://github.com/jacobmr/blueprints.git
+
+# Get the latest from the main repo
+git fetch upstream
+
+# Merge updates into your fork
+git merge upstream/main
+
+# Push to your fork
+git push origin main
+```
+
+**Or ask Claude Code**:
+```
+"Sync my fork with the latest changes from jacobmr/blueprints"
+```
+
+---
+
 ## 🐛 Troubleshooting
 
 ### Blueprint doesn't show up in Home Assistant
