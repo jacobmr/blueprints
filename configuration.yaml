@@ -1,0 +1,85 @@
+# Home Assistant Configuration with KNX Integration
+# Updated for modern HA version
+
+homeassistant:
+  name: "Casa Apertura"
+  latitude: 39.7392
+  longitude: -104.9903
+  elevation: 1609
+  unit_system: metric
+  time_zone: America/Denver
+  currency: USD
+  country: US
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+# HTTP Configuration
+http:
+  server_port: 8123
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+# Template Light - Limits Great Room LED to 90% brightness (230/255) to protect 3.3A circuit
+template:
+  - light:
+      - unique_id: light_great_room_limited
+        name: "Great Room LED (Limited)"
+
+        # State tracking - follows the underlying ESP32 light
+        availability_template: "{{ states('light.great_room_led_esp32_c3') != 'unavailable' }}"
+        value_template: "{{ is_state('light.great_room_led_esp32_c3', 'on') }}"
+        level_template: "{{ state_attr('light.great_room_led_esp32_c3', 'brightness') | int(0) }}"
+
+        # Turn on action - limit brightness to 230 max (90%)
+        turn_on:
+          - service: light.turn_on
+            target:
+              entity_id: light.great_room_led_esp32_c3
+            data:
+              brightness: >
+                {% set b = brightness | int(255) %}
+                {% if b > 230 %}230{% else %}{{ b }}{% endif %}
+
+        # Turn off action
+        turn_off:
+          - service: light.turn_off
+            target:
+              entity_id: light.great_room_led_esp32_c3
+
+        # Set level action - also limit to 230 max
+        set_level:
+          - service: light.turn_on
+            target:
+              entity_id: light.great_room_led_esp32_c3
+            data:
+              brightness: >
+                {% if brightness > 230 %}230{% else %}{{ brightness }}{% endif %}
+
+# Include automations
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# Logging
+logger:
+  default: warn
+  logs:
+    xknx: debug
+    homeassistant.components.knx: debug
+
+# Recorder - limit database size
+recorder:
+  purge_keep_days: 7
+  include:
+    domains:
+      - light
+      - switch
+      - cover
+      - media_player
+      - sensor
+      - binary_sensor
