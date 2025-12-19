@@ -27,7 +27,7 @@ http:
 # Template Light - Limits Great Room LED to 90% brightness (230/255) to protect 3.3A circuit
 template:
   - light:
-      - unique_id: light_great_room_limited
+      - unique_id: great_room_led_limited_90pct
         name: "Great Room LED (Limited)"
 
         # State tracking - follows the underlying ESP32 light
