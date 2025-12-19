@@ -29,6 +29,7 @@ template:
   - light:
       - unique_id: great_room_led_limited_90pct
         name: "Great Room LED (Limited)"
+        default_entity_id: light.great_room_limited
 
         # State tracking
         state: "{{ is_state('light.great_room_led_esp32_c3', 'on') }}"
