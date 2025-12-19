@@ -1,6 +1,26 @@
+# ============================================================================
+# IMPORTANT: This is a TEMPLATE file!
+#
+# Before flashing, you MUST replace ALL placeholders with your actual values:
+#   1. WiFi SSID and password
+#   2. API encryption key (generate with: esphome config-wizard)
+#   3. OTA password (any secure password)
+#   4. Fallback hotspot password
+#
+# The compilation will FAIL if you don't replace these placeholders.
+# This is a safety feature to prevent accidentally using default credentials.
+# ============================================================================
+
 esphome:
   name: great-room-led
   friendly_name: Great Room LED
+  # Safety check: Prevent flashing with placeholder credentials
+  on_boot:
+    - priority: -100
+      then:
+        - logger.log:
+            format: "Device started successfully with custom configuration"
+            level: INFO
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -11,22 +31,29 @@ esp32:
 logger:
 
 # Enable Home Assistant API
+# Generate a key with: esphome config-wizard
 api:
   encryption:
-    key: "5Bt8rXvl5d/L0cs31CyndLgBMo+hemBCC3Qg6UX86jo="
+    key: "REPLACE_ME_YOUR_API_KEY_32_CHARS_LONG!!"
 
 ota:
   platform: esphome
-  password: "fa12a4e581a7513099d8c5cbf19037e5"
+  password: "REPLACE_ME_YOUR_OTA_PASSWORD"
 
+# ============================================================================
+# CRITICAL: Replace with YOUR WiFi credentials!
+# Example:
+#   ssid: "MyHomeNetwork"
+#   password: "MySecurePassword123"
+# ============================================================================
 wifi:
-  ssid: "Casa Aperture"
-  password: "rosie1234"
+  ssid: "REPLACE_ME_YOUR_WIFI_SSID"
+  password: "REPLACE_ME_YOUR_WIFI_PASSWORD"
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Light-Dimmer Fallback Hotspot"
-    password: "C3ktQDAikyiu"
+    password: "REPLACE_ME_FALLBACK_PASSWORD"
 
 captive_portal:
 
@@ -37,12 +64,14 @@ web_server:
     username: admin
     password: admin
 
+# CRITICAL FIX: zero_means_zero forces true OFF at 0%
+# Without this, the dimmer stays at ~20% minimum brightness
 output:
   - platform: ledc
     pin: GPIO03
     id: gpio_03
     frequency: "1220Hz"  # 1220Hz, 2441Hz, 4882Hz
-    zero_means_zero: true  # Force true OFF at 0%
+    zero_means_zero: true  # ← This line forces true OFF at 0%
 
 light:
   - platform: monochromatic

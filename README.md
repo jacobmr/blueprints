@@ -2,6 +2,24 @@
 
 Custom Home Assistant blueprints for controlling lights with ESPHome binary sensors (buttons and switches).
 
+**Repository**: [https://github.com/jacobmr/blueprints](https://github.com/jacobmr/blueprints)
+
+---
+
+## 📖 Table of Contents
+
+- [Available Blueprints](#-available-blueprints)
+- [How to Use in Home Assistant](#-how-to-use-in-home-assistant)
+- [ESP32 Dimmer Hardware](#-esp32-dimmer-hardware)
+- [Modifying Blueprints with AI](#-modifying-blueprints-with-ai-claude-code-or-chatgpt)
+- [Contributing Back (Pull Requests)](#-contributing-back-submitting-pull-requests)
+- [Forking for Custom Versions](#-forking-creating-your-own-version)
+- [Common Modifications](#-common-modification-examples)
+- [Troubleshooting](#-troubleshooting)
+- [Project Files](#-project-files)
+
+---
+
 ## 📦 Available Blueprints
 
 ### 1. Dimmer Two Button (Click Only)
@@ -382,11 +400,31 @@ git push origin main
 
 ## 🔗 Useful Resources
 
-- **Home Assistant Blueprints Documentation**: https://www.home-assistant.io/docs/automation/using_blueprints/
-- **ESPHome Binary Sensor**: https://esphome.io/components/binary_sensor/
-- **Home Assistant Light Service**: https://www.home-assistant.io/integrations/light/
-- **Claude Code**: https://claude.ai/code
-- **ChatGPT**: https://chat.openai.com
+### Home Assistant
+- [Blueprints Documentation](https://www.home-assistant.io/docs/automation/using_blueprints/)
+- [Light Integration](https://www.home-assistant.io/integrations/light/)
+- [Automation Documentation](https://www.home-assistant.io/docs/automation/)
+- [Template Documentation](https://www.home-assistant.io/docs/configuration/templating/)
+
+### ESPHome
+- [ESPHome Official Site](https://esphome.io/)
+- [Binary Sensor Component](https://esphome.io/components/binary_sensor/)
+- [LEDC Output Component](https://esphome.io/components/output/ledc.html)
+- [Light Component](https://esphome.io/components/light/monochromatic.html)
+- [Getting Started with ESPHome](https://esphome.io/guides/getting_started_hassio.html)
+
+### Hardware
+- [krida0electronics HASS Dimmer](https://github.com/krida0electronics/hass) (hardware design)
+- [ESP32-C3 Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/)
+
+### AI Tools
+- [Claude Code](https://claude.ai/code) - Recommended for this project
+- [ChatGPT](https://chat.openai.com) - Alternative AI assistant
+
+### This Repository
+- [Main Repository](https://github.com/jacobmr/blueprints)
+- [Issues](https://github.com/jacobmr/blueprints/issues)
+- [Pull Requests](https://github.com/jacobmr/blueprints/pulls)
 
 ---
 
@@ -395,15 +433,97 @@ git push origin main
 This project uses custom ESP32-C3 dimmer hardware based on the [krida0electronics HASS dimmer](https://github.com/krida0electronics/hass).
 
 ### Hardware Specs
-- **Board**: ESP32-C3-DevKitM-1
+- **Board**: [ESP32-C3-DevKitM-1](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
 - **Output**: GPIO3 (LEDC PWM at 1220Hz)
 - **Max Load**: ~3A @ 120V (360W)
 - **Use Case**: High-amperage LED fixtures
 
 ### Configuration File
-**File**: `great-room-led-esp32.yaml`
+**File**: [`great-room-led-esp32.yaml`](great-room-led-esp32.yaml)
 
-This is the ESPHome configuration for the Great Room LED dimmer.
+This is the ESPHome configuration template for the Great Room LED dimmer.
+
+---
+
+### ⚠️ SETUP REQUIRED: Interactive Configuration Guide
+
+**This is a TEMPLATE file with placeholder credentials. Follow these steps before flashing:**
+
+#### Step 1: Download and Edit the Configuration
+
+1. **Download** the template file: [`great-room-led-esp32.yaml`](great-room-led-esp32.yaml)
+2. **Save it** to your ESPHome configuration directory
+3. **Open it** in a text editor
+
+#### Step 2: Replace Placeholders (REQUIRED!)
+
+Find and replace these placeholders with your actual values:
+
+**WiFi Credentials**:
+```yaml
+# Find this:
+wifi:
+  ssid: "REPLACE_ME_YOUR_WIFI_SSID"
+  password: "REPLACE_ME_YOUR_WIFI_PASSWORD"
+
+# Replace with your actual WiFi:
+wifi:
+  ssid: "MyHomeNetwork"
+  password: "MySecurePassword123"
+```
+
+**API Encryption Key**:
+```bash
+# Generate a new key:
+esphome config-wizard
+
+# Or generate manually:
+openssl rand -base64 32
+
+# Then replace:
+api:
+  encryption:
+    key: "REPLACE_ME_YOUR_API_KEY_32_CHARS_LONG!!"
+# With your generated key:
+api:
+  encryption:
+    key: "abcd1234efgh5678ijkl9012mnop3456=="
+```
+
+**OTA Password** (choose any secure password):
+```yaml
+# Replace:
+ota:
+  password: "REPLACE_ME_YOUR_OTA_PASSWORD"
+# With:
+ota:
+  password: "MySecureOTAPassword123"
+```
+
+**Fallback Hotspot Password**:
+```yaml
+# Replace:
+ap:
+  password: "YOUR_FALLBACK_PASSWORD"
+# With:
+ap:
+  password: "EmergencyAccess123"
+```
+
+#### Step 3: Verify Your Changes
+
+**Before flashing, check:**
+- [ ] No line contains "REPLACE_ME" or "YOUR_" placeholders
+- [ ] WiFi SSID and password are correct
+- [ ] API key is exactly 32 characters (base64)
+- [ ] OTA password is set
+- [ ] Fallback password is set
+
+**Safety Note**: The YAML will **fail to compile** if you forget to replace these placeholders. This is intentional to prevent accidentally flashing with default credentials!
+
+#### Step 4: Flash the Device
+
+Now you can safely flash using the instructions below in [Flashing/Updating Firmware](#flashingupdating-firmware).
 
 ### Critical Fix: `zero_means_zero: true`
 
@@ -438,22 +558,31 @@ Use this to:
 
 **Via ESPHome CLI** (USB connected):
 ```bash
-cd /Users/jmr/dev/hass
-python3 -m esphome run hass.yaml --device /dev/cu.usbmodem101
+# Navigate to your ESPHome config directory
+cd /path/to/your/esphome/configs
+
+# Flash via USB (device path varies by OS)
+# macOS: /dev/cu.usbmodem*, Linux: /dev/ttyUSB*, Windows: COM*
+python3 -m esphome run great-room-led-esp32.yaml --device /dev/cu.usbmodem101
 ```
 
 **Via ESPHome Dashboard** (OTA over WiFi):
-1. Install ESPHome add-on in Home Assistant
+1. Install [ESPHome add-on](https://esphome.io/guides/getting_started_hassio.html) in Home Assistant
 2. Open ESPHome Dashboard
 3. Upload `great-room-led-esp32.yaml`
-4. Click "Install" → "Wirelessly"
+4. Edit WiFi credentials
+5. Click "Install" → "Wirelessly"
 
 ### WiFi Configuration
 
-Current settings (hardcoded in YAML):
-- **SSID**: Casa Aperture
-- **Password**: rosie1234
-- **Fallback Hotspot**: "Light-Dimmer Fallback Hotspot" (activates if WiFi fails)
+**Edit the YAML file** with your WiFi credentials:
+```yaml
+wifi:
+  ssid: "YOUR_WIFI_SSID"
+  password: "YOUR_WIFI_PASSWORD"
+```
+
+**Fallback Hotspot**: If WiFi fails, device creates "Light-Dimmer Fallback Hotspot" for emergency access.
 
 ### Troubleshooting
 

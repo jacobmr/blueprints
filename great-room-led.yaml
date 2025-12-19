@@ -1,0 +1,66 @@
+esphome:
+  name: great-room-led
+  friendly_name: Great Room LED
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "24"
+  password: "1234567890"
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "Great-Room-Led"
+    password: "fallbackhotspot"
+
+captive_portal:
+
+# Diagnostic Sensors
+sensor:
+  - platform: wifi_signal
+    name: "great-room-led WiFi RSSI"
+    update_interval: 60s
+    entity_category: diagnostic
+
+  - platform: uptime
+    name: "great-room-led Uptime"
+    update_interval: 60s
+    entity_category: diagnostic
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "great-room-led IP"
+      entity_category: diagnostic
+    ssid:
+      name: "great-room-led SSID"
+      entity_category: diagnostic
+    bssid:
+      name: "great-room-led BSSID"
+      entity_category: diagnostic
+
+# Output configuration with zero_means_zero FIX
+output:
+  - platform: ledc
+    pin: GPIO03
+    id: gpio_03
+    frequency: "1220Hz"
+    zero_means_zero: true    # ← FIX: Forces true OFF at 0%
+
+# Light configuration
+light:
+  - platform: monochromatic
+    output: gpio_03
+    name: "Great_Room_LED"
