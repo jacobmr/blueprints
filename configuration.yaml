@@ -32,14 +32,14 @@ template:
         default_entity_id: light.great_room_limited
 
         # State tracking
-        state: "{{ is_state('light.great_room_led_esp32_c3', 'on') }}"
-        level: "{{ state_attr('light.great_room_led_esp32_c3', 'brightness') | int }}"
+        state: "{{ is_state('light.do_not_use_esp32_c3', 'on') }}"
+        level: "{{ state_attr('light.do_not_use_esp32_c3', 'brightness') | int }}"
 
         # Turn on action - limit brightness to 230 max (90%)
         turn_on:
           - action: light.turn_on
             data_template:
-              entity_id: light.great_room_led_esp32_c3
+              entity_id: light.do_not_use_esp32_c3
               brightness: >
                 {% set b = brightness | int %}
                 {% if b > 230 %}230{% else %}{{ b }}{% endif %}
@@ -48,13 +48,13 @@ template:
         turn_off:
           - action: light.turn_off
             data:
-              entity_id: light.great_room_led_esp32_c3
+              entity_id: light.do_not_use_esp32_c3
 
         # Set level action - also limit to 230 max
         set_level:
           - action: light.turn_on
             data_template:
-              entity_id: light.great_room_led_esp32_c3
+              entity_id: light.do_not_use_esp32_c3
               brightness: >
                 {% if brightness > 230 %}230{% else %}{{ brightness }}{% endif %}
 
