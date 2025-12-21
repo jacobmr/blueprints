@@ -24,15 +24,8 @@ http:
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
-# Reverse proxy to ESP32 web interface
-# Access at: http://YOUR_HA_IP:8123/api/hassio_ingress/TOKEN/
-# Or set up panel_iframe below
-panel_iframe:
-  great_room_dimmer:
-    title: "Great Room Dimmer"
-    icon: mdi:lightbulb-on
-    url: "http://192.168.0.118"
-    require_admin: false
+# NOTE: To access ESP32 web interface directly, use: http://192.168.0.118
+# Login: admin / admin
 
 # Template Light - Limits Great Room LED to 90% brightness (230/255) to protect 3.3A circuit
 template:
