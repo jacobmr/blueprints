@@ -27,6 +27,15 @@ http:
 # NOTE: To access ESP32 web interface directly, use: http://192.168.0.118
 # Login: admin / admin
 
+# Input Boolean - Toggle to allow 100% brightness for testing
+# Default: OFF (90% limit enforced for safety)
+# Turn ON to test full brightness
+input_boolean:
+  great_room_allow_100_percent:
+    name: "Great Room: Allow 100% Brightness (TEST MODE)"
+    icon: mdi:alert-circle
+    initial: false
+
 # Template Light - Coordinates Shelly relay + ESP32 dimmer with 90% brightness limit
 # Protects 3.3A circuit and ensures true OFF via Shelly hard cutoff
 template:
@@ -48,16 +57,17 @@ template:
           # Step 2: Wait for LED controller to boot
           - delay:
               milliseconds: 200
-          # Step 3: Set ESP32 dimmer brightness (capped at 230/255 = 90%)
+          # Step 3: Set ESP32 dimmer brightness (capped at 90% unless test mode enabled)
           - action: light.turn_on
             data_template:
               entity_id: light.do_not_use_esp32_c3
               brightness: >
+                {% set max_brightness = 255 if is_state('input_boolean.great_room_allow_100_percent', 'on') else 230 %}
                 {% if brightness is defined %}
                   {% set b = brightness | int %}
-                  {% if b > 230 %}230{% else %}{{ b }}{% endif %}
+                  {% if b > max_brightness %}{{ max_brightness }}{% else %}{{ b }}{% endif %}
                 {% else %}
-                  230
+                  {{ max_brightness }}
                 {% endif %}
 
         # Turn off action - dim to 0%, then hard cut power via Shelly
@@ -83,15 +93,16 @@ template:
           # Step 2: Brief delay if relay was off
           - delay:
               milliseconds: 200
-          # Step 3: Set dimmer brightness (capped at 230)
+          # Step 3: Set dimmer brightness (capped at 90% unless test mode enabled)
           - action: light.turn_on
             data_template:
               entity_id: light.do_not_use_esp32_c3
               brightness: >
+                {% set max_brightness = 255 if is_state('input_boolean.great_room_allow_100_percent', 'on') else 230 %}
                 {% if brightness is defined %}
-                  {% if brightness > 230 %}230{% else %}{{ brightness }}{% endif %}
+                  {% if brightness > max_brightness %}{{ max_brightness }}{% else %}{{ brightness }}{% endif %}
                 {% else %}
-                  230
+                  {{ max_brightness }}
                 {% endif %}
 
 # Include automations

@@ -1,0 +1,69 @@
+# Dashboard Card for Great Room LED Test Mode
+#
+# INSTRUCTIONS:
+# 1. Go to your Home Assistant dashboard
+# 2. Click the three dots (top right) → Edit Dashboard
+# 3. Click "+ ADD CARD"
+# 4. Scroll down and click "Manual" at the bottom
+# 5. Copy and paste this YAML into the card editor
+# 6. Click "SAVE"
+
+type: vertical-stack
+cards:
+  - type: entities
+    title: Great Room LED - Test Mode
+    entities:
+      # Main light control
+      - entity: light.great_room_limited
+        name: Great Room LED
+        icon: mdi:lightbulb
+
+      # Toggle for 100% brightness
+      - entity: input_boolean.great_room_allow_100_percent
+        name: "⚠️ Allow 100% Brightness (TEST)"
+        icon: mdi:alert-circle
+
+  - type: markdown
+    content: |
+      ## 🧪 Testing Instructions
+
+      **Normal Operation (90% Max):**
+      - Toggle above is **OFF**
+      - Brightness capped at 90% (230/255)
+      - Protects 3.3A circuit
+
+      **Test Mode (100% Max):**
+      - Toggle above is **ON**
+      - Full brightness allowed (255/255)
+      - **Monitor current sensor!**
+
+      ### To Test:
+      1. Turn **ON** the test mode toggle
+      2. Set light to 100%
+      3. Check `sensor.great_room_led_current`
+      4. Watch for > 3.3A draw
+      5. Check Shelly power monitoring
+      6. If safe, can leave at 100%
+      7. If current too high, turn OFF toggle
+
+      ⚠️ **Turn OFF test mode when done!**
+
+  - type: entities
+    title: Monitoring
+    entities:
+      - entity: sensor.great_room_led_current
+        name: Current Draw
+        icon: mdi:current-ac
+
+      - entity: sensor.great_room_led_power
+        name: Power Draw
+        icon: mdi:flash
+
+      - entity: binary_sensor.great_room_led_actually_on
+        name: Actually On
+        icon: mdi:lightbulb-on
+
+      # Shelly power monitoring (if available)
+      - entity: sensor.shelly1pm_84cca8a1148d_power
+        name: Shelly Power
+        icon: mdi:flash
