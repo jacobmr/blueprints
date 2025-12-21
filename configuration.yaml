@@ -27,19 +27,28 @@ http:
 # NOTE: To access ESP32 web interface directly, use: http://192.168.0.118
 # Login: admin / admin
 
-# Template Light - Limits Great Room LED to 90% brightness (230/255) to protect 3.3A circuit
+# Template Light - Coordinates Shelly relay + ESP32 dimmer with 90% brightness limit
+# Protects 3.3A circuit and ensures true OFF via Shelly hard cutoff
 template:
   - light:
       - unique_id: great_room_led_limited_90pct
         name: "Great Room LED (Limited)"
         default_entity_id: light.great_room_limited
 
-        # State tracking
-        state: "{{ is_state('light.do_not_use_esp32_c3', 'on') }}"
+        # State tracking - light is on if Shelly relay is on AND dimmer is on
+        state: "{{ is_state('switch.shelly1pm_84cca8a1148d', 'on') and is_state('light.do_not_use_esp32_c3', 'on') }}"
         level: "{{ state_attr('light.do_not_use_esp32_c3', 'brightness') | int }}"
 
-        # Turn on action - limit brightness to 230 max (90%)
+        # Turn on action - enable Shelly relay, then set dimmer brightness (max 90%)
         turn_on:
+          # Step 1: Turn on Shelly relay to enable power
+          - action: switch.turn_on
+            target:
+              entity_id: switch.shelly1pm_84cca8a1148d
+          # Step 2: Wait for LED controller to boot
+          - delay:
+              milliseconds: 200
+          # Step 3: Set ESP32 dimmer brightness (capped at 230/255 = 90%)
           - action: light.turn_on
             data_template:
               entity_id: light.do_not_use_esp32_c3
@@ -51,14 +60,30 @@ template:
                   230
                 {% endif %}
 
-        # Turn off action
+        # Turn off action - dim to 0%, then hard cut power via Shelly
         turn_off:
+          # Step 1: Turn off ESP32 dimmer
           - action: light.turn_off
             data:
               entity_id: light.do_not_use_esp32_c3
+          # Step 2: Wait briefly
+          - delay:
+              milliseconds: 100
+          # Step 3: Hard cut power via Shelly relay
+          - action: switch.turn_off
+            target:
+              entity_id: switch.shelly1pm_84cca8a1148d
 
-        # Set level action - also limit to 230 max
+        # Set level action - ensure Shelly is on, then adjust brightness (max 90%)
         set_level:
+          # Step 1: Make sure Shelly relay is on
+          - action: switch.turn_on
+            target:
+              entity_id: switch.shelly1pm_84cca8a1148d
+          # Step 2: Brief delay if relay was off
+          - delay:
+              milliseconds: 200
+          # Step 3: Set dimmer brightness (capped at 230)
           - action: light.turn_on
             data_template:
               entity_id: light.do_not_use_esp32_c3
