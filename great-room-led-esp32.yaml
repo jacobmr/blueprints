@@ -77,3 +77,57 @@ light:
   - platform: monochromatic
     output: gpio_03
     name: "ESP32-C3"
+
+# Current & Power Monitoring
+# IMPORTANT: GPIO04 is a placeholder - verify actual current sense pin from hardware schematic
+# See: https://github.com/krida0electronics/hass for hardware details
+sensor:
+  - platform: uptime
+    name: "Great Room LED Uptime"
+    update_interval: 60s
+
+  - platform: wifi_signal
+    name: "Great Room LED WiFi Signal"
+    update_interval: 60s
+
+  # ADC for current sensing - VERIFY PIN WITH HARDWARE SCHEMATIC
+  - platform: adc
+    pin: GPIO04  # PLACEHOLDER - check krida0electronics schematic
+    name: "Great Room LED Current Raw"
+    update_interval: 1s
+    attenuation: 11db
+    internal: true
+    id: current_adc
+
+  # Calculate actual current from ADC
+  - platform: template
+    name: "Great Room LED Current"
+    id: led_current
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+    update_interval: 1s
+    lambda: |-
+      float voltage = id(current_adc).state;
+      float current = (voltage / 3.3) * 30.0;  // Calibrate based on actual sensor
+      return current;
+
+  # Calculate power
+  - platform: template
+    name: "Great Room LED Power"
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 1s
+    lambda: |-
+      return id(led_current).state * 120.0;  // Adjust voltage if not US
+
+# Binary sensor - true if current is flowing
+binary_sensor:
+  - platform: template
+    name: "Great Room LED Actually On"
+    lambda: |-
+      return id(led_current).state > 0.1;
+    device_class: power
