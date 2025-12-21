@@ -73,6 +73,11 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+# Shell commands for downloading ESPHome configs from GitHub
+shell_command:
+  download_great_room_yaml: 'curl -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml'
+  download_all_esphome_yamls: 'cd /config/esphome && curl -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml && curl -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-esp32.yaml'
+
 # Logging
 logger:
   default: warn

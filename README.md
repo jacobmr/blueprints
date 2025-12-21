@@ -11,6 +11,7 @@ Custom Home Assistant blueprints for controlling lights with ESPHome binary sens
 - [Available Blueprints](#-available-blueprints)
 - [How to Use in Home Assistant](#-how-to-use-in-home-assistant)
 - [ESP32 Dimmer Hardware](#-esp32-dimmer-hardware)
+- [🔄 Updating ESPHome Configs (For Matt)](#-updating-esphome-configs-for-matt)
 - [Modifying Blueprints with AI](#-modifying-blueprints-with-ai-claude-code-or-chatgpt)
 - [Contributing Back (Pull Requests)](#-contributing-back-submitting-pull-requests)
 - [Forking for Custom Versions](#-forking-creating-your-own-version)
@@ -599,6 +600,89 @@ wifi:
 - Find device IP in Home Assistant (Settings → Devices → great-room-led)
 - Make sure you're on the same network
 - Try `http://great-room-led.local` (mDNS)
+
+---
+
+## 🔄 Updating ESPHome Configs (For Matt)
+
+This section explains how to easily download updated ESP32 device configurations from GitHub without using command line tools.
+
+### Quick Setup (One-Time)
+
+**Step 1: Add the Dashboard Card**
+
+1. Open Home Assistant
+2. Go to your main dashboard
+3. Click the **three dots** (top right) → **Edit Dashboard**
+4. Click **"+ ADD CARD"**
+5. Scroll to the bottom and click **"Manual"**
+6. Copy the contents of [`MATT_DASHBOARD_CARD.yaml`](MATT_DASHBOARD_CARD.yaml) and paste it into the card editor
+7. Click **SAVE**
+
+You'll now have a card with a button to download configs!
+
+**Step 2: Update Your Configuration**
+
+1. Open your Home Assistant `configuration.yaml`
+2. Add this at the bottom (or merge with existing `shell_command:` section):
+
+```yaml
+shell_command:
+  download_great_room_yaml: 'curl -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml'
+```
+
+3. Add this script (or include the file [`scripts_esphome_updater.yaml`](scripts_esphome_updater.yaml)):
+
+```yaml
+script:
+  update_great_room_led_yaml:
+    alias: "Download Great Room LED Config from GitHub"
+    sequence:
+      - service: shell_command.download_great_room_yaml
+      - service: persistent_notification.create
+        data:
+          title: "ESPHome Config Updated"
+          message: "Great Room LED config downloaded. Open ESPHome to flash."
+```
+
+4. Restart Home Assistant: **Developer Tools** → **YAML** → **Restart**
+
+### How to Use
+
+**When you want to update a device configuration:**
+
+1. Click the **"DOWNLOAD"** button on your dashboard card
+2. Wait for the notification: "ESPHome Config Updated"
+3. Open **ESPHome** from the sidebar
+4. Find the device (e.g., "great-room-led")
+5. Click **"INSTALL"** → **"Wirelessly"**
+6. Wait 2-3 minutes for the flash to complete
+7. Done! The device now has the latest firmware
+
+### What Gets Updated?
+
+The Great Room LED dimmer config includes:
+- ✅ Current monitoring (real-time amp draw)
+- ✅ Power calculation (watts)
+- ✅ "Actually On" sensor (detects if light is truly off based on current flow)
+- ✅ WiFi signal monitoring
+- ✅ Uptime tracking
+- ✅ Web interface on port 80
+
+### Troubleshooting
+
+**"Download button doesn't work"**
+- Make sure you restarted Home Assistant after adding the shell_command and script
+- Check Developer Tools → Services → search for `script.update_great_room_led_yaml`
+
+**"ESPHome shows error after download"**
+- Open the YAML file in ESPHome editor and check for any red warnings
+- The current sensor might need GPIO pin adjustment (check hardware schematic)
+
+**"Can't flash wirelessly"**
+- Make sure the device is online (check router or Home Assistant integrations)
+- Try accessing the web interface at `http://192.168.0.118` (or device's IP)
+- If needed, flash via USB cable first to enable OTA
 
 ---
 

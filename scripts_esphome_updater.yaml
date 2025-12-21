@@ -1,0 +1,27 @@
+# ESPHome YAML Updater Scripts
+# These scripts allow easy downloading of ESPHome configs from GitHub
+# Add to your scripts.yaml or include this file
+
+update_great_room_led_yaml:
+  alias: "Download Great Room LED Config from GitHub"
+  description: "Updates the ESPHome YAML for Great Room LED dimmer from GitHub"
+  icon: mdi:download
+  sequence:
+    - service: shell_command.download_great_room_yaml
+    - service: persistent_notification.create
+      data:
+        title: "ESPHome Config Updated"
+        message: "Great Room LED config downloaded from GitHub. Open ESPHome dashboard to compile and flash."
+        notification_id: "esphome_yaml_update"
+
+update_all_esphome_configs:
+  alias: "Download ALL ESPHome Configs from GitHub"
+  description: "Updates all ESPHome YAML files from the GitHub repo"
+  icon: mdi:download-multiple
+  sequence:
+    - service: shell_command.download_all_esphome_yamls
+    - service: persistent_notification.create
+      data:
+        title: "ESPHome Configs Updated"
+        message: "All ESPHome configs downloaded from GitHub. Open ESPHome dashboard to review."
+        notification_id: "esphome_yaml_update_all"

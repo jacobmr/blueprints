@@ -1,0 +1,43 @@
+# Dashboard Card for Matt - ESPHome Config Updater
+#
+# INSTRUCTIONS FOR MATT:
+# 1. Go to your Home Assistant dashboard
+# 2. Click the three dots (top right) → Edit Dashboard
+# 3. Click "+ ADD CARD" button
+# 4. Scroll down and click "Manual" at the bottom
+# 5. Copy and paste this entire YAML into the card editor
+# 6. Click "SAVE"
+#
+# You'll get a card with buttons to download updated ESPHome configs from GitHub!
+
+type: vertical-stack
+cards:
+  - type: markdown
+    content: |
+      ## 🔧 ESPHome Config Updater
+
+      Download the latest device configurations from GitHub.
+      After downloading, open **ESPHome** from the sidebar to flash devices.
+
+  - type: entities
+    title: Download Configs
+    entities:
+      - type: button
+        name: Download Great Room LED Config
+        icon: mdi:lightbulb-on
+        action_name: DOWNLOAD
+        tap_action:
+          action: call-service
+          service: script.update_great_room_led_yaml
+
+  - type: markdown
+    content: |
+      ### 📋 After Download:
+      1. Click **ESPHome** in sidebar
+      2. Find the device (great-room-led)
+      3. Click **INSTALL** → **Wirelessly**
+      4. Wait 2-3 minutes for flash to complete
+
+      ### 🔗 Links:
+      - [GitHub Repo](https://github.com/jacobmr/blueprints)
+      - [ESPHome Docs](https://esphome.io/)
