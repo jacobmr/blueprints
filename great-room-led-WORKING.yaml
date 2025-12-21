@@ -1,0 +1,112 @@
+esphome:
+  name: great-room-led
+  friendly_name: Great Room LED
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "5Bt8rXvl5d/L0cs31CyndLgBMo+hemBCC3Qg6UX86jo="
+
+ota:
+  platform: esphome
+  password: "fa12a4e581a7513099d8c5cbf19037e5"
+
+wifi:
+  ssid: "Casa Aperture"
+  password: "rosie1234"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Light-Dimmer Fallback Hotspot"
+    password: "C3ktQDAikyiu"
+
+captive_portal:
+
+# Web server on port 80
+web_server:
+  port: 80
+  auth:
+    username: admin
+    password: admin
+
+output:
+  - platform: ledc
+    pin: GPIO03
+    id: gpio_03
+    frequency: "1220Hz"  # 1220Hz, 2441Hz, 4882Hz
+    zero_means_zero: true  # Force true OFF at 0%
+
+light:
+  - platform: monochromatic
+    output: gpio_03
+    name: "ESP32-C3"
+
+# Current & Power Monitoring
+sensor:
+  # Uptime sensor
+  - platform: uptime
+    name: "Great Room LED Uptime"
+    update_interval: 60s
+
+  # WiFi Signal
+  - platform: wifi_signal
+    name: "Great Room LED WiFi Signal"
+    update_interval: 60s
+
+  # ADC for current sensing (if hardware supports it)
+  # Note: Adjust GPIO pin based on actual hardware schematic
+  - platform: adc
+    pin: GPIO04  # Common current sense pin - verify with schematic
+    name: "Great Room LED Current Raw"
+    update_interval: 1s
+    attenuation: 11db
+    internal: true  # Hide raw ADC value
+    id: current_adc
+
+  # Calculate actual current (A) from ADC
+  # Calibration: adjust multiplier based on actual measurements
+  - platform: template
+    name: "Great Room LED Current"
+    id: led_current
+    unit_of_measurement: "A"
+    device_class: current
+    state_class: measurement
+    accuracy_decimals: 2
+    update_interval: 1s
+    lambda: |-
+      // ADC voltage range: 0-3.3V with 11db attenuation
+      // Assuming 30A sensor with 33mV/A output
+      // Adjust multiplier based on your actual current sensor
+      float voltage = id(current_adc).state;
+      float current = (voltage / 3.3) * 30.0;  // Scale to 30A max
+      return current;
+
+  # Calculate power (W) - assuming 120V AC
+  - platform: template
+    name: "Great Room LED Power"
+    unit_of_measurement: "W"
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 1s
+    lambda: |-
+      float current = id(led_current).state;
+      float voltage = 120.0;  // US voltage - adjust if different
+      return current * voltage;
+
+# Binary sensor to detect if light is actually ON (current flowing)
+binary_sensor:
+  - platform: template
+    name: "Great Room LED Actually On"
+    lambda: |-
+      // Consider light "on" if current > 0.1A
+      return id(led_current).state > 0.1;
+    device_class: power
