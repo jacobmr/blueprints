@@ -1,0 +1,154 @@
+blueprint:
+  name: "2 Button CTRL based on B - pendant"
+  description: "UP: 1st click = 50%, 2nd click = 100%. DOWN: tap = dim 20%, hold = OFF"
+  domain: automation
+  source_url: https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button_pendant.yaml
+  input:
+    up_button:
+      name: Up Button
+      description: Binary sensor for UP button
+      selector:
+        entity:
+          domain: binary_sensor
+    down_button:
+      name: Down Button
+      description: Binary sensor for DOWN button
+      selector:
+        entity:
+          domain: binary_sensor
+    target_light:
+      name: Target Light
+      description: The dimmable light to control
+      selector:
+        entity:
+          domain: light
+    brightness_step:
+      name: Brightness Step Percentage
+      description: How much to dim down with DOWN tap (default 20%)
+      default: 20
+      selector:
+        number:
+          min: 5
+          max: 50
+          step: 5
+          unit_of_measurement: "%"
+    double_click_window:
+      name: Double Click Window (UP button)
+      description: Max time between UP clicks for double-click (default 400ms)
+      default: 400
+      selector:
+        number:
+          min: 200
+          max: 600
+          step: 50
+          unit_of_measurement: "ms"
+    long_press_threshold:
+      name: Long Press Threshold (DOWN button)
+      description: How long to hold DOWN button for OFF (default 600ms)
+      default: 600
+      selector:
+        number:
+          min: 300
+          max: 2000
+          step: 100
+          unit_of_measurement: "ms"
+
+mode: single
+max_exceeded: silent
+
+variables:
+  up_button: !input up_button
+  down_button: !input down_button
+  target_light: !input target_light
+  brightness_step: !input brightness_step
+  double_click_window: !input double_click_window
+  long_press_threshold: !input long_press_threshold
+
+trigger:
+  - platform: state
+    entity_id: !input up_button
+    to: 'on'
+    id: up_press
+  - platform: state
+    entity_id: !input down_button
+    to: 'on'
+    id: down_press
+
+condition: []
+
+action:
+  - choose:
+      # ============ UP BUTTON ============
+      # 1st click = 50%, 2nd click = 100%
+      - conditions:
+          - condition: trigger
+            id: up_press
+        sequence:
+          # Wait for potential second click
+          - wait_for_trigger:
+              - platform: state
+                entity_id: !input up_button
+                to: 'on'
+            timeout:
+              milliseconds: "{{ double_click_window }}"
+
+          - choose:
+              # Second click detected = DOUBLE CLICK = 100%
+              - conditions:
+                  - condition: template
+                    value_template: "{{ wait.trigger is not none }}"
+                sequence:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input target_light
+                    data:
+                      brightness_pct: 100
+
+            # No second click = SINGLE CLICK = 50%
+            default:
+              - service: light.turn_on
+                target:
+                  entity_id: !input target_light
+                data:
+                  brightness_pct: 50
+
+      # ============ DOWN BUTTON ============
+      # Tap = dim down 20%, Hold = OFF
+      - conditions:
+          - condition: trigger
+            id: down_press
+        sequence:
+          # Wait for button release (or timeout for long press)
+          - wait_for_trigger:
+              - platform: state
+                entity_id: !input down_button
+                to: 'off'
+            timeout:
+              milliseconds: "{{ long_press_threshold }}"
+
+          - choose:
+              # Button still held (timeout expired) = LONG PRESS = OFF
+              - conditions:
+                  - condition: template
+                    value_template: "{{ wait.trigger is none }}"
+                sequence:
+                  - service: light.turn_off
+                    target:
+                      entity_id: !input target_light
+
+            # Button released quickly = TAP = dim down 20%
+            default:
+              - choose:
+                  # Only dim if light is already on
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ is_state(target_light, 'on') }}"
+                    sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input target_light
+                        data:
+                          brightness_pct: >
+                            {% set current = (state_attr(target_light, 'brightness') | int(0) / 255 * 100) | round(0) %}
+                            {% set new_brightness = current - brightness_step %}
+                            {% if new_brightness < 5 %}5{% else %}{{ new_brightness }}{% endif %}
