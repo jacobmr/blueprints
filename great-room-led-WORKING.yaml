@@ -23,10 +23,17 @@ wifi:
   ssid: "Casa Aperture"
   password: "rosie1234"
 
+  # Static IP configuration for reliable OTA updates
+  manual_ip:
+    static_ip: 192.168.0.118
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+    dns1: 8.8.8.8
+
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Light-Dimmer Fallback Hotspot"
-    password: "C3ktQDAikyiu"
+    password: "rosie1234"
 
 captive_portal:
 
@@ -67,7 +74,7 @@ sensor:
     pin: GPIO04  # Common current sense pin - verify with schematic
     name: "Great Room LED Current Raw"
     update_interval: 1s
-    attenuation: 11db
+    attenuation: 12db
     internal: true  # Hide raw ADC value
     id: current_adc
 

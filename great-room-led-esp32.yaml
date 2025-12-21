@@ -50,6 +50,14 @@ wifi:
   ssid: "REPLACE_ME_YOUR_WIFI_SSID"
   password: "REPLACE_ME_YOUR_WIFI_PASSWORD"
 
+  # Static IP configuration (RECOMMENDED for reliable OTA updates)
+  # Uncomment and configure for your network
+  manual_ip:
+    static_ip: 192.168.0.118  # Change to your desired IP
+    gateway: 192.168.0.1      # Your router's IP
+    subnet: 255.255.255.0
+    dns1: 8.8.8.8
+
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Light-Dimmer Fallback Hotspot"
@@ -95,7 +103,7 @@ sensor:
     pin: GPIO04  # PLACEHOLDER - check krida0electronics schematic
     name: "Great Room LED Current Raw"
     update_interval: 1s
-    attenuation: 11db
+    attenuation: 12db
     internal: true
     id: current_adc
 
