@@ -73,10 +73,11 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-# Shell commands for downloading ESPHome configs from GitHub
+# Shell commands for downloading ESPHome configs from GitHub (PRIVATE REPO)
+# SETUP: Replace YOUR_GITHUB_TOKEN with your actual token from GitHub Settings → Developer settings → Personal access tokens
 shell_command:
-  download_great_room_yaml: 'curl -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml'
-  download_all_esphome_yamls: 'cd /config/esphome && curl -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml && curl -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-esp32.yaml'
+  download_great_room_yaml: 'curl -H "Authorization: token YOUR_GITHUB_TOKEN" -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml'
+  download_all_esphome_yamls: 'cd /config/esphome && curl -H "Authorization: token YOUR_GITHUB_TOKEN" -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml && curl -H "Authorization: token YOUR_GITHUB_TOKEN" -O https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-esp32.yaml'
 
 # Logging
 logger:
