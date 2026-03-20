@@ -1,8 +1,10 @@
 # ESP32 Device Inventory - Casa Apertura
+
 **Last Updated**: 2025-12-12
 **Home Assistant**: http://192.168.0.22:8123
 
 ## Summary
+
 - **Total Custom ESP32 Panels**: 7 devices
 - **Total Button Entities**: 51 binary sensors
 - **Current Status**: All devices showing as **UNAVAILABLE** in Home Assistant
@@ -11,6 +13,7 @@
 ## Registered Devices in Home Assistant
 
 ### 1. Dining Room Light Panel
+
 - **Device Name**: `dining_room_light_panel`
 - **Status**: Unavailable
 - **Button Count**: 8 (4 UP + 4 DOWN)
@@ -25,6 +28,7 @@
   - `binary_sensor.dining_room_light_panel_dr4d` - 4 - DN - Great Room Box Lights
 
 ### 2. Kitchen Panel (DOWN)
+
 - **Device Name**: `kitchen_panel_dn`
 - **Status**: Unavailable
 - **Button Count**: 6 buttons
@@ -37,6 +41,7 @@
   - `binary_sensor.kitchen_panel_dn_kpld3` - 3 - DN - Banquette Pendant
 
 ### 3. Kitchen Panel (UP)
+
 - **Device Name**: `kitchen_panel_up`
 - **Status**: Unavailable
 - **Button Count**: 8 (4 UP + 4 DOWN)
@@ -51,6 +56,7 @@
   - `binary_sensor.kitchen_panel_up_kpud4` - 4 - DN - Kitchen Box Lights
 
 ### 4. Master Panel
+
 - **Device Name**: `master_panel`
 - **Status**: Unavailable
 - **Button Count**: 8 buttons
@@ -65,6 +71,7 @@
   - `binary_sensor.master_panel_mstr4d`
 
 ### 5. Nine Panel
+
 - **Device Name**: `nine_panel`
 - **Status**: Unavailable
 - **Button Count**: 5 buttons
@@ -76,6 +83,7 @@
   - `binary_sensor.nine_panel_nine6` - 1 - DN - Outdoor Dining Lights
 
 ### 6. Other Nine Panel
+
 - **Device Name**: `other_nine_panel`
 - **Status**: Unavailable
 - **Button Count**: 8 buttons
@@ -90,6 +98,7 @@
   - `binary_sensor.other_nine_panel_nine8`
 
 ### 7. Terrace Panel
+
 - **Device Name**: `terrace_panel`
 - **Status**: Unavailable
 - **Button Count**: 8 (4 UP + 4 DOWN)
@@ -106,6 +115,7 @@
 ## Device Naming Pattern Analysis
 
 The devices follow a clear naming convention:
+
 - **Panel Name**: Location identifier (e.g., `kitchen_panel_up`, `dining_room_light_panel`)
 - **Button Naming**: `{panel}_{button_id}` where button_id indicates:
   - UP buttons: `kpu1`, `kpu2`, `dr1`, `dr2`, etc.
@@ -153,6 +163,7 @@ The devices follow a clear naming convention:
 ## Access Methods
 
 ### Through Home Assistant Web UI
+
 1. Navigate to http://192.168.0.22:8123
 2. Go to Settings → Add-ons → ESPHome
 3. View dashboard to see:
@@ -162,17 +173,20 @@ The devices follow a clear naming convention:
    - Configuration files
 
 ### Through HA SSH Addon
+
 1. Access Terminal addon in HA
 2. Navigate to `/config/esphome/`
 3. List configs: `ls -la /config/esphome/*.yaml`
 
 ### Through ESPHome Web Interface
+
 - If ESPHome dashboard addon is installed
 - Access via HA sidebar → ESPHome
 
 ## Automation Integration
 
 Currently using in `kitchen_dimmer_automation.yaml`:
+
 - UP Button: `binary_sensor.kitchen_panel_up_kpu3`
 - DOWN Button: `binary_sensor.kitchen_panel_dn_kpl3`
 - Target Light: `light.shellyprodm2pm_a0dd6c9e5f08_light_0`
@@ -182,6 +196,7 @@ Currently using in `kitchen_dimmer_automation.yaml`:
 ## Recommended Documentation
 
 Once configs are accessible, document for each device:
+
 - Hardware model (ESP32, ESP8266, variant)
 - GPIO pin mapping for buttons
 - WiFi configuration method

@@ -53,11 +53,11 @@ variables:
 trigger:
   - platform: state
     entity_id: !input up_button
-    to: 'on'
+    to: "on"
     id: up_press
   - platform: state
     entity_id: !input down_button
-    to: 'on'
+    to: "on"
     id: down_press
 
 condition: []
@@ -73,10 +73,10 @@ action:
           - wait_for_trigger:
               - platform: state
                 entity_id: !input up_button
-                to: 'on'
+                to: "on"
             timeout:
               milliseconds: "{{ double_click_window }}"
-          
+
           - choose:
               # Second click detected = DOUBLE CLICK
               - conditions:
@@ -89,7 +89,7 @@ action:
                       entity_id: !input target_light
                     data:
                       brightness_pct: 100
-            
+
             # No second click = SINGLE CLICK
             default:
               # SINGLE CLICK UP = 50% if off, +20% if on
@@ -115,10 +115,10 @@ action:
           - wait_for_trigger:
               - platform: state
                 entity_id: !input down_button
-                to: 'on'
+                to: "on"
             timeout:
               milliseconds: "{{ double_click_window }}"
-          
+
           - choose:
               # Second click detected = DOUBLE CLICK
               - conditions:
@@ -129,7 +129,7 @@ action:
                   - service: light.turn_off
                     target:
                       entity_id: !input target_light
-            
+
             # No second click = SINGLE CLICK
             default:
               # SINGLE CLICK DOWN = 20% if off, -20% if on

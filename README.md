@@ -24,10 +24,12 @@ Custom Home Assistant blueprints for controlling lights with ESPHome binary sens
 ## 📦 Available Blueprints
 
 ### 1. Dimmer Two Button (Click Only)
+
 **File**: `dimmer_two_button.yaml`
 **Import URL**: `https://raw.githubusercontent.com/jacobmr/blueprints/main/dimmer_two_button.yaml`
 
 **Features**:
+
 - Full dimming control with two momentary buttons (UP/DOWN)
 - Single-click UP: Turn on to 50% (if off) or increase brightness by step
 - Double-click UP: Set to 100% brightness
@@ -41,10 +43,12 @@ Custom Home Assistant blueprints for controlling lights with ESPHome binary sens
 ---
 
 ### 2. Two Button On/Off
+
 **File**: `two_button_onoff.yaml`
 **Import URL**: `https://raw.githubusercontent.com/jacobmr/blueprints/main/two_button_onoff.yaml`
 
 **Features**:
+
 - Simple on/off control with two momentary buttons
 - UP button: Turn light ON
 - DOWN button: Turn light OFF
@@ -55,10 +59,12 @@ Custom Home Assistant blueprints for controlling lights with ESPHome binary sens
 ---
 
 ### 3. SPST Switch Light Control
+
 **File**: `spst_switch_light.yaml`
 **Import URL**: `https://raw.githubusercontent.com/jacobmr/blueprints/main/spst_switch_light.yaml`
 
 **Features**:
+
 - Direct mapping of physical SPST (toggle) switch to light state
 - Switch ON → Light ON
 - Switch OFF → Light OFF
@@ -100,6 +106,7 @@ Matt, here's how you can modify these blueprints yourself using AI tools without
 ### Option 1: Using Claude Code (Recommended)
 
 **Setup** (one-time):
+
 1. Install Claude Code: https://claude.ai/download
 2. Clone this repository:
    ```bash
@@ -128,6 +135,7 @@ Just describe what you want in plain English. Here are some examples:
 ```
 
 Claude Code will:
+
 1. Read the relevant blueprint file
 2. Make the changes
 3. Test the YAML syntax
@@ -136,6 +144,7 @@ Claude Code will:
 
 **Push to GitHub**:
 After Claude makes changes, tell it:
+
 ```
 "Commit these changes and push to GitHub"
 ```
@@ -147,12 +156,14 @@ Then re-import the blueprint in Home Assistant to get the updates.
 ### Option 2: Using ChatGPT
 
 **Setup**:
+
 1. Go to https://chat.openai.com
 2. Copy the entire blueprint file content you want to modify
 
 **Making Changes**:
 
 Start a new conversation with:
+
 ```
 I have a Home Assistant blueprint that controls lights with buttons.
 Here's the current blueprint:
@@ -164,6 +175,7 @@ Can you update the blueprint and show me the complete new YAML file?
 ```
 
 **Example Requests**:
+
 ```
 "Change the double-click timeout from 400ms to 300ms"
 
@@ -175,6 +187,7 @@ Can you update the blueprint and show me the complete new YAML file?
 ```
 
 ChatGPT will give you the complete updated YAML. Then:
+
 1. Copy the new YAML
 2. Save it to the blueprint file
 3. Commit to git:
@@ -190,6 +203,7 @@ ChatGPT will give you the complete updated YAML. Then:
 ## 🔧 Common Modification Examples
 
 ### Change Brightness Step
+
 **Tell the AI**: "Change the default brightness step from 20% to 15%"
 
 **What gets modified**: The `default: 20` value under `brightness_step` input
@@ -197,6 +211,7 @@ ChatGPT will give you the complete updated YAML. Then:
 ---
 
 ### Adjust Double-Click Timing
+
 **Tell the AI**: "Make the double-click window 500ms instead of 400ms"
 
 **What gets modified**: The `default: 400` value under `double_click_window` input
@@ -204,6 +219,7 @@ ChatGPT will give you the complete updated YAML. Then:
 ---
 
 ### Add Triple-Click Feature
+
 **Tell the AI**: "Add triple-click detection. Triple-click UP should set brightness to 75%"
 
 **What happens**: AI will add another `wait_for_trigger` after the double-click detection and add a new action
@@ -211,6 +227,7 @@ ChatGPT will give you the complete updated YAML. Then:
 ---
 
 ### Change Single-Click Behavior
+
 **Tell the AI**: "When light is off, single-click UP should turn it on to 100% instead of 50%"
 
 **What gets modified**: The `50` in the template under "SINGLE CLICK UP"
@@ -218,6 +235,7 @@ ChatGPT will give you the complete updated YAML. Then:
 ---
 
 ### Add Color Temperature Control
+
 **Tell the AI**: "Add color temperature control - long press UP to make warmer, long press DOWN to make cooler"
 
 **What happens**: AI will add duration detection and new color temperature service calls
@@ -246,6 +264,7 @@ If you create a useful blueprint modification that others might benefit from, yo
 **Step 1**: Make your changes and test them in Home Assistant
 
 **Step 2**: Ask Claude Code to submit a PR:
+
 ```
 "I've modified the dimmer blueprint to add triple-click support.
 Please create a pull request to submit this back to the main repository.
@@ -257,6 +276,7 @@ Use this PR description:
 ```
 
 **Step 3**: Claude Code will:
+
 1. Create a new branch
 2. Commit your changes
 3. Push to GitHub
@@ -305,6 +325,7 @@ Want to maintain your own customized version of the blueprints? Fork the reposit
 ### How to Fork
 
 **Step 1**: Go to the repository on GitHub:
+
 ```
 https://github.com/jacobmr/blueprints
 ```
@@ -312,11 +333,13 @@ https://github.com/jacobmr/blueprints
 **Step 2**: Click the **Fork** button (top right)
 
 **Step 3**: This creates a copy at:
+
 ```
 https://github.com/YOUR-USERNAME/blueprints
 ```
 
 **Step 4**: Clone YOUR fork to your computer:
+
 ```bash
 cd ~/dev
 git clone https://github.com/YOUR-USERNAME/blueprints.git my-blueprints
@@ -324,6 +347,7 @@ cd my-blueprints
 ```
 
 **Step 5**: Make changes and push to YOUR fork:
+
 ```bash
 # Make your changes
 git add .
@@ -332,6 +356,7 @@ git push origin main
 ```
 
 **Step 6**: Import from YOUR fork in Home Assistant:
+
 ```
 https://raw.githubusercontent.com/YOUR-USERNAME/blueprints/main/dimmer_two_button.yaml
 ```
@@ -339,6 +364,7 @@ https://raw.githubusercontent.com/YOUR-USERNAME/blueprints/main/dimmer_two_butto
 ### Asking Claude Code to Work with Your Fork
 
 Tell Claude Code which fork to use:
+
 ```
 "I've forked the blueprints repo to my-username/blueprints.
 Please make changes to MY fork, not the original.
@@ -346,6 +372,7 @@ Add a feature that..."
 ```
 
 Claude will:
+
 1. Work with your forked repository
 2. Push changes to your fork
 3. Keep your custom version separate from the main repo
@@ -369,6 +396,7 @@ git push origin main
 ```
 
 **Or ask Claude Code**:
+
 ```
 "Sync my fork with the latest changes from jacobmr/blueprints"
 ```
@@ -378,21 +406,25 @@ git push origin main
 ## 🐛 Troubleshooting
 
 ### Blueprint doesn't show up in Home Assistant
+
 - Make sure you imported from the correct raw GitHub URL
 - Check that the YAML syntax is valid (use Developer Tools → YAML → Check Configuration)
 - Try re-importing the blueprint
 
 ### Automation doesn't trigger
+
 - Check that your button entities are `binary_sensor` domain
 - Monitor button presses: Developer Tools → States → find your binary sensor → watch it change
 - Check Home Assistant logs: Settings → System → Logs
 
 ### Double-click not working
+
 - Increase the `double_click_window` timeout (try 500ms or 600ms)
 - Make sure you're clicking fast enough
 - Some ESPHome configurations may need debounce adjustments
 
 ### Changes not appearing after push to GitHub
+
 - Wait 1-2 minutes for GitHub CDN to update
 - Clear Home Assistant cache: Developer Tools → YAML → Reload Automations
 - Re-import the blueprint (delete old one first)
@@ -402,12 +434,14 @@ git push origin main
 ## 🔗 Useful Resources
 
 ### Home Assistant
+
 - [Blueprints Documentation](https://www.home-assistant.io/docs/automation/using_blueprints/)
 - [Light Integration](https://www.home-assistant.io/integrations/light/)
 - [Automation Documentation](https://www.home-assistant.io/docs/automation/)
 - [Template Documentation](https://www.home-assistant.io/docs/configuration/templating/)
 
 ### ESPHome
+
 - [ESPHome Official Site](https://esphome.io/)
 - [Binary Sensor Component](https://esphome.io/components/binary_sensor/)
 - [LEDC Output Component](https://esphome.io/components/output/ledc.html)
@@ -415,14 +449,17 @@ git push origin main
 - [Getting Started with ESPHome](https://esphome.io/guides/getting_started_hassio.html)
 
 ### Hardware
+
 - [krida0electronics HASS Dimmer](https://github.com/krida0electronics/hass) (hardware design)
 - [ESP32-C3 Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/)
 
 ### AI Tools
+
 - [Claude Code](https://claude.ai/code) - Recommended for this project
 - [ChatGPT](https://chat.openai.com) - Alternative AI assistant
 
 ### This Repository
+
 - [Main Repository](https://github.com/jacobmr/blueprints)
 - [Issues](https://github.com/jacobmr/blueprints/issues)
 - [Pull Requests](https://github.com/jacobmr/blueprints/pulls)
@@ -434,12 +471,14 @@ git push origin main
 This project uses custom ESP32-C3 dimmer hardware based on the [krida0electronics HASS dimmer](https://github.com/krida0electronics/hass).
 
 ### Hardware Specs
+
 - **Board**: [ESP32-C3-DevKitM-1](https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/hw-reference/esp32c3/user-guide-devkitm-1.html)
 - **Output**: GPIO3 (LEDC PWM at 1220Hz)
 - **Max Load**: ~3A @ 120V (360W)
 - **Use Case**: High-amperage LED fixtures
 
 ### Configuration File
+
 **File**: [`great-room-led-esp32.yaml`](great-room-led-esp32.yaml)
 
 This is the ESPHome configuration template for the Great Room LED dimmer.
@@ -461,6 +500,7 @@ This is the ESPHome configuration template for the Great Room LED dimmer.
 Find and replace these placeholders with your actual values:
 
 **WiFi Credentials**:
+
 ```yaml
 # Find this:
 wifi:
@@ -474,6 +514,7 @@ wifi:
 ```
 
 **API Encryption Key**:
+
 ```bash
 # Generate a new key:
 esphome config-wizard
@@ -492,6 +533,7 @@ api:
 ```
 
 **OTA Password** (choose any secure password):
+
 ```yaml
 # Replace:
 ota:
@@ -502,6 +544,7 @@ ota:
 ```
 
 **Fallback Hotspot Password**:
+
 ```yaml
 # Replace:
 ap:
@@ -514,7 +557,8 @@ ap:
 #### Step 3: Verify Your Changes
 
 **Before flashing, check:**
-- [ ] No line contains "REPLACE_ME" or "YOUR_" placeholders
+
+- [ ] No line contains "REPLACE*ME" or "YOUR*" placeholders
 - [ ] WiFi SSID and password are correct
 - [ ] API key is exactly 32 characters (base64)
 - [ ] OTA password is set
@@ -531,13 +575,14 @@ Now you can safely flash using the instructions below in [Flashing/Updating Firm
 **IMPORTANT**: The default krida0electronics config has a bug where lights won't turn completely off (stay at ~20%).
 
 **The Fix** (already applied in our config):
+
 ```yaml
 output:
   - platform: ledc
     pin: GPIO03
     id: gpio_03
     frequency: "1220Hz"
-    zero_means_zero: true  # ← This line forces true OFF at 0%
+    zero_means_zero: true # ← This line forces true OFF at 0%
 ```
 
 Without this line, the dimmer maintains a minimum brightness and won't fully turn off, which prevents sleep!
@@ -545,11 +590,13 @@ Without this line, the dimmer maintains a minimum brightness and won't fully tur
 ### Web Interface Access
 
 The dimmer has a built-in web interface:
+
 - **URL**: `http://[device-ip-address]` (find IP in Home Assistant)
 - **Username**: `admin`
 - **Password**: `admin`
 
 Use this to:
+
 - Control the light directly
 - View device logs
 - Check WiFi status
@@ -558,6 +605,7 @@ Use this to:
 ### Flashing/Updating Firmware
 
 **Via ESPHome CLI** (USB connected):
+
 ```bash
 # Navigate to your ESPHome config directory
 cd /path/to/your/esphome/configs
@@ -568,6 +616,7 @@ python3 -m esphome run great-room-led-esp32.yaml --device /dev/cu.usbmodem101
 ```
 
 **Via ESPHome Dashboard** (OTA over WiFi):
+
 1. Install [ESPHome add-on](https://esphome.io/guides/getting_started_hassio.html) in Home Assistant
 2. Open ESPHome Dashboard
 3. Upload `great-room-led-esp32.yaml`
@@ -577,6 +626,7 @@ python3 -m esphome run great-room-led-esp32.yaml --device /dev/cu.usbmodem101
 ### WiFi Configuration
 
 **Edit the YAML file** with your WiFi credentials:
+
 ```yaml
 wifi:
   ssid: "YOUR_WIFI_SSID"
@@ -588,15 +638,18 @@ wifi:
 ### Troubleshooting
 
 **Light won't turn completely off**:
+
 - Check that `zero_means_zero: true` is in the output config
 - Reflash firmware if missing
 
 **Device offline**:
+
 - Check WiFi credentials
 - Look for fallback hotspot
 - Power cycle the device
 
 **Can't access web interface**:
+
 - Find device IP in Home Assistant (Settings → Devices → great-room-led)
 - Make sure you're on the same network
 - Try `http://great-room-led.local` (mDNS)
@@ -628,7 +681,7 @@ You'll now have a card with a button to download configs!
 
 ```yaml
 shell_command:
-  download_great_room_yaml: 'curl -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml'
+  download_great_room_yaml: "curl -o /config/esphome/great-room-led.yaml https://raw.githubusercontent.com/jacobmr/blueprints/main/great-room-led-WORKING.yaml"
 ```
 
 3. Add this script (or include the file [`scripts_esphome_updater.yaml`](scripts_esphome_updater.yaml)):
@@ -662,6 +715,7 @@ script:
 ### What Gets Updated?
 
 The Great Room LED dimmer config includes:
+
 - ✅ Current monitoring (real-time amp draw)
 - ✅ Power calculation (watts)
 - ✅ "Actually On" sensor (detects if light is truly off based on current flow)
@@ -672,14 +726,17 @@ The Great Room LED dimmer config includes:
 ### Troubleshooting
 
 **"Download button doesn't work"**
+
 - Make sure you restarted Home Assistant after adding the shell_command and script
 - Check Developer Tools → Services → search for `script.update_great_room_led_yaml`
 
 **"ESPHome shows error after download"**
+
 - Open the YAML file in ESPHome editor and check for any red warnings
 - The current sensor might need GPIO pin adjustment (check hardware schematic)
 
 **"Can't flash wirelessly"**
+
 - Make sure the device is online (check router or Home Assistant integrations)
 - Try accessing the web interface at `http://192.168.0.118` (or device's IP)
 - If needed, flash via USB cable first to enable OTA
@@ -689,20 +746,24 @@ The Great Room LED dimmer config includes:
 ## 📚 Project Files
 
 **Blueprints:**
+
 - `dimmer_two_button.yaml` - Main dimmer blueprint with double-click
 - `two_button_onoff.yaml` - Simple on/off control
 - `spst_switch_light.yaml` - Toggle switch control
 - `kitchen_dimmer_automation.yaml` - Example automation instance
 
 **ESP32 Hardware:**
+
 - `great-room-led-esp32.yaml` - ESP32-C3 dimmer configuration with `zero_means_zero` fix
 
 **Documentation:**
+
 - `README.md` - This file! Complete guide for Matt
 - `CLAUDE.md` - Development instructions for AI assistants
 - `ESP32_COMPLETE_DOCUMENTATION.md` - Full ESP32 system documentation
 
 **Development Tools:**
+
 - `monitor_kitchen_buttons.py` - Real-time button event monitor
 - `monitor_light_debug.py` - Light debugging tool (service calls + state changes)
 
@@ -721,6 +782,7 @@ The Great Room LED dimmer config includes:
 ## 🙋 Questions?
 
 If you run into issues or want to add features:
+
 1. Ask Claude Code or ChatGPT - describe the problem in detail
 2. Check Home Assistant logs for error messages
 3. Review the Home Assistant blueprint documentation

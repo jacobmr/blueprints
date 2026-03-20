@@ -3,10 +3,10 @@ description: "Test if buttons trigger any automation at all"
 trigger:
   - platform: state
     entity_id: binary_sensor.kitchen_panel_up_kpu3
-    to: 'on'
+    to: "on"
   - platform: state
     entity_id: binary_sensor.kitchen_panel_up_kpud3
-    to: 'on'
+    to: "on"
 action:
   - service: persistent_notification.create
     data:

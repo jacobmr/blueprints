@@ -13,7 +13,7 @@
 2. ✅ **kitchen-panel-dn** → Kitchen Lower Panel (8 entities)
 3. ✅ **kitchen-panel-up** → Upper Kitchen Panel ESP (8 entities)
 4. ✅ **master-panel** → Master-Panel (8 entities)
-5. ✅ **nine-panel** → Terrace Panel (8 entities) *Note: Confusing name in HA*
+5. ✅ **nine-panel** → Terrace Panel (8 entities) _Note: Confusing name in HA_
 6. ✅ **great-room-one** → Great-Room-One (8 entities)
 7. ✅ **great-room-two** → Great-Room-Two (8 entities)
 
@@ -24,6 +24,7 @@
 ## 🧹 Orphaned Configs (Can Be Deleted)
 
 These are old configs from re-flashed panels:
+
 - ❌ `other-nine-panel` - offline (old config)
 - ❌ `terrace-panel` - offline (old config)
 - ❌ `great-room-led` - marked "DO NOT USE"
@@ -37,20 +38,24 @@ These are old configs from re-flashed panels:
 You have plenty of buttons available on the working panels:
 
 ### great-room-one (8 entities)
+
 - All 8 buttons likely available
 - Located in Great Room
 - Can use for outdoor/landscape lights
 
 ### great-room-two (8 entities)
+
 - All 8 buttons likely available
 - Located in Great Room
 - Can use for outdoor/landscape lights or other areas
 
 ### master-panel
+
 - Some buttons may be available
 - Located in Master Bedroom
 
 ### nine-panel (Terrace)
+
 - Some buttons may be available
 - Located Outdoor/Terrace area
 
@@ -59,7 +64,9 @@ You have plenty of buttons available on the working panels:
 ## 🎯 Tomorrow's Simple Plan
 
 ### 1. Clean Up (5 minutes - Optional)
+
 Go to ESPHome dashboard and delete:
+
 - `other-nine-panel`
 - `terrace-panel`
 - `great-room-led` (if not used)
@@ -71,23 +78,15 @@ This removes the unavailable entities from HA.
 **Lights Still Needing Automations:**
 
 **Indoor:**
+
 1. Banquette Spots
 
-**Outdoor/Landscape:**
-2. Driveway
-3. Front Walk
-4. Front Walk Sconce
-5. Garage Sconces
-6. Guest Walkway
-7. Service Walkway
-8. South Landscape Lights
-9. Tree
+**Outdoor/Landscape:** 2. Driveway 3. Front Walk 4. Front Walk Sconce 5. Garage Sconces 6. Guest Walkway 7. Service Walkway 8. South Landscape Lights 9. Tree
 
-**Pool Area:**
-10. Pool Lights
-11. Planter By Pool
+**Pool Area:** 10. Pool Lights 11. Planter By Pool
 
 **How to Create Each:**
+
 1. Settings → Automations & Scenes → + Create Automation
 2. Select "Dimmer Two Button (Click Only)" blueprint
 3. Fill in form (Name, UP button, DOWN button, Target light)
@@ -95,6 +94,7 @@ This removes the unavailable entities from HA.
 5. Test immediately
 
 **Use buttons from:**
+
 - `great-room-one` panel (8 buttons)
 - `great-room-two` panel (8 buttons)
 
@@ -112,6 +112,7 @@ This removes the unavailable entities from HA.
 ## 📁 Documentation Summary
 
 All documentation created and committed to git:
+
 - ✅ ESP32_COMPLETE_DOCUMENTATION.md
 - ✅ ESP32_INVENTORY.md
 - ✅ LIGHTS_NEEDING_AUTOMATIONS.md

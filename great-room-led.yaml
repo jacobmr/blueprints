@@ -57,7 +57,7 @@ output:
     pin: GPIO03
     id: gpio_03
     frequency: "1220Hz"
-    zero_means_zero: true    # ← FIX: Forces true OFF at 0%
+    zero_means_zero: true # ← FIX: Forces true OFF at 0%
 
 # Light configuration
 light:

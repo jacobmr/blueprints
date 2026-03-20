@@ -63,8 +63,8 @@ ls -la /config/.github_token
 3. It should already have:
    ```yaml
    shell_command:
-     download_great_room_yaml: '/config/scripts/download_esphome_config.sh great-room'
-     download_all_esphome_yamls: '/config/scripts/download_esphome_config.sh all'
+     download_great_room_yaml: "/config/scripts/download_esphome_config.sh great-room"
+     download_all_esphome_yamls: "/config/scripts/download_esphome_config.sh all"
    ```
 4. Save and restart Home Assistant
 
@@ -78,11 +78,13 @@ ls -la /config/.github_token
 ## How It Works
 
 **Single Token, Multiple Files:**
+
 - Token stored **once** in `/config/.github_token`
 - Script reads token and downloads any file from the repo
 - No token duplication in configuration files
 
 **Security:**
+
 - Token file is in `/config/` (not accessible via web)
 - Token has **read-only** access
 - Token only works for the `blueprints` repository
@@ -91,6 +93,7 @@ ls -la /config/.github_token
 ## Troubleshooting
 
 ### "ERROR: Token file not found"
+
 ```bash
 # Check if file exists
 ls -la /config/.github_token
@@ -100,6 +103,7 @@ echo "your_token_here" > /config/.github_token
 ```
 
 ### "Failed to download"
+
 - Check that repo is accessible at: https://github.com/jacobmr/blueprints
 - Verify token hasn't expired: https://github.com/settings/tokens
 - Test manually:
@@ -108,6 +112,7 @@ echo "your_token_here" > /config/.github_token
   ```
 
 ### "Permission denied"
+
 ```bash
 # Make script executable
 chmod +x /config/scripts/download_esphome_config.sh
@@ -135,6 +140,7 @@ Tokens expire after 1 year (or custom duration). When expired:
 ## For Matt
 
 Once setup is complete, you just:
+
 1. Click the **DOWNLOAD** button on your dashboard
 2. Open **ESPHome** from sidebar
 3. Click **INSTALL** → **Wirelessly**

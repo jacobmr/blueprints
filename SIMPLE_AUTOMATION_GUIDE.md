@@ -54,48 +54,56 @@ Once they're online, buttons will work and you can proceed.
 ### Outdoor/Landscape Lights (Use "Other Nine Panel")
 
 #### 1. Driveway
+
 - **Name**: Driveway Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine1`
 - **DOWN Button**: `binary_sensor.other_nine_panel_nine1` (same button for UP/DOWN, or find the corresponding DOWN entity)
 - **Light**: `light.shellypro3_ece334e986dc_switch_0` (Driveway)
 
 #### 2. Front Walk
+
 - **Name**: Front Walk Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine2`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334e977e0_switch_2` (Front Walk)
 
 #### 3. Front Walk Sconce
+
 - **Name**: Front Walk Sconce Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine3`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334ed586c_switch_2` (Front Walk Sconce)
 
 #### 4. Garage Sconces
+
 - **Name**: Garage Sconces Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine4`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334e977e0_switch_1` (Garage Sconces)
 
 #### 5. Guest Walkway
+
 - **Name**: Guest Walkway Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine5`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334ed5278_switch_1` (Guest Walkway)
 
 #### 6. Service Walkway
+
 - **Name**: Service Walkway Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine6`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334e986dc_switch_2` (Service Walkway)
 
 #### 7. South Landscape Lights
+
 - **Name**: South Landscape Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine7`
 - **DOWN Button**: Corresponding DOWN button
 - **Light**: `light.shellypro3_ece334e977e0_switch_0` (South Landscape Lights)
 
 #### 8. Tree
+
 - **Name**: Tree Light Control
 - **UP Button**: `binary_sensor.other_nine_panel_nine8`
 - **DOWN Button**: Corresponding DOWN button
@@ -104,12 +112,14 @@ Once they're online, buttons will work and you can proceed.
 ### Pool Area (Use "Terrace Panel")
 
 #### 9. Pool Lights
+
 - **Name**: Pool Lights Control
 - **UP Button**: `binary_sensor.terrace_panel_terr1`
 - **DOWN Button**: `binary_sensor.terrace_panel_terr1d`
 - **Light**: `light.shellypro3_ece334e97ab8_switch_1` (Pool Lights)
 
 #### 10. Planter By Pool
+
 - **Name**: Planter By Pool Control
 - **UP Button**: `binary_sensor.terrace_panel_terr2`
 - **DOWN Button**: `binary_sensor.terrace_panel_terr2d`
@@ -118,6 +128,7 @@ Once they're online, buttons will work and you can proceed.
 ### Bonus: Banquette Spots (If Needed)
 
 #### 11. Banquette Spots
+
 - **Name**: Banquette Spots Control
 - **UP Button**: Find available kitchen or master panel button
 - **DOWN Button**: Corresponding DOWN button
@@ -130,11 +141,13 @@ Once they're online, buttons will work and you can proceed.
 ### What Each Setting Does:
 
 **Brightness Step Percentage (default 20%)**
+
 - How much the light brightens/dims with each single click
 - 20% = 5 clicks to go from 0% to 100%
 - Adjust if you want finer (10%) or coarser (30%) control
 
 **Double Click Window (default 400ms)**
+
 - Maximum time between clicks to register as "double-click"
 - 400ms = 0.4 seconds works well for most people
 - Increase if you find double-clicks not registering
@@ -143,10 +156,12 @@ Once they're online, buttons will work and you can proceed.
 ### Blueprint Behavior:
 
 **Single Click:**
+
 - **UP button**: Increases brightness by step % (or turns on to 50% if off)
 - **DOWN button**: Decreases brightness by step % (or turns on to 20% if off)
 
 **Double Click:**
+
 - **UP button**: Sets to 100% brightness
 - **DOWN button**: Turns light OFF
 
@@ -171,6 +186,7 @@ After creating each automation, test it:
    - Light should turn OFF
 
 If it doesn't work:
+
 - Check that panel device is online
 - Check that button entity IDs are correct
 - Check that light entity ID is correct

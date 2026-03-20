@@ -2,11 +2,11 @@ alias: Test Button Presses
 description: "Log all button presses for debugging"
 trigger:
   - platform: state
-    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down  # Replace with your actual button entity IDs
-    to: 'on'
+    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down # Replace with your actual button entity IDs
+    to: "on"
   - platform: state
-    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down  # Replace with your actual button entity IDs
-    to: 'off'
+    entity_id: binary_sensor.kitchen_switch_up, binary_sensor.kitchen_switch_down # Replace with your actual button entity IDs
+    to: "off"
 action:
   - service: system_log.write
     data:

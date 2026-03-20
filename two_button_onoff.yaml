@@ -33,11 +33,11 @@ variables:
 trigger:
   - platform: state
     entity_id: !input up_button
-    to: 'on'
+    to: "on"
     id: up_press
   - platform: state
     entity_id: !input down_button
-    to: 'on'
+    to: "on"
     id: down_press
 
 condition: []

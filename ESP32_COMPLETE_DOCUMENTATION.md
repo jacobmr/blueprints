@@ -1,4 +1,5 @@
 # ESP32 Complete System Documentation
+
 **Project**: Casa Apertura Lighting & Automation
 **Last Updated**: 2025-12-12
 **Home Assistant**: http://192.168.0.22:8123
@@ -6,6 +7,7 @@
 ---
 
 ## Table of Contents
+
 1. [System Overview](#system-overview)
 2. [Device Inventory](#device-inventory)
 3. [Configuration Files](#configuration-files)
@@ -20,6 +22,7 @@
 ### Two Independent ESP32 Systems
 
 #### System 1: 96-Channel Dimmer System (General Lighting)
+
 - **Location**: `/Users/jmr/dev/esp_project/`
 - **Purpose**: Whole-house dimmable and on/off lighting control
 - **Devices**: 7 ESP32 boards controlling 96 lighting zones
@@ -27,6 +30,7 @@
 - **Integration**: Home Assistant via ESPHome API
 
 #### System 2: Panel Control System (Wall Switch Panels)
+
 - **Location**: Configs likely on HA server at `/config/esphome/`
 - **Purpose**: Wall-mounted control panels for room-specific lighting
 - **Devices**: 7 panel devices with 51 button entities
@@ -39,21 +43,22 @@
 
 ### Panel Control Devices (Currently Offline)
 
-| Panel Name | Device Name in HA | Buttons | Location | Status |
-|------------|-------------------|---------|----------|--------|
-| 1 | `dining_room_light_panel` | 8 (4 UP/4 DOWN) | Dining Room | Offline |
-| 2 | `kitchen_panel_up` | 8 (4 UP/4 DOWN) | Kitchen (Upper) | Offline |
-| 3 | `kitchen_panel_dn` | 6 buttons | Kitchen (Lower) | Offline |
-| 4 | `master_panel` | 8 buttons | Master Bedroom | Offline |
-| 5 | `nine_panel` | 5 buttons | Terrace/Outdoor | Offline |
-| 6 | `other_nine_panel` | 8 buttons | TBD | Offline |
-| 7 | `terrace_panel` | 8 buttons | Terrace | Offline |
+| Panel Name | Device Name in HA         | Buttons         | Location        | Status  |
+| ---------- | ------------------------- | --------------- | --------------- | ------- |
+| 1          | `dining_room_light_panel` | 8 (4 UP/4 DOWN) | Dining Room     | Offline |
+| 2          | `kitchen_panel_up`        | 8 (4 UP/4 DOWN) | Kitchen (Upper) | Offline |
+| 3          | `kitchen_panel_dn`        | 6 buttons       | Kitchen (Lower) | Offline |
+| 4          | `master_panel`            | 8 buttons       | Master Bedroom  | Offline |
+| 5          | `nine_panel`              | 5 buttons       | Terrace/Outdoor | Offline |
+| 6          | `other_nine_panel`        | 8 buttons       | TBD             | Offline |
+| 7          | `terrace_panel`           | 8 buttons       | Terrace         | Offline |
 
 **Total**: 7 panels, 51 button entities
 
 ### Panel Button Details
 
 #### Dining Room Light Panel (8 buttons)
+
 - `binary_sensor.dining_room_light_panel_dr1` - 1 - UP - Dining Sideboard
 - `binary_sensor.dining_room_light_panel_dr2` - 2 - UP - Dining Pendant
 - `binary_sensor.dining_room_light_panel_dr3` - 3 - UP - Great Room Cans
@@ -64,6 +69,7 @@
 - `binary_sensor.dining_room_light_panel_dr4d` - 4 - DN - Great Room Box Lights
 
 #### Kitchen Panel UP (8 buttons)
+
 - `binary_sensor.kitchen_panel_up_kpu1` - 2 - UP - Kitchen Cans
 - `binary_sensor.kitchen_panel_up_kpu2` - 1 - UP - Main Hallway
 - `binary_sensor.kitchen_panel_up_kpu3` - 3 - UP - Isla ⭐ **Used in dimmer automation**
@@ -74,6 +80,7 @@
 - `binary_sensor.kitchen_panel_up_kpud4` - 4 - DN - Kitchen Box Lights
 
 #### Kitchen Panel DOWN (6 buttons)
+
 - `binary_sensor.kitchen_panel_dn_kpl1` - 1- Courtyard ON/OFF
 - `binary_sensor.kitchen_panel_dn_kpl2` - 2 - UP - Great Room LED
 - `binary_sensor.kitchen_panel_dn_kpl3` - 3 - UP - Banquette Pendant ⭐ **Used in dimmer automation**
@@ -82,6 +89,7 @@
 - `binary_sensor.kitchen_panel_dn_kpld3` - 3 - DN - Banquette Pendant
 
 #### Master Panel (8 buttons)
+
 - `binary_sensor.master_panel_mstr1` - Master 3 UP
 - `binary_sensor.master_panel_mstr2` - Master 1 Up
 - `binary_sensor.master_panel_mstr3` - Master 3 DN
@@ -92,6 +100,7 @@
 - `binary_sensor.master_panel_mstr4d` - Master-Panel MSTR4D
 
 #### Nine Panel (5 buttons)
+
 - `binary_sensor.nine_panel_nine1` - 1 - UP - Terrace Ceiling One
 - `binary_sensor.nine_panel_nine2` - 1 - UP - Outdoor Dining Lights
 - `binary_sensor.nine_panel_nine3` - Outdoor Bench LED
@@ -99,25 +108,27 @@
 - `binary_sensor.nine_panel_nine6` - 1 - DN - Outdoor Dining Lights
 
 #### Other Nine Panel (8 buttons)
+
 - `binary_sensor.other_nine_panel_nine1` through `nine8`
 - (Labels need to be configured in HA)
 
 #### Terrace Panel (8 buttons)
+
 - `binary_sensor.terrace_panel_terr1` through `terr4`
 - `binary_sensor.terrace_panel_terr1d` through `terr4d`
 - (Labels need to be configured in HA)
 
 ### 96-Channel Dimmer System Devices
 
-| Board | Device Name | Channels | Hardware | Config File |
-|-------|-------------|----------|----------|-------------|
-| 1 | `dimmerboard1` | 1-16 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard1.yaml |
-| 2 | `dimmerboard2` | 17-32 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard2.yaml |
-| 3 | `dimmerboard3` | 33-48 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard3.yaml |
-| 4 | `dimmerboard4` | 49-64 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard4.yaml |
-| 5 | `dimmerboard5` | 65-80 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard5.yaml |
-| 6 | `onoffboard6` | 81-96 (On/Off) | ESP32 + PCF8574 | OnOffBoard6.yaml |
-| 7 | `onoffboard7` | Future expansion | ESP32 + PCF8574 | OnOffBoard7.yaml |
+| Board | Device Name    | Channels         | Hardware            | Config File       |
+| ----- | -------------- | ---------------- | ------------------- | ----------------- |
+| 1     | `dimmerboard1` | 1-16 (Dimmable)  | ESP32-S3 + MCP23017 | DimmerBoard1.yaml |
+| 2     | `dimmerboard2` | 17-32 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard2.yaml |
+| 3     | `dimmerboard3` | 33-48 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard3.yaml |
+| 4     | `dimmerboard4` | 49-64 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard4.yaml |
+| 5     | `dimmerboard5` | 65-80 (Dimmable) | ESP32-S3 + MCP23017 | DimmerBoard5.yaml |
+| 6     | `onoffboard6`  | 81-96 (On/Off)   | ESP32 + PCF8574     | OnOffBoard6.yaml  |
+| 7     | `onoffboard7`  | Future expansion | ESP32 + PCF8574     | OnOffBoard7.yaml  |
 
 **Total**: 96 independently controlled lighting zones
 
@@ -126,12 +137,14 @@
 ## Configuration Files
 
 ### Panel Configs
+
 - **Location**: Likely at `/config/esphome/` on Home Assistant server
 - **Access Method**: HA Web UI → ESPHome Dashboard
 - **File Names**: Unknown (need to access HA ESPHome dashboard)
 - **Backup Status**: ❌ Need to download/backup configs
 
 ### Dimmer System Configs
+
 - **Location**: `/Users/jmr/dev/esp_project/`
 - **Backup Status**: ✅ Locally backed up
 - **Key Files**:
@@ -142,6 +155,7 @@
   - `claude.md` - Comprehensive technical documentation
 
 ### Shared Secrets (`secrets.yaml`)
+
 ```yaml
 wifi_ssid: "24"
 wifi_password: "1234567890"
@@ -155,18 +169,22 @@ fallback_password: "RNaWqpHp6lz1"
 ## Network & Connectivity
 
 ### WiFi Configuration
+
 - **SSID**: `24`
 - **Password**: `1234567890`
 - **Network**: Local WiFi (recently experienced brief outage)
 - **Effect**: All panel devices offline after WiFi restoration
 
 ### Device Network Names
+
 Expected mDNS names (if using ESPHome defaults):
+
 - `dimmerboard1.local` through `dimmerboard5.local`
 - `onoffboard6.local`, `onoffboard7.local`
 - Panel device names unknown (check HA ESPHome dashboard)
 
 ### Home Assistant Integration
+
 - **URL**: http://192.168.0.22:8123
 - **API Token**: (stored in monitoring scripts)
 - **Integration**: ESPHome components loaded
@@ -180,18 +198,22 @@ Expected mDNS names (if using ESPHome defaults):
 ## Blueprint Automation System
 
 ### Current Blueprint
+
 **File**: `dimmer_two_button.yaml`
 **Location**: `/Users/jmr/dev/casa apertura/`
 
 **Functionality**:
+
 - Single click: Brightness adjustment
 - Double click: On/off or 100% brightness
 - Configurable brightness step (default 20%)
 - Configurable double-click window (default 400ms)
 
 ### Current Automation
+
 **File**: `kitchen_dimmer_automation.yaml`
 **Uses**:
+
 - UP Button: `binary_sensor.kitchen_panel_up_kpu3`
 - DOWN Button: `binary_sensor.kitchen_panel_dn_kpl3`
 - Target Light: `light.shellyprodm2pm_a0dd6c9e5f08_light_0`
@@ -205,40 +227,47 @@ Each panel has UP/DOWN button pairs that can use the dimmer blueprint. The plan 
 **Button Pairs to Automate** (26 total automations):
 
 #### Dining Room Panel (4 automations)
+
 1. DR1 (UP) + DR1D (DOWN) → Dining Sideboard
 2. DR2 (UP) + DR2D (DOWN) → Dining Pendant
 3. DR3 (UP) + DR3D (DOWN) → Great Room Cans
 4. DR4 (UP) + DR4D (DOWN) → Great Room Box Lights
 
 #### Kitchen Panel UP (4 automations)
+
 1. KPU1 (UP) + KPUD1 (DOWN) → Kitchen Cans
 2. KPU2 (UP) + KPUD2 (DOWN) → Main Hallway
 3. KPU3 (UP) + KPUD3 (DOWN) → Isla ⭐ (already configured)
 4. KPU4 (UP) + KPUD4 (DOWN) → Kitchen Box Lights
 
 #### Kitchen Panel DOWN (2 automations)
+
 1. KPL2 (UP) + KPLD2 (DOWN) → Great Room LED
 2. KPL3 (UP) + KPLD3 (DOWN) → Banquette Pendant ⭐ (already configured)
 
 Note: KPL1 and KPL4 don't have DOWN pairs in the entity list
 
 #### Master Panel (4 automations)
+
 1. MSTR1 (UP) + MSTR1D (DOWN)
 2. MSTR2 (UP) + MSTR2D (DOWN)
 3. MSTR3 (UP) + MSTR3D (DOWN)
 4. MSTR4 (UP) + MSTR4D (DOWN)
 
 #### Nine Panel (2 automations)
+
 1. NINE1 (UP) + NINE5 (DOWN) → Terrace Ceiling One
 2. NINE2 (UP) + NINE6 (DOWN) → Outdoor Dining Lights
 
 Note: NINE3 has no DOWN pair
 
 #### Other Nine Panel (4 automations)
+
 - Needs button mapping review after device comes online
 - Potentially 4 UP/DOWN pairs
 
 #### Terrace Panel (4 automations)
+
 1. TERR1 (UP) + TERR1D (DOWN)
 2. TERR2 (UP) + TERR2D (DOWN)
 3. TERR3 (UP) + TERR3D (DOWN)
@@ -347,16 +376,19 @@ Note: NINE3 has no DOWN pair
 ## Quick Reference Commands
 
 ### Check Device Status
+
 ```bash
 python3 monitor_kitchen_buttons.py
 ```
 
 ### Update HA Entities Export
+
 ```bash
 python3 dump_ha_entities.py
 ```
 
 ### ESPHome Commands (from esp_project directory)
+
 ```bash
 # Compile configuration
 esphome compile DimmerBoard1.yaml
@@ -369,6 +401,7 @@ esphome run DimmerBoard1.yaml
 ```
 
 ### Network Scan for ESP32s
+
 ```bash
 nmap -sn 192.168.0.0/24 | grep -B 2 "Espressif"
 ```
@@ -380,16 +413,19 @@ nmap -sn 192.168.0.0/24 | grep -B 2 "Espressif"
 ### Devices Won't Connect After WiFi Restore
 
 **Solution 1**: Power cycle devices
+
 - Unplug power for 10 seconds
 - Plug back in
 - Wait 2-3 minutes for connection
 
 **Solution 2**: Check WiFi credentials
+
 - Verify SSID "24" is broadcasting
 - Verify password "1234567890" is correct
 - Check router for MAC filtering
 
 **Solution 3**: Fallback AP mode
+
 - If device can't connect, it creates fallback AP
 - Look for WiFi network named `<devicename>_fallback`
 - Connect using password `RNaWqpHp6lz1`
@@ -398,6 +434,7 @@ nmap -sn 192.168.0.0/24 | grep -B 2 "Espressif"
 ### Device Shows as Unavailable in HA
 
 **Possible Causes**:
+
 - Device not powered on
 - WiFi connection issues
 - API encryption key mismatch
@@ -405,6 +442,7 @@ nmap -sn 192.168.0.0/24 | grep -B 2 "Espressif"
 - ESPHome integration needs reload
 
 **Solutions**:
+
 1. Check device power and network LED
 2. Restart ESPHome integration in HA
 3. Check HA logs for connection errors

@@ -33,11 +33,11 @@ variables:
 trigger:
   - platform: state
     entity_id: !input switch_sensor
-    to: 'on'
+    to: "on"
     id: switch_on
   - platform: state
     entity_id: !input switch_sensor
-    to: 'off'
+    to: "off"
     id: switch_off
 
 condition: []

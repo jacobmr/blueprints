@@ -1,57 +1,14 @@
-#!/bin/bash
-# ESPHome Config Downloader for Private GitHub Repository
-# This script reads the GitHub token from a local file for security
-
-# Configuration
-GITHUB_USER="jacobmr"
-GITHUB_REPO="blueprints"
-GITHUB_BRANCH="main"
-TOKEN_FILE="/config/.github_token"
-ESPHOME_DIR="/config/esphome"
-
-# Read token from file
-if [ ! -f "$TOKEN_FILE" ]; then
-    echo "ERROR: Token file not found at $TOKEN_FILE"
-    echo "Create the file with: echo 'your_token_here' > $TOKEN_FILE"
-    exit 1
-fi
-
-GITHUB_TOKEN=$(cat "$TOKEN_FILE" | tr -d '\n\r ')
-
-# Function to download a file
-download_file() {
-    local filename=$1
-    local output_path="${ESPHOME_DIR}/${2:-$filename}"
-    local url="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${filename}"
-
-    echo "Downloading ${filename}..."
-    curl -H "Authorization: token ${GITHUB_TOKEN}" \
-         -o "$output_path" \
-         -f \
-         -s \
-         "$url"
-
-    if [ $? -eq 0 ]; then
-        echo "✓ Downloaded ${filename}"
-    else
-        echo "✗ Failed to download ${filename}"
-        return 1
-    fi
+{
+	"data": "ENC[AES256_GCM,data:HjKNswPozHEPM1+94mJq+3Hn83F5Pk5uhr7tAQCjq032GWnbjimN0n2tmxKQXnQN6Ls71FwVFqZxp5hn4fEzxP62SI+6XPxjcQz/2/OG+cvA7GvsKXzwmej6XQJLAKprYU8qLxvq2L/n48Cg6yBa0GkQuWdlcjmeymDMHIDIxX1aALBOvmTdNprWZPLVR2w1lIabIKWhsoPA+NqblAbEF7iZ605ehtOh5qz0ssmB90svmIoK/or9LP633wriZGUJeFCoCnCwLHurJqMsT8NfSrQCcCxn1ngewYBn0kfnG0QxdYIQl1NVCoS+7HXtnc8yrwGKDaP2WKH3qqtHSw7+vGmIe+LcGw1Q4gh4nTHwpRK/iLDH0viWNGEBTqigtS8BukOQuEUyazAPgHD5CVq3Nljekf2atazXX54zqQK5JqnYhDo4u6/bJ8FGQt/GB8NgZmbZrei81tOxpHpufn0GoYDwOUJMJWlETjs5eqNxlpHgqqiCZ9bP9nf9Tilndk9UBd3QvI1wu0AHlERTjsq/Dm9ojgVw8KJQFLePuYBzooGJlHLMDiTogE1qAacbMhP4Zt0XX1rTKIkri/IzNDSiwk3Ssmy1+E+nnZJYhgBg33W4UTUStRmcTTS0c6VYEyCSnzhA7tzeuy2m5JTaaUM2gIC0fdO+oIOIjS8LWnjfk6cLwfVPbg2846cxqhQ32rzZ4aX//axTne+EiW6h6hqQWKJQvQ0q+d9q0Tf7n/vQdfpRKCEg5+teQyY0kXV8NKgWV8KW5ZtS2YW1cS+U7sM8rPf10qNptz6dg8/je5WiGxup2vYe6qXweW+qcYUm4suc6p2HyVGPSUjKycIQqjOaqiAIO1M2k481Dx3Na+2wJb4sDX/pMJ1vjG7OcmQMxqZfm0I8W+W78U54kl19Y+4sov3tWzk/w3doSNN/VZ5IKdlL1wuftmWT1mVR4Hx3zfWhwUosLDAL9tuaaUisbQUGvv0dNnXscAWMA4q45Hm2NIzCF+PYEVq4+N9t0Y8mjqWF6OucRtcuL5P8diPXdyHIPLZVCRnflbG0ZEJgfutn6dCOOJ34ffTv3uVij9JSZzx+Tm7Rsai0EB9sQSp4i2LqeEjpKTZ/ksEcNkj3yU/dch7eO4lbtmIMK9xGT5ZZ0iXVAbJZy2Q6S50iI53FQ/wJTT1N2aQTEzW8n2q+EFssC4UmhPpRpyTNDLGsMzsBUgaEZ2BwnO55CVz/OFRYykLxAv4UsfD3pl8G3/DEJH+d04Y8ROaT5N6ShiJJUStkiq1oiLqGwm8gBnsjgEA+361lSh8ql1gxLXPK4Nc89rVT0lFEIUQnPwV+3FZh2LZ0yEUk9kXdMYArjwC3opnBLwbUfCUmJJTkbNN5PiDHo7cblnCYeAZao8/f+1YLLwyrJvh2tb6eTJbQnqxFsyCmd8sArrrzp8MOBWJqcCOmEzC5shk+LvdWtZu98qtZE5ordDPv4HB3LLRTDm8R0CFebbwgxKRaTURvCLh43zAkSGMQfesOHmyUa0ZKLujpAKo6/+pLhT55I6djg1+bGBMnUzohrWo/drv04X/Lp/QLXn+0NSeog08egCkcJgEwF0qmN5j9J3WLFoPKDyfTvD7kg6mra/YHC0hgw3zl/cxWpBdh7ubHs4d8khi21zxDiKIRnWq6ato31rMLgkxswQQJTVk/esjg5SCIoKLHii8RCh4o2bW4UMnpWKp/RZTqVCAaEAIL1o1q7t2Xm8+sXzguTD3GuKOaOOzne09mGDXNL2yPRULr3GvRobV3oGTNhM2s9dHlgVEqD0KLcwqyJGL/87fyLoaqBZFvuJJgbDsL++I/W1cMnvobiWGmpF/fvUro5fTsrcIpP7C3H2eQ8sYJhML0LVcpjC8RlfplyuNwBTsz7Bc5LpTxL40tZlG2qWJSPS6K6QGAlWURao45UvmSw9nEn8kyLQ+Zw+psWfplES4NAdH3+7vwoNoe3sxWMdrsl3DT3v+h,iv:LagPewzs4KRZeQHvXlpz4q+hO4lXx9U8+H2DU5c862E=,tag:f0y9u0EuxIIBOxM+dphVjQ==,type:str]",
+	"sops": {
+		"age": [
+			{
+				"recipient": "age1gpyd88ke50f76g77xtstzh9x009h8v49nu7m9lut27wz9mx3a3wqs3s3sd",
+				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBNTXh3SHh5VGdzZlRMSHRF\nUFR5OWhqdkFnMHIrcVF4NWhhbG5NbHU3VHp3CjlhVTZORHV4SnlvZFlxRzhIMXly\nLzNmVTlkWW90V0tPU281bjIyY0MwQnMKLS0tIEVtU3M2cTkwbWRmeUtKR3hNbVI3\ncVFSRlU5NjFiZmUzQklwcWlldGJ1QXcKWA2DJbAmFKqgNEcKbdHAm39m1PAN9/O8\nhc/exJy/o7h1JJGwvgG3CL4U+rwjoAZ6aG5Gi6WLVRofPO4WxxWuMg==\n-----END AGE ENCRYPTED FILE-----\n"
+			}
+		],
+		"lastmodified": "2026-03-17T18:10:48Z",
+		"mac": "ENC[AES256_GCM,data:ESg877kloipez4gSRnbvzdirl0a2pP5+ADK8APygqTRreaFW/nXW38m9JYBCvZ4Jc57/TmGbJ+4ndxRWAGX0plk1e+7B2VjT7OvsVkjIaGe2gRsJrw+j6mRukkG0Y/fraXFnnbs6yPGsdOc/9pBDfl1U7XgU32ht3pWjJNQup4s=,iv:doGdcKr/azLU9W38BZueeI8Kt59ukydZ+hYzorHbYZQ=,tag:Mzqcyd+cJGiUkuOL6ry3Cg==,type:str]",
+		"version": "3.12.1"
+	}
 }
-
-# Download specific file or all configs
-case "${1:-all}" in
-    "great-room")
-        download_file "great-room-led-WORKING.yaml" "great-room-led.yaml"
-        ;;
-    "all")
-        download_file "great-room-led-WORKING.yaml" "great-room-led.yaml"
-        download_file "great-room-led-esp32.yaml"
-        ;;
-    *)
-        echo "Usage: $0 [great-room|all]"
-        exit 1
-        ;;
-esac
-
-echo "Done!"

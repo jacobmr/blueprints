@@ -23,17 +23,20 @@ This is a Home Assistant automation project for controlling dimmable lights usin
 ### Blueprint System (`dimmer_two_button.yaml`)
 
 The core automation is implemented as a Home Assistant blueprint that:
+
 - Listens for state changes on two binary sensors (UP/DOWN buttons)
 - Implements double-click detection using `wait_for_trigger` with configurable timeout (default 400ms)
 - Uses `mode: single` with `max_exceeded: silent` to prevent overlapping executions
 
 **Button Behavior**:
+
 - **UP Single Click**: Turn on to 50% if off, increase by brightness_step% if on
 - **UP Double Click**: Set brightness to 100%
 - **DOWN Single Click**: Turn on to 20% if off, decrease by brightness_step% if on
 - **DOWN Double Click**: Turn light off
 
 **Key Design Decisions**:
+
 - Click detection happens at button press (`to: 'on'`), not release
 - Double-click window is configurable (default 400ms)
 - Brightness calculations handle edge cases (min/max clamping)
@@ -69,11 +72,13 @@ All scripts use the Home Assistant REST API and WebSocket streaming API for real
 ### Testing
 
 Run the button monitor while physically testing:
+
 ```bash
 python3 monitor_kitchen_buttons.py
 ```
 
 Expected output format:
+
 ```
 14:23:45.123 - UP PRESSED
 14:23:45.321 - UP RELEASED after 198ms (TAP)
@@ -106,10 +111,12 @@ Expected output format:
 ## Project Evolution
 
 **Original Design (prd.md)**: Tap vs hold with continuous dimming loops
+
 - Tap: brightness step
 - Hold: start dimming_loop script
 
 **Current Design**: Single/double click detection
+
 - More reliable than duration-based detection
 - Eliminates need for external dimming_loop scripts
 - Better user experience for discrete brightness control
@@ -128,6 +135,7 @@ These files remain for reference but are not part of the active system.
 ## ESP32 Device Management
 
 **📁 COMPLETE DOCUMENTATION**: See **ESP32_COMPLETE_DOCUMENTATION.md** for:
+
 - Full system overview (2 independent ESP32 systems)
 - 7 panel devices + 96-channel dimmer system
 - Configuration file locations and backups

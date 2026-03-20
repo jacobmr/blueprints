@@ -3,7 +3,7 @@ description: "Test light state detection"
 trigger:
   - platform: state
     entity_id: binary_sensor.kitchen_panel_up_kpu3
-    to: 'on'
+    to: "on"
 action:
   - service: persistent_notification.create
     data:

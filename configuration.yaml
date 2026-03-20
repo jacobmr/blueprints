@@ -116,8 +116,8 @@ scene: !include scenes.yaml
 #   2. Create /config/.github_token with your GitHub Personal Access Token
 #   3. chmod +x /config/scripts/download_esphome_config.sh
 shell_command:
-  download_great_room_yaml: '/config/scripts/download_esphome_config.sh great-room'
-  download_all_esphome_yamls: '/config/scripts/download_esphome_config.sh all'
+  download_great_room_yaml: "/config/scripts/download_esphome_config.sh great-room"
+  download_all_esphome_yamls: "/config/scripts/download_esphome_config.sh all"
 
 # Logging
 logger:

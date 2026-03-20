@@ -53,8 +53,8 @@ wifi:
   # Static IP configuration (RECOMMENDED for reliable OTA updates)
   # Uncomment and configure for your network
   manual_ip:
-    static_ip: 192.168.0.118  # Change to your desired IP
-    gateway: 192.168.0.1      # Your router's IP
+    static_ip: 192.168.0.118 # Change to your desired IP
+    gateway: 192.168.0.1 # Your router's IP
     subnet: 255.255.255.0
     dns1: 8.8.8.8
 
@@ -78,8 +78,8 @@ output:
   - platform: ledc
     pin: GPIO03
     id: gpio_03
-    frequency: "1220Hz"  # 1220Hz, 2441Hz, 4882Hz
-    zero_means_zero: true  # ← This line forces true OFF at 0%
+    frequency: "1220Hz" # 1220Hz, 2441Hz, 4882Hz
+    zero_means_zero: true # ← This line forces true OFF at 0%
 
 light:
   - platform: monochromatic
@@ -100,7 +100,7 @@ sensor:
 
   # ADC for current sensing - VERIFY PIN WITH HARDWARE SCHEMATIC
   - platform: adc
-    pin: GPIO04  # PLACEHOLDER - check krida0electronics schematic
+    pin: GPIO04 # PLACEHOLDER - check krida0electronics schematic
     name: "Great Room LED Current Raw"
     update_interval: 1s
     attenuation: 12db

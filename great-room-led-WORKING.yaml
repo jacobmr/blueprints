@@ -48,8 +48,8 @@ output:
   - platform: ledc
     pin: GPIO03
     id: gpio_03
-    frequency: "1220Hz"  # 1220Hz, 2441Hz, 4882Hz
-    zero_means_zero: true  # Force true OFF at 0%
+    frequency: "1220Hz" # 1220Hz, 2441Hz, 4882Hz
+    zero_means_zero: true # Force true OFF at 0%
 
 light:
   - platform: monochromatic
@@ -71,11 +71,11 @@ sensor:
   # ADC for current sensing (if hardware supports it)
   # Note: Adjust GPIO pin based on actual hardware schematic
   - platform: adc
-    pin: GPIO04  # Common current sense pin - verify with schematic
+    pin: GPIO04 # Common current sense pin - verify with schematic
     name: "Great Room LED Current Raw"
     update_interval: 1s
     attenuation: 12db
-    internal: true  # Hide raw ADC value
+    internal: true # Hide raw ADC value
     id: current_adc
 
   # Calculate actual current (A) from ADC

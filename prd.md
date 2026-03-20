@@ -1,6 +1,7 @@
 # PRD: ESPHome-Based Dual Button Dimmer Control
 
 ## Overview
+
 This project defines a Home Assistant automation blueprint for controlling a dimmable light using two binary sensors (e.g. from ESPHome) representing an "Up" and a "Down" button. The buttons support tap and hold behaviors.
 
 ## Goals
@@ -170,4 +171,3 @@ sequence:
         - delay:
             milliseconds: 200
 ```
-
