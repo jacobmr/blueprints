@@ -1,0 +1,3 @@
+
+# plaintext pre-encryption backups — never commit
+*.bak.pre-sops
