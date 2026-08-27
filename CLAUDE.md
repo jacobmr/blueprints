@@ -152,3 +152,23 @@ These files remain for reference but are not part of the active system.
 - Home Assistant WebSocket API may timeout; scripts include polling fallbacks
 - Token in scripts expires: 2073155912 (Unix timestamp)
 - **Current Issue**: All ESP32 panels showing as unavailable - need to bring devices online
+
+<!-- inventory-secrets-pointer v1 -->
+## Secrets
+
+This repo's credentials are SOPS-encrypted and registered centrally in
+`/data/dev/inventory`. Never commit plaintext, and do not invent a second
+scheme — a copy that inventory does not know about will be missed by the next
+rotation.
+
+Run `/secrets-management` for how it works and the traps that have bitten.
+
+Answers that need no decryption (`placements.yaml` is deliberately plaintext):
+
+```bash
+grep -n "<name>" /data/dev/inventory/secrets/placements.yaml   # which files hold it
+npm run secrets:check                # is it healthy
+```
+
+To read or rotate a value, use the dashboard: http://dash.zt/ -> Secrets.
+Rotating there writes every copy at once, and reports the ones it cannot reach.
